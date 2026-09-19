@@ -1,9 +1,12 @@
 import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { HeroScene } from "@/components/hero/hero-scene";
+import { FloatingNav } from "@/components/navigation/floating-nav";
 
 export function Hero() {
   return (
-    <main>
+    <>
+      <FloatingNav />
+      <main id="top">
       <section aria-labelledby="hero-title" className="hero-shell">
         <div className="hero-grid">
           <div className="hero-intro">
@@ -23,6 +26,7 @@ export function Hero() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

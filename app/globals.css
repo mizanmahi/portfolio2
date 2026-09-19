@@ -87,6 +87,50 @@
 }
 
 @layer components {
+  .floating-nav {
+    position: fixed;
+    z-index: 20;
+    top: var(--space-4);
+    left: 50%;
+    width: max-content;
+    max-width: calc(100% - var(--space-12));
+    transform: translateX(-50%);
+    border: 1px solid hsl(var(--border));
+    border-radius: 999px;
+    background: hsl(var(--surface) / 0.88);
+    box-shadow: 0 var(--space-2) var(--space-12) hsl(0 0% 0% / 0.16);
+    backdrop-filter: blur(var(--space-4));
+  }
+
+  .floating-nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1);
+  }
+
+  .floating-nav-link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 999px;
+    color: hsl(var(--muted));
+    font-family: var(--font-geist-mono), monospace;
+    font-size: var(--text-kicker);
+    line-height: var(--leading-kicker);
+    text-decoration: none;
+    transition: color 180ms ease-out, background-color 180ms ease-out;
+  }
+
+  .floating-nav-link:hover,
+  .floating-nav-link[aria-current="page"] {
+    color: hsl(var(--accent));
+  }
+
+  .floating-nav-link:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: var(--space-1);
+  }
+
   .hero-shell {
     min-height: 100svh;
     padding: var(--space-section) var(--space-page);
