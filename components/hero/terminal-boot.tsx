@@ -1,9 +1,13 @@
 "use client";
 
 import { useBootSequence } from "@/components/hero/boot-sequence-provider";
+import { useRef, type PointerEvent } from "react";
+
+const maximumTilt = 4;
 
 export function TerminalBoot() {
   const { announcement, isComplete, lines, skip } = useBootSequence();
+  const terminalRef = useRef<HTMLElement>(null);
   const showIdlePrompt =
     isComplete ||
     lines.some(
@@ -14,6 +18,36 @@ export function TerminalBoot() {
   const activeCommandIndex = lines.findIndex(
     (line) => Boolean(line.command) && !line.output,
   );
+  const resetParallax = () => {
+    const terminal = terminalRef.current;
+
+    terminal?.style.setProperty("--terminal-tilt-x", "0deg");
+    terminal?.style.setProperty("--terminal-tilt-y", "0deg");
+  };
+  const updateParallax = (event: PointerEvent<HTMLElement>) => {
+    if (
+      event.pointerType !== "mouse" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const terminal = terminalRef.current;
+    if (!terminal) return;
+
+    const bounds = terminal.getBoundingClientRect();
+    const horizontalPosition = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const verticalPosition = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+    terminal.style.setProperty(
+      "--terminal-tilt-x",
+      `${verticalPosition * maximumTilt * -1}deg`,
+    );
+    terminal.style.setProperty(
+      "--terminal-tilt-y",
+      `${horizontalPosition * maximumTilt}deg`,
+    );
+  };
 
   return (
     <div className="terminal-journey" data-complete={isComplete}>
@@ -21,6 +55,9 @@ export function TerminalBoot() {
         aria-label="Profile terminal"
         className={`terminal${isComplete ? "" : " terminal--booting"}`}
         onClick={isComplete ? undefined : skip}
+        onPointerLeave={resetParallax}
+        onPointerMove={updateParallax}
+        ref={terminalRef}
       >
         <header className="terminal-bar">
           <span className="terminal-indicator" aria-hidden="true" />

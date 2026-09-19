@@ -68,6 +68,7 @@
   --radius-terminal-sm: 0.25rem;
   --radius-terminal-md: 0.5rem;
   --radius-terminal-lg: 0.75rem;
+  --perspective-terminal: 72rem;
 }
 
 html[data-theme="light"] {
@@ -370,16 +371,6 @@ html[data-theme="light"] {
     scroll-margin-top: var(--space-16);
   }
 
-  .hero-scene,
-  .hero-scene-fallback {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    pointer-events: none;
-    -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, #000 45%, transparent 100%);
-    mask-image: radial-gradient(ellipse 90% 80% at center, #000 45%, transparent 100%);
-  }
-
   .terminal {
     position: relative;
     overflow: hidden;
@@ -388,9 +379,19 @@ html[data-theme="light"] {
     background: hsl(var(--surface) / 0.9);
     box-shadow: 0 1.5rem 4rem hsl(0 0% 0% / 0.22);
     font-family: var(--font-geist-mono), monospace;
+    transform: perspective(var(--perspective-terminal)) rotateX(var(--terminal-tilt-x, 0deg)) rotateY(var(--terminal-tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: box-shadow 180ms ease-out, transform 180ms ease-out;
+    will-change: transform;
   }
 
   .terminal--booting { cursor: pointer; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .terminal:hover {
+      box-shadow: 0 var(--space-8) var(--space-24) hsl(0 0% 0% / 0.28);
+    }
+  }
 
   .terminal-bar {
     display: flex;
@@ -545,6 +546,7 @@ html[data-theme="light"] {
     .scroll-cue,
     .scroll-cue-caret,
     .hero-title { animation: none; transition: none; }
+    .terminal { transform: none; transition: none; }
     html { scroll-behavior: auto; }
   }
 

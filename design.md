@@ -10,7 +10,7 @@ This doc is the single source of truth for design decisions on this project. Che
 
 - Hero section opens as a terminal boot sequence (auto-typing, realistic speed, skippable, respects `prefers-reduced-motion`)
 - Once the sequence finishes, the rest of the site unfolds as a bento-grid dashboard, projects, experience, skills, contact, each as a card in the grid
-- One subtle 3D accent lives in the hero only (R3F + Drei), a slowly rotating abstract wireframe object with light mouse-parallax. No 3D anywhere else, keeps performance budget in check.
+- The terminal panel itself supplies the hero depth accent through a bounded hover parallax tilt. This keeps the first screen focused and avoids a competing decorative object.
 
 **Why this concept:** Terminal/IDE and Bento are the two developer-portfolio styles that read as memorable and recruiter-friendly rather than generic. Combining them gives a strong entrance plus a scannable, information-dense body.
 
@@ -20,7 +20,7 @@ This doc is the single source of truth for design decisions on this project. Che
 
 - Next.js (App Router), TypeScript
 - Tailwind CSS + shadcn/ui (customized, not default look)
-- React Three Fiber + Drei for the hero 3D accent (lazy loaded, code-split)
+- CSS custom properties and pointer events for the terminal hover parallax
 - Framer Motion / motion for UI transitions
 
 ---
@@ -124,5 +124,5 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 
 Add one line per week here, what you built, what you changed from plan, and why. Future-you will forget the reasoning otherwise.
 
-- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. The hero uses a sparse constellation network with capped DPR, continuous idle rotation, bounded pointer parallax, and a radial edge fade; it is dynamically imported and restricted to the hero. The completed boot sequence reveals the portfolio actions and a terminal-style `scroll↓` cue for the forthcoming bento dashboard.
+- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. The terminal itself has a bounded pointer parallax tilt, resets when the pointer leaves, and is disabled for reduced-motion users. The completed boot sequence reveals the portfolio actions and a terminal-style `scroll↓` cue for the forthcoming bento dashboard.
 - **Theme system:** Added a theme toggler to the navigation, implemented light-mode tokens, and split `--accent` from `--accent-strong` so amber fills stay expressive while amber text remains accessible on light backgrounds.

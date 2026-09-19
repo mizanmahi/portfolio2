@@ -1,7 +1,6 @@
 import { BootSequenceProvider } from "@/components/hero/boot-sequence-provider";
 import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { HeroActions } from "@/components/hero/hero-actions";
-import { HeroScene } from "@/components/hero/hero-scene";
 import { ScrollCue } from "@/components/hero/scroll-cue";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 
@@ -12,7 +11,6 @@ export function Hero() {
       <BootSequenceProvider>
         <main id="top">
           <section aria-labelledby="hero-title" className="hero-shell">
-            <HeroScene />
             <div className="hero-grid">
               <div className="hero-intro">
                 <p className="hero-kicker">Developer profile</p>
