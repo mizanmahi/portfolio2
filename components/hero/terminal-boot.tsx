@@ -1,7 +1,6 @@
 "use client";
 
 import { useBootSequence } from "@/components/hero/boot-sequence-provider";
-import { ScrollCue } from "@/components/hero/scroll-cue";
 
 export function TerminalBoot() {
   const { announcement, isComplete, lines, skip } = useBootSequence();
@@ -97,9 +96,6 @@ export function TerminalBoot() {
           )}
         </div>
       </section>
-
-      <ScrollCue isVisible={isComplete} />
-
       {/* <p className="terminal-next" aria-hidden={!isComplete}>
         <span className="terminal-next-marker" aria-hidden="true" />
         Next: the bento dashboard for experience, projects, and skills.

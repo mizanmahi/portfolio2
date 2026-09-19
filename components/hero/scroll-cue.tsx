@@ -1,19 +1,20 @@
 "use client";
 
-import { ChevronDownIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { useBootSequence } from "@/components/hero/boot-sequence-provider";
 
-export function ScrollCue({ isVisible }: { isVisible: boolean }) {
+export function ScrollCue() {
+  const { isComplete } = useBootSequence();
+
   return (
     <a
-      aria-hidden={!isVisible}
+      aria-hidden={!isComplete}
       className="scroll-cue"
-      data-visible={isVisible}
+      data-visible={isComplete}
       href="#projects"
-      tabIndex={isVisible ? undefined : -1}
+      tabIndex={isComplete ? undefined : -1}
     >
-      <span>Scroll to explore</span>
-      <HugeiconsIcon aria-hidden="true" className="scroll-cue-icon" icon={ChevronDownIcon} size="1em" />
+      <span>scroll↓</span>
+      <span aria-hidden="true" className="scroll-cue-caret" />
     </a>
   );
 }
