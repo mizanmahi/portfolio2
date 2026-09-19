@@ -2,15 +2,20 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-export type TerminalLine = { command: string; output: string };
+export type TerminalLine = { command: string; output: string; progress?: number };
 
 const bootLines: TerminalLine[] = [
   { command: "whoami", output: "Mizanur Rahman" },
   { command: "cat role.txt", output: "Full-Stack Web Developer | Dhaka, Bangladesh" },
-  { command: "./load_profile.sh", output: "[██████████] profile loaded" },
+  { command: "./load_profile.sh", output: "Profile loaded", progress: 1 },
 ];
 
-const progressFrames = ["[█□□□□□□□□□] loading profile", "[████□□□□□□] loading profile", "[███████□□□] loading profile", "[██████████] profile loaded"];
+const progressFrames = [
+  { output: "Loading profile", progress: 0.1 },
+  { output: "Loading profile", progress: 0.4 },
+  { output: "Loading profile", progress: 0.7 },
+  { output: "Profile loaded", progress: 1 },
+];
 const emptyLines = (): TerminalLine[] => bootLines.map(() => ({ command: "", output: "" }));
 const finalLines = (): TerminalLine[] => bootLines.map((line) => ({ ...line }));
 const pause = (duration: number) => new Promise<void>((resolve) => window.setTimeout(resolve, duration));
@@ -72,7 +77,7 @@ export function useTerminalBoot() {
           for (const frame of progressFrames) {
             await pause(220 + Math.random() * 120);
             if (cancelled) return;
-            updateLine(lineIndex, { output: frame });
+            updateLine(lineIndex, frame);
           }
         } else {
           const outputTyped = await typeText(lineIndex, "output", line.output);
