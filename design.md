@@ -27,7 +27,7 @@ This doc is the single source of truth for design decisions on this project. Che
 
 ## Color System
 
-Dark-first (no light mode toggle for now).
+Dark-first, with a warm light-mode counterpart.
 
 | Token | Hex | HSL (for CSS var) | Use |
 |---|---|---|---|
@@ -45,6 +45,27 @@ Dark-first (no light mode toggle for now).
 
 **Why amber, not purple or green:** purple-to-blue gradients are the default "AI SaaS" look right now, avoiding it dodges the generic-AI-slop read. Green-on-black is the cliché "hacker portfolio" look. Amber reads as authentic CRT/terminal nostalgia and pairs cleanly with near-black without feeling copied.
 
+### Light Mode
+
+| Token | Hex | HSL (for CSS var) | Use |
+|---|---|---|---|
+| Background | `#F7F5F2` | `36 24% 96%` | Page background, warm off-white |
+| Surface | `#FFFFFF` | `0 0% 100%` | Cards, terminal panel, bento tiles |
+| Foreground | `#1A1A1A` | `0 0% 10%` | Primary text |
+| Muted | `#6B6B6B` | `0 0% 42%` | Secondary text, timestamps, comments |
+| Border | `#E5E1DC` | `35 16% 88%` | Dividers, card outlines |
+| Accent | `#F5A623` | `38 91% 58%` | Button, icon, and progress fills |
+| Accent strong | `#B2530A` | `26 89% 37%` | Links, active states, and amber text requiring AA contrast |
+| Accent hover | `#DB8D1F` | `35 75% 49%` | Hover/active state on accent fills |
+| Success | `#16A249` | `142 76% 36%` | Fake "ok" terminal lines, positive states |
+| Error | `#DC2828` | `0 72% 51%` | Fake error lines, destructive states |
+| Warning | `#DB7706` | `32 95% 44%` | Warning states |
+| Info | `#2463EB` | `221 83% 53%` | Rare, comment-style lines only |
+
+**Why warm off-white instead of pure white:** `#F7F5F2` keeps continuity with the CRT-nostalgia concept from dark mode instead of making light mode feel like a disconnected second theme.
+
+**Why `--accent-strong` is separate:** raw accent amber fails AA contrast as text on light backgrounds, so `--accent` is reserved for fills and buttons while `--accent-strong` handles text, links, and active states.
+
 ### CSS variables (globals.css)
 
 ```css
@@ -55,6 +76,7 @@ Dark-first (no light mode toggle for now).
   --muted: 0 0% 54%;
   --border: 0 0% 16%;
   --accent: 38 91% 58%;
+  --accent-strong: 38 91% 58%;
   --accent-hover: 38 100% 68%;
   --success: 142 71% 65%;
   --destructive: 0 91% 71%;
@@ -103,3 +125,4 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 Add one line per week here, what you built, what you changed from plan, and why. Future-you will forget the reasoning otherwise.
 
 - **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. Chose a low-detail amber wireframe icosahedron with capped DPR, continuous idle rotation, bounded pointer parallax, and intentional edge bleed; it is dynamically imported and restricted to the hero. A completion-aware scroll cue is ready for the forthcoming bento dashboard.
+- **Theme system:** Added a theme toggler to the navigation, implemented light-mode tokens, and split `--accent` from `--accent-strong` so amber fills stay expressive while amber text remains accessible on light backgrounds.
