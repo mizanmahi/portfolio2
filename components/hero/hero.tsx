@@ -1,4 +1,5 @@
 import { TerminalBoot } from "@/components/hero/terminal-boot";
+import { HeroActions } from "@/components/hero/hero-actions";
 import { HeroScene } from "@/components/hero/hero-scene";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 
@@ -18,6 +19,7 @@ export function Hero() {
               Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years
               of experience.
             </p>
+            <HeroActions />
           </div>
 
           <div className="hero-terminal-wrap">

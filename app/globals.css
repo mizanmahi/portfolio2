@@ -182,6 +182,59 @@
     text-wrap: pretty;
   }
 
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .hero-action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid transparent;
+    border-radius: var(--radius-terminal-md);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: var(--text-kicker);
+    font-weight: 600;
+    line-height: var(--leading-kicker);
+    text-decoration: none;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out;
+  }
+
+  .hero-action--primary {
+    background: hsl(var(--accent));
+    color: hsl(var(--background));
+  }
+
+  .hero-action--primary:hover {
+    background: hsl(var(--accent-hover));
+  }
+
+  .hero-action--secondary {
+    border-color: hsl(var(--border));
+    color: hsl(var(--foreground));
+  }
+
+  .hero-action--secondary:hover {
+    border-color: hsl(var(--muted));
+    color: hsl(var(--accent-hover));
+  }
+
+  .hero-action:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: var(--space-2);
+  }
+
+  .hero-action-arrow {
+    transition: transform 180ms ease-out;
+  }
+
+  .hero-action--primary:hover .hero-action-arrow {
+    transform: translateX(var(--space-1));
+  }
+
   .hero-terminal-wrap {
     position: relative;
     isolation: isolate;
