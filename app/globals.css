@@ -135,11 +135,25 @@
     text-wrap: pretty;
   }
 
+  .hero-terminal-wrap {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-scene,
+  .hero-scene-fallback {
+    position: absolute;
+    z-index: -1;
+    inset: calc(var(--space-12) * -1);
+    pointer-events: none;
+  }
+
   .terminal {
+    position: relative;
     overflow: hidden;
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius-terminal-lg);
-    background: hsl(var(--surface));
+    background: hsl(var(--surface) / 0.9);
     box-shadow: 0 1.5rem 4rem hsl(0 0% 0% / 0.22);
     font-family: var(--font-geist-mono), monospace;
   }

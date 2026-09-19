@@ -1,4 +1,5 @@
 import { TerminalBoot } from "@/components/hero/terminal-boot";
+import { HeroScene } from "@/components/hero/hero-scene";
 
 export function Hero() {
   return (
@@ -16,7 +17,10 @@ export function Hero() {
             </p>
           </div>
 
-          <TerminalBoot />
+          <div className="hero-terminal-wrap">
+            <HeroScene />
+            <TerminalBoot />
+          </div>
         </div>
       </section>
     </main>
