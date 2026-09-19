@@ -135,7 +135,7 @@
     text-wrap: pretty;
   }
 
-  .hero-stage {
+  .terminal {
     overflow: hidden;
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius-terminal-lg);
@@ -144,7 +144,7 @@
     font-family: var(--font-geist-mono), monospace;
   }
 
-  .hero-stage-bar {
+  .terminal-bar {
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -155,40 +155,80 @@
     font-size: var(--text-kicker);
   }
 
-  .hero-stage-dot {
+  .terminal-indicator {
     width: var(--space-2);
     aspect-ratio: 1;
     border-radius: 999px;
     background: hsl(var(--accent));
   }
 
-  .hero-stage-label {
+  .terminal-file {
     color: hsl(var(--foreground));
   }
 
-  .hero-stage-status {
+  .terminal-state {
     margin-left: auto;
   }
 
-  .hero-stage-body {
-    min-height: 13rem;
+  .terminal-body {
+    display: grid;
+    gap: var(--space-6);
+    min-height: 18rem;
     padding: var(--space-6);
+  }
+
+  .terminal-output {
+    display: grid;
+    align-content: start;
+    gap: var(--space-6);
+  }
+
+  .terminal-entry {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .terminal-command,
+  .terminal-idle {
+    color: hsl(var(--foreground));
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+  }
+
+  .terminal-result {
     color: hsl(var(--muted));
     font-size: var(--text-body);
     line-height: var(--leading-body);
   }
 
-  .hero-stage-prompt {
+  .terminal-prompt {
     color: hsl(var(--accent));
   }
 
-  .hero-stage-caret {
+  .terminal-caret {
     display: inline-block;
     width: 0.6ch;
     height: 1em;
     margin-left: var(--space-1);
     translate: 0 0.15em;
     background: hsl(var(--accent));
+  }
+
+  .terminal-skip {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: hsl(var(--muted));
+    font: inherit;
+    font-size: var(--text-kicker);
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--border));
+    text-underline-offset: var(--space-1);
+  }
+
+  .terminal-skip:disabled {
+    cursor: wait;
   }
 
   @media (min-width: 64rem) {
