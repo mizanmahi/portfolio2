@@ -11,6 +11,7 @@
   --color-muted: hsl(var(--muted));
   --color-border: hsl(var(--border));
   --color-accent: hsl(var(--accent));
+  --color-accent-strong: hsl(var(--accent-strong));
   --color-accent-hover: hsl(var(--accent-hover));
   --color-success: hsl(var(--success));
   --color-destructive: hsl(var(--destructive));
@@ -31,6 +32,7 @@
   --muted: 0 0% 54%;
   --border: 0 0% 16%;
   --accent: 38 91% 58%;
+  --accent-strong: 38 91% 58%;
   --accent-hover: 38 100% 68%;
   --success: 142 71% 65%;
   --destructive: 0 91% 71%;
@@ -66,6 +68,21 @@
   --radius-terminal-sm: 0.25rem;
   --radius-terminal-md: 0.5rem;
   --radius-terminal-lg: 0.75rem;
+}
+
+html[data-theme="light"] {
+  --background: 36 24% 96%;
+  --surface: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --muted: 0 0% 42%;
+  --border: 35 16% 88%;
+  --accent: 38 91% 58%;
+  --accent-strong: 26 89% 37%;
+  --accent-hover: 35 75% 49%;
+  --success: 142 76% 36%;
+  --destructive: 0 72% 51%;
+  --warning: 32 95% 44%;
+  --info: 221 83% 53%;
 }
 
 @layer base {
