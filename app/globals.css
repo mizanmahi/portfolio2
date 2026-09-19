@@ -413,8 +413,35 @@
   @media (min-width: 64rem) {
     .hero-grid {
       grid-template-columns: minmax(0, 0.85fr) minmax(var(--measure-terminal), 1.15fr);
-      align-items: center;
+      align-items: start;
       gap: var(--space-24);
+    }
+
+    .hero-intro {
+      position: relative;
+    }
+
+    .hero-kicker {
+      position: absolute;
+      top: calc(var(--space-6) * -1);
+      left: 0;
+    }
+
+    .hero-terminal-wrap::before {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--space-12) * -1);
+      width: 1px;
+      content: "";
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        hsl(var(--accent) / 0.28),
+        transparent
+      );
     }
   }
 }
