@@ -1,7 +1,6 @@
 "use client";
 
 import { useTerminalBoot } from "@/hooks/use-terminal-boot";
-import type { CSSProperties } from "react";
 
 export function TerminalBoot() {
   const { announcement, isComplete, lines, skip } = useTerminalBoot();
@@ -54,15 +53,23 @@ export function TerminalBoot() {
                     (line.progress === undefined ? (
                       <p className="terminal-result">{line.output}</p>
                     ) : (
-                      <div
-                        className="terminal-progress"
-                        style={{ "--terminal-progress": line.progress } as CSSProperties}
-                      >
-                        <p className="terminal-result">{line.output}</p>
-                        <span className="terminal-progress-track">
-                          <span className="terminal-progress-fill" />
-                        </span>
-                      </div>
+                      <p className="terminal-result terminal-progress">
+                        {line.output} [
+                        {Array.from({ length: 10 }, (_, segment) => {
+                          const isFilled =
+                            segment < Math.round((line.progress ?? 0) * 10);
+
+                          return (
+                            <span
+                              className={`terminal-progress-cell${isFilled ? " terminal-progress-cell--filled" : ""}`}
+                              key={segment}
+                            >
+                              {isFilled ? "█" : "░"}
+                            </span>
+                          );
+                        })}
+                        ]
+                      </p>
                     ))}
                 </div>
               ) : null,
