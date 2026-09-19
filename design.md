@@ -102,4 +102,4 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 
 Add one line per week here, what you built, what you changed from plan, and why. Future-you will forget the reasoning otherwise.
 
-- **Week 1:** _(fill in once hero is done: typing speed settled on, 3D shape chosen, any deviation from the prompt spec)_
+- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. Chose a low-detail amber wireframe icosahedron with capped DPR and low-amplitude pointer parallax; it is dynamically imported and restricted to the hero.

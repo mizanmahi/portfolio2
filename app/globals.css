@@ -51,6 +51,9 @@
   --space-32: 8rem;
   --space-page: clamp(var(--space-6), 5vw, var(--space-24));
   --space-section: clamp(var(--space-16), 10vw, var(--space-32));
+  --space-terminal-min: 18rem;
+  --measure-hero: 80rem;
+  --measure-terminal: 28rem;
 
   --text-kicker: 0.75rem;
   --text-body: clamp(1rem, 1vw + 0.75rem, 1.25rem);
@@ -95,7 +98,7 @@
   }
 
   .hero-grid {
-    width: min(100%, 80rem);
+    width: min(100%, var(--measure-hero));
     margin-inline: auto;
     display: grid;
     gap: var(--space-12);
@@ -114,7 +117,6 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     line-height: var(--leading-kicker);
-    text-transform: uppercase;
   }
 
   .hero-title {
@@ -138,6 +140,13 @@
   .hero-terminal-wrap {
     position: relative;
     isolation: isolate;
+  }
+
+  .terminal-journey {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: var(--space-6);
   }
 
   .hero-scene,
@@ -189,7 +198,7 @@
   .terminal-body {
     display: grid;
     gap: var(--space-6);
-    min-height: 18rem;
+    min-height: var(--space-terminal-min);
     padding: var(--space-6);
   }
 
@@ -255,17 +264,45 @@
     outline-offset: var(--space-2);
   }
 
+  .terminal-next {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    color: hsl(var(--muted));
+    font-family: var(--font-geist-mono), monospace;
+    font-size: var(--text-kicker);
+    line-height: var(--leading-body);
+    opacity: 0;
+    transform: translateY(var(--space-3));
+    transition: opacity 360ms ease-out, transform 360ms ease-out;
+    text-wrap: pretty;
+  }
+
+  .terminal-journey[data-complete="true"] .terminal-next {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .terminal-next-marker {
+    width: var(--space-2);
+    height: var(--space-2);
+    flex: none;
+    border-radius: 999px;
+    background: hsl(var(--success));
+  }
+
   @keyframes terminal-caret {
     50% { opacity: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .terminal-caret { animation: none; }
+    .terminal-next { transition: none; }
   }
 
   @media (min-width: 64rem) {
     .hero-grid {
-      grid-template-columns: minmax(0, 0.85fr) minmax(28rem, 1.15fr);
+      grid-template-columns: minmax(0, 0.85fr) minmax(var(--measure-terminal), 1.15fr);
       align-items: center;
       gap: var(--space-24);
     }
