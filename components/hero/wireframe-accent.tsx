@@ -9,28 +9,31 @@ function WireframeObject({ accent, motionAllowed }: { accent: string; motionAllo
   const group = useRef<Group>(null);
   const { pointer } = useThree();
 
+  const maxPitch = MathUtils.degToRad(5);
+  const maxRoll = MathUtils.degToRad(4);
+
   useFrame((_, delta) => {
     if (!group.current || !motionAllowed) return;
 
     group.current.rotation.x = MathUtils.damp(
       group.current.rotation.x,
-      pointer.y * 0.16,
+      pointer.y * maxPitch,
       4,
       delta,
     );
-    group.current.rotation.y += delta * 0.16;
+    group.current.rotation.y += delta * 0.18;
     group.current.rotation.z = MathUtils.damp(
       group.current.rotation.z,
-      pointer.x * -0.08,
+      pointer.x * -maxRoll,
       4,
       delta,
     );
   });
 
   return (
-    <group ref={group} rotation={[0.1, 0.5, 0]}>
+    <group ref={group} position={[0.9, 0.72, 0]} rotation={[0.1, 0.5, 0]}>
       <mesh>
-        <icosahedronGeometry args={[1.35, 1]} />
+        <icosahedronGeometry args={[1.6, 1]} />
         <meshBasicMaterial color={accent} depthWrite={false} opacity={0.06} transparent />
         <Edges color={accent} threshold={15} />
       </mesh>

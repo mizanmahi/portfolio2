@@ -452,5 +452,10 @@
         transparent
       );
     }
+
+    .hero-scene,
+    .hero-scene-fallback {
+      inset: calc(var(--space-32) * -1);
+    }
   }
 }
