@@ -141,10 +141,34 @@ html[data-theme="light"] {
 
   .floating-nav-link:hover,
   .floating-nav-link[aria-current="page"] {
-    color: hsl(var(--accent));
+    color: hsl(var(--accent-strong));
   }
 
   .floating-nav-link:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: var(--space-1);
+  }
+
+  .theme-toggle {
+    display: grid;
+    width: var(--space-8);
+    aspect-ratio: 1;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: hsl(var(--muted));
+    font-size: var(--text-kicker);
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    background: hsl(var(--border));
+    color: hsl(var(--accent-strong));
+  }
+
+  .theme-toggle:focus-visible {
     outline: 2px solid hsl(var(--accent));
     outline-offset: var(--space-1);
   }

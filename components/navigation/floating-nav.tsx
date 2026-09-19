@@ -1,3 +1,5 @@
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+
 const navigationItems = [
   { href: "#top", label: "Home" },
   { href: "#projects", label: "Projects" },
@@ -18,6 +20,9 @@ export function FloatingNav() {
             </a>
           </li>
         ))}
+        <li>
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   );
