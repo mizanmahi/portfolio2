@@ -124,5 +124,5 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 
 Add one line per week here, what you built, what you changed from plan, and why. Future-you will forget the reasoning otherwise.
 
-- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. Chose a low-detail amber wireframe icosahedron with capped DPR, continuous idle rotation, bounded pointer parallax, and intentional edge bleed; it is dynamically imported and restricted to the hero. A completion-aware scroll cue is ready for the forthcoming bento dashboard.
+- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. The hero uses a sparse constellation network with capped DPR, continuous idle rotation, bounded pointer parallax, and a radial edge fade; it is dynamically imported and restricted to the hero. The completed boot sequence reveals the portfolio actions and a terminal-style `scroll↓` cue for the forthcoming bento dashboard.
 - **Theme system:** Added a theme toggler to the navigation, implemented light-mode tokens, and split `--accent` from `--accent-strong` so amber fills stay expressive while amber text remains accessible on light backgrounds.
