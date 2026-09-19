@@ -233,6 +233,10 @@
     color: hsl(var(--accent));
   }
 
+  .terminal-prompt--inactive {
+    color: hsl(var(--muted));
+  }
+
   .terminal-caret {
     display: inline-block;
     width: 0.6ch;

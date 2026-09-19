@@ -11,6 +11,9 @@ export function TerminalBoot() {
         Boolean(line.output) &&
         (index === lines.length - 1 || !lines[index + 1].command),
     );
+  const activeCommandIndex = lines.findIndex(
+    (line) => Boolean(line.command) && !line.output,
+  );
 
   return (
     <div className="terminal-journey" data-complete={isComplete}>
@@ -38,7 +41,12 @@ export function TerminalBoot() {
                 <div className="terminal-entry" key={index}>
                   {line.command && (
                     <p className="terminal-command">
-                      <span className="terminal-prompt">$</span> {line.command}
+                      <span
+                        className={`terminal-prompt${index === activeCommandIndex ? "" : " terminal-prompt--inactive"}`}
+                      >
+                        $
+                      </span>{" "}
+                      {line.command}
                     </p>
                   )}
                   {line.output && <p className="terminal-result">{line.output}</p>}
