@@ -28,6 +28,7 @@ export function Hero() {
           </div>
         </div>
       </section>
+      <div id="projects" className="future-section-anchor" aria-hidden="true" />
       </main>
     </>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTerminalBoot } from "@/hooks/use-terminal-boot";
+import { ScrollCue } from "@/components/hero/scroll-cue";
 
 export function TerminalBoot() {
   const { announcement, isComplete, lines, skip } = useTerminalBoot();
@@ -96,6 +97,8 @@ export function TerminalBoot() {
           )}
         </div>
       </section>
+
+      <ScrollCue isVisible={isComplete} />
 
       {/* <p className="terminal-next" aria-hidden={!isComplete}>
         <span className="terminal-next-marker" aria-hidden="true" />

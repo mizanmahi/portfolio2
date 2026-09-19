@@ -1,8 +1,6 @@
 const navigationItems = [
   { href: "#top", label: "Home" },
   { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
 ];
 
 export function FloatingNav() {
