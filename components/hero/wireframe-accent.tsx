@@ -2,6 +2,7 @@
 
 import { Line } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useTheme } from "@/components/theme/theme-provider";
 import { useEffect, useRef, useState } from "react";
 import { MathUtils, type Group } from "three";
 
@@ -38,7 +39,17 @@ const networkConnections = [
 const maxPitch = MathUtils.degToRad(5);
 const maxRoll = MathUtils.degToRad(4);
 
-function NetworkAccent({ color, motionAllowed }: { color: string; motionAllowed: boolean }) {
+function NetworkAccent({
+  color,
+  lineOpacity,
+  motionAllowed,
+  nodeOpacity,
+}: {
+  color: string;
+  lineOpacity: number;
+  motionAllowed: boolean;
+  nodeOpacity: number;
+}) {
   const group = useRef<Group>(null);
   const { pointer } = useThree();
 
@@ -67,7 +78,7 @@ function NetworkAccent({ color, motionAllowed }: { color: string; motionAllowed:
           color={color}
           key={`${start}-${end}`}
           lineWidth={1}
-          opacity={0.38}
+          opacity={lineOpacity}
           points={[networkNodes[start], networkNodes[end]]}
           transparent
         />
@@ -75,7 +86,7 @@ function NetworkAccent({ color, motionAllowed }: { color: string; motionAllowed:
       {networkNodes.map((position, index) => (
         <mesh key={index} position={position}>
           <sphereGeometry args={[0.045, 8, 8]} />
-          <meshBasicMaterial color={color} opacity={0.8} transparent />
+          <meshBasicMaterial color={color} opacity={nodeOpacity} transparent />
         </mesh>
       ))}
     </group>
@@ -83,13 +94,13 @@ function NetworkAccent({ color, motionAllowed }: { color: string; motionAllowed:
 }
 
 export function WireframeAccent() {
-  const [accent] = useState(() => {
-    const accentToken = getComputedStyle(document.documentElement)
-      .getPropertyValue("--accent")
-      .trim();
-
-    return `hsl(${accentToken})`;
-  });
+  const { theme } = useTheme();
+  const isLightTheme = theme === "light";
+  const colorToken = isLightTheme ? "--foreground" : "--accent";
+  const colorValue = getComputedStyle(document.documentElement)
+    .getPropertyValue(colorToken)
+    .trim();
+  const color = `hsl(${colorValue})`;
   const [motionAllowed, setMotionAllowed] = useState(
     () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -109,7 +120,12 @@ export function WireframeAccent() {
       dpr={[1, 1.5]}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
     >
-      <NetworkAccent color={accent} motionAllowed={motionAllowed} />
+      <NetworkAccent
+        color={color}
+        lineOpacity={isLightTheme ? 0.18 : 0.38}
+        motionAllowed={motionAllowed}
+        nodeOpacity={isLightTheme ? 0.2 : 0.8}
+      />
     </Canvas>
   );
 }
