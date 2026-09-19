@@ -7,12 +7,15 @@ import { useTheme } from "@/components/theme/theme-provider";
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const isLight = theme === "light";
+  const nextTheme = isLight ? "dark" : "light";
 
   return (
     <button
-      aria-label={`Switch to ${isLight ? "dark" : "light"} theme`}
+      aria-label={`Switch to ${nextTheme} theme`}
       className="theme-toggle"
+      data-theme={theme}
       onClick={() => setTheme(isLight ? "dark" : "light")}
+      title={`Switch to ${nextTheme} theme`}
       type="button"
     >
       <HugeiconsIcon
