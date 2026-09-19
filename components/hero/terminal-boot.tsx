@@ -76,10 +76,10 @@ export function TerminalBoot() {
         </div>
       </section>
 
-      <p className="terminal-next" aria-hidden={!isComplete}>
+      {/* <p className="terminal-next" aria-hidden={!isComplete}>
         <span className="terminal-next-marker" aria-hidden="true" />
         Next: the bento dashboard for experience, projects, and skills.
-      </p>
+      </p> */}
     </div>
   );
 }
