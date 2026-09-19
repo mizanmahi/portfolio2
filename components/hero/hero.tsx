@@ -1,3 +1,4 @@
+import { BootSequenceProvider } from "@/components/hero/boot-sequence-provider";
 import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { HeroActions } from "@/components/hero/hero-actions";
 import { HeroScene } from "@/components/hero/hero-scene";
@@ -7,29 +8,31 @@ export function Hero() {
   return (
     <>
       <FloatingNav />
-      <main id="top">
-      <section aria-labelledby="hero-title" className="hero-shell">
-        <HeroScene />
-        <div className="hero-grid">
-          <div className="hero-intro">
-            <p className="hero-kicker">Developer profile</p>
-            <h1 id="hero-title" className="hero-title">
-              Mizanur Rahman
-            </h1>
-            <p className="hero-summary">
-              Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years
-              of experience.
-            </p>
-            <HeroActions />
-          </div>
+      <BootSequenceProvider>
+        <main id="top">
+          <section aria-labelledby="hero-title" className="hero-shell">
+            <HeroScene />
+            <div className="hero-grid">
+              <div className="hero-intro">
+                <p className="hero-kicker">Developer profile</p>
+                <h1 id="hero-title" className="hero-title">
+                  Mizanur Rahman
+                </h1>
+                <p className="hero-summary">
+                  Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years
+                  of experience.
+                </p>
+                <HeroActions />
+              </div>
 
-          <div className="hero-terminal-wrap">
-            <TerminalBoot />
-          </div>
-        </div>
-      </section>
-      <div id="projects" className="future-section-anchor" aria-hidden="true" />
-      </main>
+              <div className="hero-terminal-wrap">
+                <TerminalBoot />
+              </div>
+            </div>
+          </section>
+          <div id="projects" className="future-section-anchor" aria-hidden="true" />
+        </main>
+      </BootSequenceProvider>
     </>
   );
 }

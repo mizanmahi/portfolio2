@@ -1,10 +1,10 @@
 "use client";
 
-import { useTerminalBoot } from "@/hooks/use-terminal-boot";
+import { useBootSequence } from "@/components/hero/boot-sequence-provider";
 import { ScrollCue } from "@/components/hero/scroll-cue";
 
 export function TerminalBoot() {
-  const { announcement, isComplete, lines, skip } = useTerminalBoot();
+  const { announcement, isComplete, lines, skip } = useBootSequence();
   const showIdlePrompt =
     isComplete ||
     lines.some(

@@ -232,6 +232,16 @@ html[data-theme="light"] {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(var(--space-3));
+    transition: opacity 360ms ease-out, transform 360ms ease-out;
+  }
+
+  .hero-actions[data-complete="true"] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .hero-action {
@@ -504,6 +514,7 @@ html[data-theme="light"] {
   @media (prefers-reduced-motion: reduce) {
     .terminal-caret { animation: none; }
     .terminal-next { transition: none; }
+    .hero-actions { transition: none; }
     .scroll-cue,
     .scroll-cue-icon { animation: none; transition: none; }
     html { scroll-behavior: auto; }
