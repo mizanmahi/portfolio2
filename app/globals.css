@@ -144,6 +144,8 @@
     font-family: var(--font-geist-mono), monospace;
   }
 
+  .terminal--booting { cursor: pointer; }
+
   .terminal-bar {
     display: flex;
     align-items: center;
@@ -212,6 +214,7 @@
     margin-left: var(--space-1);
     translate: 0 0.15em;
     background: hsl(var(--accent));
+    animation: terminal-caret 1s steps(1, end) infinite;
   }
 
   .terminal-skip {
@@ -225,10 +228,25 @@
     text-decoration: underline;
     text-decoration-color: hsl(var(--border));
     text-underline-offset: var(--space-1);
+    cursor: pointer;
   }
 
-  .terminal-skip:disabled {
-    cursor: wait;
+  .terminal-skip:hover {
+    color: hsl(var(--accent-hover));
+    text-decoration-color: currentcolor;
+  }
+
+  .terminal-skip:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: var(--space-2);
+  }
+
+  @keyframes terminal-caret {
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-caret { animation: none; }
   }
 
   @media (min-width: 64rem) {

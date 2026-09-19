@@ -1,27 +1,34 @@
-const bootLines = [
-  { command: "$ whoami", output: "Mizanur Rahman" },
-  {
-    command: "$ cat role.txt",
-    output: "Full-Stack Web Developer | Dhaka, Bangladesh",
-  },
-  { command: "$ ./load_profile.sh", output: "[██████████] profile loaded" },
-];
+"use client";
+
+import { useTerminalBoot } from "@/hooks/use-terminal-boot";
 
 export function TerminalBoot() {
+  const { announcement, isComplete, lines, skip } = useTerminalBoot();
+
   return (
-    <section className="terminal" aria-label="Profile terminal">
+    <section
+      aria-label="Profile terminal"
+      className={`terminal${isComplete ? "" : " terminal--booting"}`}
+      onClick={isComplete ? undefined : skip}
+    >
       <header className="terminal-bar">
         <span className="terminal-indicator" aria-hidden="true" />
         <span className="terminal-file">profile.sh</span>
-        <span className="terminal-state">Session active</span>
+        <span className="terminal-state">
+          {isComplete ? "Session active" : "Booting"}
+        </span>
       </header>
 
-      <div className="terminal-body" aria-live="polite" aria-atomic="true">
-        <div className="terminal-output">
-          {bootLines.map((line) => (
-            <div className="terminal-entry" key={line.command}>
-              <p className="terminal-command">{line.command}</p>
-              <p className="terminal-result">{line.output}</p>
+      <div className="terminal-body">
+        <p className="sr-only" role="status" aria-atomic="true">
+          {announcement}
+        </p>
+
+        <div className="terminal-output" aria-hidden="true">
+          {lines.map((line, index) => (
+            <div className="terminal-entry" key={index}>
+              {line.command && <p className="terminal-command">{line.command}</p>}
+              {line.output && <p className="terminal-result">{line.output}</p>}
             </div>
           ))}
           <p className="terminal-idle">
@@ -30,9 +37,18 @@ export function TerminalBoot() {
           </p>
         </div>
 
-        <button className="terminal-skip" type="button" disabled>
-          Skip boot
-        </button>
+        {!isComplete && (
+          <button
+            className="terminal-skip"
+            onClick={(event) => {
+              event.stopPropagation();
+              skip();
+            }}
+            type="button"
+          >
+            Skip boot
+          </button>
+        )}
       </div>
     </section>
   );
