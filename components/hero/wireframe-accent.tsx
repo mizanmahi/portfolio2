@@ -1,16 +1,46 @@
 "use client";
 
-import { Edges } from "@react-three/drei";
+import { Line } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { MathUtils, type Group } from "three";
 import { useEffect, useRef, useState } from "react";
+import { MathUtils, type Group } from "three";
 
-function WireframeObject({ accent, motionAllowed }: { accent: string; motionAllowed: boolean }) {
+const networkNodes = [
+  [-1.8, 0.72, -0.14],
+  [-1.22, 1.34, 0.08],
+  [-0.78, 0.4, 0.2],
+  [-0.34, 1.08, -0.08],
+  [0.1, 0.18, 0.1],
+  [0.46, 1.5, -0.16],
+  [0.88, 0.76, 0.18],
+  [1.42, 1.18, -0.06],
+  [1.72, 0.12, 0.12],
+  [0.74, -0.42, -0.1],
+  [-0.5, -0.7, 0.06],
+] as const;
+
+const networkConnections = [
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [2, 3],
+  [2, 4],
+  [3, 5],
+  [4, 6],
+  [5, 6],
+  [5, 7],
+  [6, 8],
+  [6, 9],
+  [4, 9],
+  [4, 10],
+] as const;
+
+const maxPitch = MathUtils.degToRad(5);
+const maxRoll = MathUtils.degToRad(4);
+
+function NetworkAccent({ color, motionAllowed }: { color: string; motionAllowed: boolean }) {
   const group = useRef<Group>(null);
   const { pointer } = useThree();
-
-  const maxPitch = MathUtils.degToRad(5);
-  const maxRoll = MathUtils.degToRad(4);
 
   useFrame((_, delta) => {
     if (!group.current || !motionAllowed) return;
@@ -31,12 +61,23 @@ function WireframeObject({ accent, motionAllowed }: { accent: string; motionAllo
   });
 
   return (
-    <group ref={group} position={[0.9, 0.72, 0]} rotation={[0.1, 0.5, 0]}>
-      <mesh>
-        <icosahedronGeometry args={[1.6, 1]} />
-        <meshBasicMaterial color={accent} depthWrite={false} opacity={0.06} transparent />
-        <Edges color={accent} threshold={15} />
-      </mesh>
+    <group ref={group} position={[0, -0.4, 0]} rotation={[0.1, 0.5, 0]} scale={1.5}>
+      {networkConnections.map(([start, end]) => (
+        <Line
+          color={color}
+          key={`${start}-${end}`}
+          lineWidth={1}
+          opacity={0.38}
+          points={[networkNodes[start], networkNodes[end]]}
+          transparent
+        />
+      ))}
+      {networkNodes.map((position, index) => (
+        <mesh key={index} position={position}>
+          <sphereGeometry args={[0.045, 8, 8]} />
+          <meshBasicMaterial color={color} opacity={0.8} transparent />
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -68,7 +109,7 @@ export function WireframeAccent() {
       dpr={[1, 1.5]}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
     >
-      <WireframeObject accent={accent} motionAllowed={motionAllowed} />
+      <NetworkAccent color={accent} motionAllowed={motionAllowed} />
     </Canvas>
   );
 }

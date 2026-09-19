@@ -9,6 +9,7 @@ export function Hero() {
       <FloatingNav />
       <main id="top">
       <section aria-labelledby="hero-title" className="hero-shell">
+        <HeroScene />
         <div className="hero-grid">
           <div className="hero-intro">
             <p className="hero-kicker">Developer profile</p>
@@ -23,7 +24,6 @@ export function Hero() {
           </div>
 
           <div className="hero-terminal-wrap">
-            <HeroScene />
             <TerminalBoot />
           </div>
         </div>
