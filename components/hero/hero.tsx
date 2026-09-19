@@ -7,7 +7,7 @@ export function Hero() {
       <section aria-labelledby="hero-title" className="hero-shell">
         <div className="hero-grid">
           <div className="hero-intro">
-            <p className="hero-kicker">Portfolio / booting profile</p>
+            <p className="hero-kicker">Developer profile</p>
             <h1 id="hero-title" className="hero-title">
               Mizanur Rahman
             </h1>

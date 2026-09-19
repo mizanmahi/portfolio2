@@ -51,7 +51,8 @@
   --space-32: 8rem;
   --space-page: clamp(var(--space-6), 5vw, var(--space-24));
   --space-section: clamp(var(--space-16), 10vw, var(--space-32));
-  --space-terminal-min: 18rem;
+  --space-terminal-body: 26rem;
+  --space-terminal-body-compact: 30rem;
   --measure-hero: 80rem;
   --measure-terminal: 28rem;
 
@@ -198,7 +199,7 @@
   .terminal-body {
     display: grid;
     gap: var(--space-6);
-    min-height: var(--space-terminal-min);
+    block-size: var(--space-terminal-body);
     padding: var(--space-6);
   }
 
@@ -298,6 +299,12 @@
   @media (prefers-reduced-motion: reduce) {
     .terminal-caret { animation: none; }
     .terminal-next { transition: none; }
+  }
+
+  @media (max-width: 30rem) {
+    .terminal-body {
+      block-size: var(--space-terminal-body-compact);
+    }
   }
 
   @media (min-width: 64rem) {

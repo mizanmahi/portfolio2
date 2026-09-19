@@ -4,6 +4,13 @@ import { useTerminalBoot } from "@/hooks/use-terminal-boot";
 
 export function TerminalBoot() {
   const { announcement, isComplete, lines, skip } = useTerminalBoot();
+  const showIdlePrompt =
+    isComplete ||
+    lines.some(
+      (line, index) =>
+        Boolean(line.output) &&
+        (index === lines.length - 1 || !lines[index + 1].command),
+    );
 
   return (
     <div className="terminal-journey" data-complete={isComplete}>
@@ -26,16 +33,24 @@ export function TerminalBoot() {
           </p>
 
           <div className="terminal-output" aria-hidden="true">
-            {lines.map((line, index) => (
-              <div className="terminal-entry" key={index}>
-                {line.command && <p className="terminal-command">{line.command}</p>}
-                {line.output && <p className="terminal-result">{line.output}</p>}
-              </div>
-            ))}
-            <p className="terminal-idle">
-              <span className="terminal-prompt">$</span>
-              <span className="terminal-caret" aria-hidden="true" />
-            </p>
+            {lines.map((line, index) =>
+              line.command || line.output ? (
+                <div className="terminal-entry" key={index}>
+                  {line.command && (
+                    <p className="terminal-command">
+                      <span className="terminal-prompt">$</span> {line.command}
+                    </p>
+                  )}
+                  {line.output && <p className="terminal-result">{line.output}</p>}
+                </div>
+              ) : null,
+            )}
+            {showIdlePrompt && (
+              <p className="terminal-idle">
+                <span className="terminal-prompt">$</span>
+                <span className="terminal-caret" aria-hidden="true" />
+              </p>
+            )}
           </div>
 
           {!isComplete && (

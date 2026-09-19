@@ -5,9 +5,9 @@ import { useCallback, useEffect, useState } from "react";
 export type TerminalLine = { command: string; output: string };
 
 const bootLines: TerminalLine[] = [
-  { command: "$ whoami", output: "Mizanur Rahman" },
-  { command: "$ cat role.txt", output: "Full-Stack Web Developer | Dhaka, Bangladesh" },
-  { command: "$ ./load_profile.sh", output: "[██████████] profile loaded" },
+  { command: "whoami", output: "Mizanur Rahman" },
+  { command: "cat role.txt", output: "Full-Stack Web Developer | Dhaka, Bangladesh" },
+  { command: "./load_profile.sh", output: "[██████████] profile loaded" },
 ];
 
 const progressFrames = ["[█□□□□□□□□□] loading profile", "[████□□□□□□] loading profile", "[███████□□□] loading profile", "[██████████] profile loaded"];
