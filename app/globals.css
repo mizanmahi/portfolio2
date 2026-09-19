@@ -199,12 +199,14 @@
   .terminal-body {
     display: grid;
     gap: var(--space-6);
+    grid-template-rows: minmax(0, 1fr) auto;
     block-size: var(--space-terminal-body);
     padding: var(--space-6);
   }
 
   .terminal-output {
     display: grid;
+    min-block-size: 0;
     align-content: start;
     gap: var(--space-6);
   }
