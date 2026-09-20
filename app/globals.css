@@ -88,6 +88,12 @@ html[data-theme="light"] {
   --info: 221 83% 53%;
 }
 
+html[data-theme="light"] .floating-nav {
+  border-color: hsl(var(--border));
+  background: hsl(var(--surface) / 0.94);
+  box-shadow: 0 var(--space-2) var(--space-12) hsl(var(--foreground) / 0.1);
+}
+
 @layer base {
   * {
     @apply border-border;
