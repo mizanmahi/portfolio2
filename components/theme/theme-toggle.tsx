@@ -14,7 +14,6 @@ export function ThemeToggle() {
       aria-label={`Switch to ${nextTheme} theme`}
       aria-pressed={isLight}
       className="theme-toggle"
-      data-theme={theme}
       onClick={() => setTheme(isLight ? "dark" : "light")}
       title={`Switch to ${nextTheme} theme`}
       type="button"
