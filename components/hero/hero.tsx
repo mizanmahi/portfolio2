@@ -3,14 +3,16 @@ import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { HeroActions } from "@/components/hero/hero-actions";
 import { ScrollCue } from "@/components/hero/scroll-cue";
 import { FloatingNav } from "@/components/navigation/floating-nav";
+import { AuraBackground } from "@/components/ui/ambient-glow";
 
 export function Hero() {
   return (
     <>
       <FloatingNav />
       <BootSequenceProvider>
-        <main id="top">
-          <section aria-labelledby="hero-title" className="hero-shell">
+        <main id="top" className="aura-page">
+          <section aria-labelledby="hero-title" className="hero-shell aura-bg">
+            <AuraBackground />
             <div className="hero-grid">
               <div className="hero-intro">
                 <p className="hero-kicker">Developer profile</p>

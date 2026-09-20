@@ -193,15 +193,72 @@ html[data-theme="light"] .floating-nav {
 
   .hero-shell {
     position: relative;
-    isolation: isolate;
+    overflow: hidden;
     min-height: 100svh;
     padding: var(--space-section) var(--space-page);
     display: grid;
     align-items: center;
+  }
+
+  /* The aura layers remain transparent and blend with .aura-page behind them. */
+  .aura-page {
+    background-color: #100e0b;
+  }
+
+  .aura-bg {
+    position: relative;
+    overflow: hidden;
+    min-height: 100svh;
+  }
+
+  .aura-layer-1,
+  .aura-layer-2,
+  .aura-layer-3,
+  .aura-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .aura-layer-1 {
+    background: radial-gradient(55.8% 55.49% at 50% 100%, rgba(245, 166, 35, 0.76) 0%, rgba(25, 48, 47, 0) 100%);
+    mix-blend-mode: screen;
+    opacity: 0.65;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .aura-layer-2 {
+    background:
+      repeating-linear-gradient(100deg, #262626 0%, #262626 3%, rgba(38, 38, 38, 0.7) 5%, rgba(38, 38, 38, 0.7) 7%, transparent 10%, transparent 12%, rgba(38, 38, 38, 0.7) 14%, #262626 16%),
+      repeating-linear-gradient(100deg, #9ca3af 0%, #9ca3af 1.5%, rgba(156, 163, 175, 0.8) 2%, #6b7280 3%, #6b7280 4%, rgba(156, 163, 175, 0.8) 4.5%, #9ca3af 5%);
+    background-size: 300% 200%;
+    mix-blend-mode: screen;
+    filter: blur(75px);
+    opacity: 0.9;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .aura-layer-3 {
+    background: radial-gradient(ellipse at 100% 100%, #ffffff 20%, #0a0a0a 80%);
+    mix-blend-mode: multiply;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .aura-grain {
+    mix-blend-mode: overlay;
+    opacity: 0.85;
+  }
+
+  html[data-theme="light"] .aura-page {
     background-color: hsl(var(--background));
-    background-image: linear-gradient(hsl(var(--border) / 0.25) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.25) 1px, transparent 1px);
-    background-size: var(--space-8) var(--space-8);
+  }
+
+  html[data-theme="light"] .aura-layer-1,
+  html[data-theme="light"] .aura-layer-2 {
+    mix-blend-mode: multiply;
   }
 
   .hero-grid {
@@ -577,6 +634,10 @@ html[data-theme="light"] .floating-nav {
   }
 
   @media (min-width: 64rem) {
+    .aura-layer-2 {
+      filter: blur(108px);
+    }
+
     .hero-grid {
       grid-template-columns: minmax(0, 0.85fr) minmax(var(--measure-terminal), 1.15fr);
       align-items: start;
