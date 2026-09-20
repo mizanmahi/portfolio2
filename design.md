@@ -10,7 +10,8 @@ This doc is the single source of truth for design decisions on this project. Che
 
 - Hero section opens as a terminal boot sequence (auto-typing, realistic speed, skippable, respects `prefers-reduced-motion`)
 - Once the sequence finishes, the rest of the site unfolds as a bento-grid dashboard, projects, experience, skills, contact, each as a card in the grid
-- The terminal panel itself supplies the hero depth accent through a bounded hover parallax tilt. This keeps the first screen focused and avoids a competing decorative object.
+- The terminal panel supplies the hero depth accent through a bounded hover parallax tilt
+- A third typography layer, "agentic mono," is used sparingly for system-style status text (see Typography section), separate from the main serif identity and sans body text
 
 **Why this concept:** Terminal/IDE and Bento are the two developer-portfolio styles that read as memorable and recruiter-friendly rather than generic. Combining them gives a strong entrance plus a scannable, information-dense body.
 
@@ -25,25 +26,45 @@ This doc is the single source of truth for design decisions on this project. Che
 
 ---
 
+## Typography
+
+Three distinct type roles, never mixed:
+
+| Role | Font | Use |
+|---|---|---|
+| Display | Serif (current heading font) | Name/identity heading only |
+| Body | Sans | Paragraphs, nav, labels, buttons |
+| Agentic mono | Monospace, pixel-adjacent (e.g. a grid/blocky mono font) | Short system-style status lines only, e.g. a rotating tagline under "Developer profile". Rendered with a soft accent glow (text-shadow) and a blinking cursor block at the end, never used for body copy or headings |
+
+**Agentic mono treatment spec:**
+- Letter-spacing slightly widened
+- Color: `--accent-strong` in light mode, `--accent` in dark mode
+- `text-shadow` glow using the same accent color at low opacity for a soft neon feel
+- Trailing blinking cursor block, same blink timing as the terminal's own cursor
+
+---
+
 ## Color System
 
 Dark-first, with a warm light-mode counterpart.
 
+### Dark Mode
+
 | Token | Hex | HSL (for CSS var) | Use |
 |---|---|---|---|
-| Background | `#0A0A0A` | `0 0% 4%` | Page background, near-black not pure black |
+| Background | `#0A0A0A` | `0 0% 4%` | Page background |
 | Surface | `#141414` | `0 0% 8%` | Cards, terminal panel, bento tiles |
 | Border | `#2A2A2A` | `0 0% 16%` | Dividers, card outlines |
 | Foreground | `#E4E4E4` | `0 0% 89%` | Primary text |
-| Muted | `#8A8A8A` | `0 0% 54%` | Secondary text, timestamps, comments |
-| Accent | `#F5A623` | `38 91% 58%` | Primary accent, warm amber (CRT feel) |
-| Accent hover | `#FFC15E` | `38 100% 68%` | Hover/active state on accent elements |
-| Success | `#4ADE80` | `142 71% 65%` | Fake "ok" terminal lines, positive states |
-| Error | `#F87171` | `0 91% 71%` | Fake error lines, destructive states |
+| Muted | `#8A8A8A` | `0 0% 54%` | Secondary text |
+| Accent | `#F5A623` | `38 91% 58%` | Fills, buttons, progress bars |
+| Accent strong | `#F5A623` | `38 91% 58%` | Same as accent, already AA-safe as text on dark bg |
+| Accent hover | `#FFC15E` | `38 100% 68%` | Hover state, goes lighter |
+| Name shimmer highlight | `#FFFFFF` at 40% opacity | `0 0% 100%` | The moving highlight band in the name's shimmer sweep, light-on-dark |
+| Success | `#4ADE80` | `142 71% 65%` | Positive states |
+| Error | `#F87171` | `0 91% 71%` | Destructive states |
 | Warning | `#FBBF24` | `43 96% 62%` | Warning states |
 | Info | `#60A5FA` | `217 91% 70%` | Rare, comment-style lines only |
-
-**Why amber, not purple or green:** purple-to-blue gradients are the default "AI SaaS" look right now, avoiding it dodges the generic-AI-slop read. Green-on-black is the cliché "hacker portfolio" look. Amber reads as authentic CRT/terminal nostalgia and pairs cleanly with near-black without feeling copied.
 
 ### Light Mode
 
@@ -52,19 +73,22 @@ Dark-first, with a warm light-mode counterpart.
 | Background | `#F7F5F2` | `36 24% 96%` | Page background, warm off-white |
 | Surface | `#FFFFFF` | `0 0% 100%` | Cards, terminal panel, bento tiles |
 | Foreground | `#1A1A1A` | `0 0% 10%` | Primary text |
-| Muted | `#6B6B6B` | `0 0% 42%` | Secondary text, timestamps, comments |
-| Border | `#E5E1DC` | `35 16% 88%` | Dividers, card outlines |
-| Accent | `#F5A623` | `38 91% 58%` | Button, icon, and progress fills |
-| Accent strong | `#B2530A` | `26 89% 37%` | Links, active states, and amber text requiring AA contrast |
-| Accent hover | `#DB8D1F` | `35 75% 49%` | Hover/active state on accent fills |
-| Success | `#16A249` | `142 76% 36%` | Fake "ok" terminal lines, positive states |
-| Error | `#DC2828` | `0 72% 51%` | Fake error lines, destructive states |
+| Muted | `#6B6B6B` | `0 0% 42%` | Secondary text |
+| Border | `#E5E1DC` | `35 16% 88%` | Dividers, card outlines, MUST be visible against surface, add a subtle shadow too, border alone is too faint on near-white |
+| Accent | `#F5A623` | `38 91% 58%` | Fills, buttons, progress bars only, never raw icon-only buttons at full saturation, pair with a ghost/outline style instead |
+| Accent strong | `#B2530A` | `26 89% 37%` | Text, links, active nav state, name shimmer highlight |
+| Accent hover | `#DB8D1F` | `35 75% 49%` | Hover state, goes darker (opposite direction from dark mode) |
+| Name shimmer highlight | `#B2530A` at 55% opacity | `26 89% 37%` | The moving highlight band in the name's shimmer sweep, must use accent-strong, NOT white, white-on-dark-text produces no visible effect and causes the frozen-letter bug |
+| Success | `#16A249` | `142 76% 36%` | Positive states |
+| Error | `#DC2828` | `0 72% 51%` | Destructive states |
 | Warning | `#DB7706` | `32 95% 44%` | Warning states |
 | Info | `#2463EB` | `221 83% 53%` | Rare, comment-style lines only |
 
-**Why warm off-white instead of pure white:** `#F7F5F2` keeps continuity with the CRT-nostalgia concept from dark mode instead of making light mode feel like a disconnected second theme.
+**Why warm off-white instead of pure white:** keeps continuity with the CRT-nostalgia concept from dark mode instead of making light mode feel like a disconnected second theme.
 
-**Why `--accent-strong` is separate:** raw accent amber fails AA contrast as text on light backgrounds, so `--accent` is reserved for fills and buttons while `--accent-strong` handles text, links, and active states.
+**Why `--accent-strong` is separate:** raw accent amber fails AA contrast as text on light backgrounds, so `--accent` is reserved for fills and buttons while `--accent-strong` handles text, links, active states, and the name shimmer highlight.
+
+**Known bug fixed here:** the name shimmer effect was using a single hardcoded highlight color across both themes. It must be theme-aware, white-based highlight for dark mode, accent-strong-based highlight for light mode, otherwise the sweep either doesn't render or freezes on individual letters like the orange "M" and "R" bug.
 
 ### CSS variables (globals.css)
 
@@ -78,10 +102,27 @@ Dark-first, with a warm light-mode counterpart.
   --accent: 38 91% 58%;
   --accent-strong: 38 91% 58%;
   --accent-hover: 38 100% 68%;
+  --name-highlight: 0 0% 100%;
   --success: 142 71% 65%;
   --destructive: 0 91% 71%;
   --warning: 43 96% 62%;
   --info: 217 91% 70%;
+}
+
+.light {
+  --background: 36 24% 96%;
+  --surface: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --muted: 0 0% 42%;
+  --border: 35 16% 88%;
+  --accent: 38 91% 58%;
+  --accent-strong: 26 89% 37%;
+  --accent-hover: 35 75% 49%;
+  --name-highlight: 26 89% 37%;
+  --success: 142 76% 36%;
+  --destructive: 0 72% 51%;
+  --warning: 32 95% 44%;
+  --info: 221 83% 53%;
 }
 ```
 
@@ -95,7 +136,7 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 - Sentence case on all headings and labels, never Title Case
 - Use `text-wrap: balance` on headings, `text-wrap: pretty` on body paragraphs
 - Customize shadcn defaults, never ship the untouched look
-- Monospace font for terminal/code elements, a separate contrasting font for headings/body, not two similar sans fonts
+- Icon-only buttons (like the theme toggle) use a ghost/outline treatment, never a fully-filled solid accent circle, full saturation fills are reserved for primary CTAs only
 
 ---
 
@@ -105,6 +146,7 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 - Full keyboard access, no focus traps during animations
 - Proper semantic heading hierarchy, real `h1` on the hero
 - Reduced motion users skip straight to the settled end-state (no forced animation)
+- Light mode border/shadow values checked against actual contrast, not just copied proportionally from dark mode
 
 ---
 
@@ -112,7 +154,7 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 
 | Week | Section | Status |
 |---|---|---|
-| 1 | Hero (terminal boot + 3D accent) | In progress |
+| 1 | Hero (terminal boot + theming) | In progress |
 | 2 | Bento dashboard shell (grid structure) | Not started |
 | 3 | Experience / projects cards | Not started |
 | 4 | Skills visualization | Not started |
@@ -122,7 +164,7 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 
 ## Decision Log
 
-Add one line per week here, what you built, what you changed from plan, and why. Future-you will forget the reasoning otherwise.
-
-- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. The terminal itself has a bounded pointer parallax tilt, resets when the pointer leaves, and is disabled for reduced-motion users. The completed boot sequence reveals the portfolio actions and a terminal-style `scroll↓` cue for the forthcoming bento dashboard.
-- **Theme system:** Added a theme toggler to the navigation, implemented light-mode tokens, and split `--accent` from `--accent-strong` so amber fills stay expressive while amber text remains accessible on light backgrounds.
+- **Week 1:** Built the terminal boot hero with randomized 28–80ms character pacing, longer punctuation and inter-line pauses, and a skippable reduced-motion path. Terminal has bounded pointer parallax tilt, disabled for reduced-motion users.
+- **Theme system:** Added theme toggler to nav, implemented light-mode tokens, split `--accent` from `--accent-strong`.
+- **Bugfix:** Light mode shipped with broken name-shimmer (frozen orange letters) and an overly saturated solid theme-toggle icon. Root cause was reusing dark-mode-only values (`--name-highlight`, full-fill icon buttons) without a light-mode-specific variant. Fixed by adding a theme-aware `--name-highlight` token and switching icon-only buttons to ghost style.
+- **Typography:** Added a third type layer, "agentic mono," a monospace status-text treatment with accent glow and blinking cursor, used for short system-style taglines only, kept separate from the serif name and sans body text.
