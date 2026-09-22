@@ -19,6 +19,7 @@ export function TerminalBoot() {
 
     return () => window.cancelAnimationFrame(frame);
   }, []);
+
   const showIdlePrompt =
     isComplete ||
     lines.some(
@@ -29,12 +30,14 @@ export function TerminalBoot() {
   const activeCommandIndex = lines.findIndex(
     (line) => Boolean(line.command) && !line.output,
   );
+
   const resetParallax = () => {
     const terminal = terminalRef.current;
 
     terminal?.style.setProperty("--terminal-tilt-x", "0deg");
     terminal?.style.setProperty("--terminal-tilt-y", "0deg");
   };
+
   const updateParallax = (event: PointerEvent<HTMLElement>) => {
     if (
       event.pointerType !== "mouse" ||
