@@ -2,6 +2,7 @@
 
 import { useBootSequence } from "@/components/hero/boot-sequence-provider";
 import { Glitch, supportsHtmlInCanvas } from "@/components/canvasui/Glitch";
+import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const maximumTilt = 4;
@@ -18,6 +19,7 @@ export function TerminalBoot() {
 
     return () => window.cancelAnimationFrame(frame);
   }, []);
+
   const showIdlePrompt =
     isComplete ||
     lines.some(
@@ -28,12 +30,14 @@ export function TerminalBoot() {
   const activeCommandIndex = lines.findIndex(
     (line) => Boolean(line.command) && !line.output,
   );
+
   const resetParallax = () => {
     const terminal = terminalRef.current;
 
     terminal?.style.setProperty("--terminal-tilt-x", "0deg");
     terminal?.style.setProperty("--terminal-tilt-y", "0deg");
   };
+
   const updateParallax = (event: PointerEvent<HTMLElement>) => {
     if (
       event.pointerType !== "mouse" ||
@@ -161,9 +165,19 @@ export function TerminalBoot() {
           {terminal}
         </Glitch>
       ) : (
-        <div className="terminal-glitch terminal-glitch--fallback">
+        <TerminalWebGlGlitch
+          blocks={0.5}
+          className="terminal-glitch"
+          duration={0.4}
+          intensity={1}
+          interval={5}
+          noise={0.35}
+          rgbShift={4}
+          shift={30}
+          slices={24}
+        >
           {terminal}
-        </div>
+        </TerminalWebGlGlitch>
       )}
       {/* <p className="terminal-next" aria-hidden={!isComplete}>
         <span className="terminal-next-marker" aria-hidden="true" />

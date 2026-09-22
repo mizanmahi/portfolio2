@@ -422,6 +422,20 @@ html[data-theme="light"] .floating-nav {
     border-radius: inherit;
   }
 
+  .terminal-webgl-glitch-content,
+  .terminal-webgl-glitch-output {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .terminal-webgl-glitch-output {
+    z-index: 2;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
   .terminal-glitch canvas,
   .terminal-glitch canvas > div,
   .terminal-glitch > div {
@@ -435,29 +449,6 @@ html[data-theme="light"] .floating-nav {
     display: none;
   }
 
-  .terminal-glitch--fallback {
-    position: relative;
-    animation: terminal-glitch-fallback 1s steps(1, end) infinite;
-  }
-
-  .terminal-glitch--fallback::after {
-    position: absolute;
-    z-index: 2;
-    inset: 0;
-    border-radius: inherit;
-    content: "";
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent var(--space-2),
-      hsl(var(--accent) / 0.16) var(--space-2),
-      hsl(var(--accent) / 0.16) var(--space-3)
-    );
-    mix-blend-mode: screen;
-    opacity: 0;
-    animation: terminal-glitch-scanlines 1s steps(1, end) infinite;
-  }
 
   .scroll-cue {
     position: absolute;
@@ -668,33 +659,6 @@ html[data-theme="light"] .floating-nav {
     50% { opacity: 0; }
   }
 
-  @keyframes terminal-glitch-fallback {
-    0%, 60%, 100% {
-      filter: none;
-      transform: translate3d(0, 0, 0);
-    }
-
-    62% {
-      filter: contrast(1.12);
-      transform: translate3d(var(--space-2), 0, 0);
-    }
-
-    66% {
-      filter: saturate(1.2);
-      transform: translate3d(var(--space-1), var(--space-1), 0);
-    }
-
-    72% {
-      filter: contrast(1.08);
-      transform: translate3d(0, var(--space-1), 0);
-    }
-  }
-
-  @keyframes terminal-glitch-scanlines {
-    0%, 60%, 100% { opacity: 0; }
-    62%, 72% { opacity: 0.62; }
-  }
-
   @keyframes hero-title-shimmer {
     0%, 100% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
@@ -707,9 +671,7 @@ html[data-theme="light"] .floating-nav {
     .scroll-cue,
     .scroll-cue-caret,
     .hero-title,
-    .theme-toggle,
-    .terminal-glitch--fallback,
-    .terminal-glitch--fallback::after { animation: none; transition: none; }
+    .theme-toggle { animation: none; transition: none; }
     .terminal { transform: none; transition: none; }
     html { scroll-behavior: auto; }
   }
