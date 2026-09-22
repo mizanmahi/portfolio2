@@ -412,6 +412,53 @@ html[data-theme="light"] .floating-nav {
     gap: var(--space-6);
   }
 
+  .terminal-glitch {
+    block-size: calc(var(--space-terminal-body) + var(--space-12));
+    overflow: hidden;
+    border-radius: var(--radius-terminal-lg);
+  }
+
+  .terminal-glitch > canvas {
+    border-radius: inherit;
+  }
+
+  .terminal-glitch canvas,
+  .terminal-glitch canvas > div,
+  .terminal-glitch > div {
+    overflow: hidden !important;
+    scrollbar-width: none;
+  }
+
+  .terminal-glitch canvas::-webkit-scrollbar,
+  .terminal-glitch canvas > div::-webkit-scrollbar,
+  .terminal-glitch > div::-webkit-scrollbar {
+    display: none;
+  }
+
+  .terminal-glitch--fallback {
+    position: relative;
+    animation: terminal-glitch-fallback 1s steps(1, end) infinite;
+  }
+
+  .terminal-glitch--fallback::after {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    border-radius: inherit;
+    content: "";
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent var(--space-2),
+      hsl(var(--accent) / 0.16) var(--space-2),
+      hsl(var(--accent) / 0.16) var(--space-3)
+    );
+    mix-blend-mode: screen;
+    opacity: 0;
+    animation: terminal-glitch-scanlines 1s steps(1, end) infinite;
+  }
+
   .scroll-cue {
     position: absolute;
     z-index: 1;
@@ -621,6 +668,33 @@ html[data-theme="light"] .floating-nav {
     50% { opacity: 0; }
   }
 
+  @keyframes terminal-glitch-fallback {
+    0%, 60%, 100% {
+      filter: none;
+      transform: translate3d(0, 0, 0);
+    }
+
+    62% {
+      filter: contrast(1.12);
+      transform: translate3d(var(--space-2), 0, 0);
+    }
+
+    66% {
+      filter: saturate(1.2);
+      transform: translate3d(var(--space-1), var(--space-1), 0);
+    }
+
+    72% {
+      filter: contrast(1.08);
+      transform: translate3d(0, var(--space-1), 0);
+    }
+  }
+
+  @keyframes terminal-glitch-scanlines {
+    0%, 60%, 100% { opacity: 0; }
+    62%, 72% { opacity: 0.62; }
+  }
+
   @keyframes hero-title-shimmer {
     0%, 100% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
@@ -633,12 +707,18 @@ html[data-theme="light"] .floating-nav {
     .scroll-cue,
     .scroll-cue-caret,
     .hero-title,
-    .theme-toggle { animation: none; transition: none; }
+    .theme-toggle,
+    .terminal-glitch--fallback,
+    .terminal-glitch--fallback::after { animation: none; transition: none; }
     .terminal { transform: none; transition: none; }
     html { scroll-behavior: auto; }
   }
 
   @media (max-width: 30rem) {
+    .terminal-glitch {
+      block-size: calc(var(--space-terminal-body-compact) + var(--space-12));
+    }
+
     .terminal-body {
       block-size: var(--space-terminal-body-compact);
     }

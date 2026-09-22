@@ -5,6 +5,7 @@ import { ScrollCue } from "@/components/hero/scroll-cue";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 import { AuraBackground } from "@/components/ui/ambient-glow";
 
+
 export function Hero() {
   return (
     <>
@@ -16,9 +17,11 @@ export function Hero() {
             <div className="hero-grid">
               <div className="hero-intro">
                 <p className="hero-kicker">Developer profile</p>
+
                 <h1 id="hero-title" className="hero-title">
                   Mizanur Rahman
                 </h1>
+
                 <p className="hero-summary">
                   Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years
                   of experience.
@@ -35,6 +38,10 @@ export function Hero() {
           <div id="projects" className="future-section-anchor" aria-hidden="true" />
         </main>
       </BootSequenceProvider>
+
+
+
+
     </>
   );
 }
