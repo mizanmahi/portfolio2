@@ -2,21 +2,36 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-export type TerminalLine = { command: string; output: string; progress?: number };
+export type TerminalLine = {
+  command: string;
+  output: string;
+  comment?: string;
+  commentExpected?: boolean;
+};
 
 const bootLines: TerminalLine[] = [
-  { command: "whoami", output: "Mizanur Rahman" },
-  { command: "cat role.txt", output: "Full-Stack Web Developer | Dhaka, Bangladesh" },
-  { command: "./load_profile.sh", output: "Profile loaded", progress: 1 },
+  {
+    command: "whoami",
+    output: "Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years of experience.",
+  },
+  {
+    command: "cat role.txt",
+    output: "Full-stack developer L2 at Programming Hero",
+  },
+  {
+    command: 'docker ps --format "{{.Names}}"',
+    output: "tailscale, adguard-home, jellyfin, caddy",
+    commentExpected: true,
+    comment: "yeah, my mini homelab works harder",
+  },
 ];
 
-const progressFrames = [
-  { output: "Loading profile", progress: 0.1 },
-  { output: "Loading profile", progress: 0.4 },
-  { output: "Loading profile", progress: 0.7 },
-  { output: "Profile loaded", progress: 1 },
-];
-const emptyLines = (): TerminalLine[] => bootLines.map(() => ({ command: "", output: "" }));
+const emptyLines = (): TerminalLine[] =>
+  bootLines.map((line) => ({
+    command: "",
+    output: "",
+    commentExpected: line.commentExpected,
+  }));
 const finalLines = (): TerminalLine[] => bootLines.map((line) => ({ ...line }));
 const pause = (duration: number) => new Promise<void>((resolve) => window.setTimeout(resolve, duration));
 
@@ -27,7 +42,7 @@ const characterDelay = (character: string) => {
   return baseDelay;
 };
 
-export function useTerminalBoot() {
+export function useTerminalBoot(shouldStart: boolean) {
   const [lines, setLines] = useState<TerminalLine[]>(emptyLines);
   const [announcement, setAnnouncement] = useState("Preparing profile terminal.");
   const [isComplete, setIsComplete] = useState(false);
@@ -35,7 +50,7 @@ export function useTerminalBoot() {
 
   const finish = useCallback(() => {
     setLines(finalLines());
-    setAnnouncement("Profile loaded. Terminal ready.");
+    setAnnouncement("Profile terminal ready.");
     setIsComplete(true);
   }, []);
 
@@ -49,6 +64,7 @@ export function useTerminalBoot() {
 
   useEffect(() => {
     if (isComplete) return;
+    if (!shouldStart) return;
     if (prefersReducedMotion) {
       const completeImmediately = window.setTimeout(finish, 0);
       return () => window.clearTimeout(completeImmediately);
@@ -73,15 +89,12 @@ export function useTerminalBoot() {
         const commandTyped = await typeText(lineIndex, "command", line.command);
         if (!commandTyped || cancelled) return;
         await pause(180 + Math.random() * 220);
-        if (lineIndex === bootLines.length - 1) {
-          for (const frame of progressFrames) {
-            await pause(220 + Math.random() * 120);
-            if (cancelled) return;
-            updateLine(lineIndex, frame);
-          }
-        } else {
-          const outputTyped = await typeText(lineIndex, "output", line.output);
-          if (!outputTyped || cancelled) return;
+        const outputTyped = await typeText(lineIndex, "output", line.output);
+        if (!outputTyped || cancelled) return;
+        if (line.comment) {
+          await pause(180 + Math.random() * 220);
+          const commentTyped = await typeText(lineIndex, "comment", line.comment);
+          if (!commentTyped || cancelled) return;
         }
         setAnnouncement(line.output);
         await pause(340 + Math.random() * 360);
@@ -90,7 +103,7 @@ export function useTerminalBoot() {
     };
     void runBootSequence();
     return () => { cancelled = true; };
-  }, [finish, isComplete, prefersReducedMotion]);
+  }, [finish, isComplete, prefersReducedMotion, shouldStart]);
 
-  return { announcement, isComplete, lines, skip: finish };
+  return { announcement, isComplete, lines };
 }

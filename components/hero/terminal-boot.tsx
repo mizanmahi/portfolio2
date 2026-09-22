@@ -6,9 +6,23 @@ import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const maximumTilt = 4;
+const programmingHeroRole = "Full-stack developer L2 at Programming Hero";
+
+function TerminalResult({ command, output }: { command: string; output: string }) {
+  if (command === "cat role.txt" && output === programmingHeroRole) {
+    return (
+      <p className="terminal-result">
+        Full-stack developer L2 at{" "}
+        <span className="terminal-result-highlight">Programming Hero</span>
+      </p>
+    );
+  }
+
+  return <p className="terminal-result">{output}</p>;
+}
 
 export function TerminalBoot() {
-  const { announcement, isComplete, lines, skip } = useBootSequence();
+  const { announcement, isComplete, lines } = useBootSequence();
   const terminalRef = useRef<HTMLElement>(null);
   const [supportsNativeGlitch, setSupportsNativeGlitch] = useState(false);
 
@@ -25,6 +39,7 @@ export function TerminalBoot() {
     lines.some(
       (line, index) =>
         Boolean(line.output) &&
+        (!line.commentExpected || Boolean(line.comment)) &&
         (index === lines.length - 1 || !lines[index + 1].command),
     );
   const activeCommandIndex = lines.findIndex(
@@ -66,8 +81,7 @@ export function TerminalBoot() {
   const terminal = (
     <section
       aria-label="Profile terminal"
-      className={`terminal${isComplete ? "" : " terminal--booting"}`}
-      onClick={isComplete ? undefined : skip}
+      className="terminal"
       onPointerLeave={resetParallax}
       onPointerMove={updateParallax}
       ref={terminalRef}
@@ -99,28 +113,10 @@ export function TerminalBoot() {
                     {line.command}
                   </p>
                 )}
-                {line.output &&
-                  (line.progress === undefined ? (
-                    <p className="terminal-result">{line.output}</p>
-                  ) : (
-                    <p className="terminal-result terminal-progress">
-                      {line.output} [
-                      {Array.from({ length: 10 }, (_, segment) => {
-                        const isFilled =
-                          segment < Math.round((line.progress ?? 0) * 10);
-
-                        return (
-                          <span
-                            className={`terminal-progress-cell${isFilled ? " terminal-progress-cell--filled" : ""}`}
-                            key={segment}
-                          >
-                            {isFilled ? "█" : "░"}
-                          </span>
-                        );
-                      })}
-                      ]
-                    </p>
-                  ))}
+                {line.output && (
+                  <TerminalResult command={line.command} output={line.output} />
+                )}
+                {line.comment && <p className="terminal-comment"># {line.comment}</p>}
               </div>
             ) : null,
           )}
@@ -131,19 +127,6 @@ export function TerminalBoot() {
             </p>
           )}
         </div>
-
-        {!isComplete && (
-          <button
-            className="terminal-skip"
-            onClick={(event) => {
-              event.stopPropagation();
-              skip();
-            }}
-            type="button"
-          >
-            Skip boot
-          </button>
-        )}
       </div>
     </section>
   );

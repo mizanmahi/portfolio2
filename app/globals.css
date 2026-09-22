@@ -17,9 +17,9 @@
   --color-destructive: hsl(var(--destructive));
   --color-warning: hsl(var(--warning));
   --color-info: hsl(var(--info));
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-editorial);
+  --font-sans: var(--font-hanken-grotesk);
+  --font-mono: var(--font-hanken-grotesk);
+  --font-heading: var(--font-hanken-grotesk);
   --radius-sm: var(--radius-terminal-sm);
   --radius-md: var(--radius-terminal-md);
   --radius-lg: var(--radius-terminal-lg);
@@ -40,8 +40,6 @@
   --warning: 43 96% 62%;
   --info: 217 91% 70%;
 
-  --font-editorial: Georgia, "Times New Roman", serif;
-
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -60,9 +58,11 @@
   --measure-terminal: 28rem;
 
   --text-kicker: 0.75rem;
+  --text-terminal: clamp(0.875rem, 0.5vw + 0.75rem, 1rem);
   --text-body: clamp(1rem, 1vw + 0.75rem, 1.25rem);
   --text-display: clamp(3.25rem, 9vw, 8rem);
   --leading-kicker: 1.2;
+  --leading-terminal: 1.45;
   --leading-body: 1.6;
   --leading-display: 0.92;
 
@@ -121,7 +121,6 @@ html[data-theme="light"] .floating-nav {
     left: 50%;
     width: max-content;
     max-width: calc(100% - var(--space-12));
-    transform: translateX(-50%);
     border: 1px solid hsl(var(--border));
     border-radius: 999px;
     background: hsl(var(--surface) / 0.88);
@@ -141,7 +140,7 @@ html[data-theme="light"] .floating-nav {
     padding: var(--space-2) var(--space-3);
     border-radius: 999px;
     color: hsl(var(--muted));
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     font-size: var(--text-kicker);
     line-height: var(--leading-kicker);
     text-decoration: none;
@@ -278,7 +277,7 @@ html[data-theme="light"] .floating-nav {
 
   .hero-kicker {
     color: hsl(var(--accent));
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     font-size: var(--text-kicker);
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -302,7 +301,7 @@ html[data-theme="light"] .floating-nav {
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
-    font-family: var(--font-editorial);
+    font-family: var(--font-heading);
     font-size: var(--text-display);
     font-weight: 400;
     letter-spacing: -0.06em;
@@ -318,28 +317,10 @@ html[data-theme="light"] .floating-nav {
     text-shadow: 0 0 var(--space-4) hsl(var(--accent) / 0.36);
   }
 
-  .hero-summary {
-    max-width: 38rem;
-    color: hsl(var(--muted));
-    font-size: var(--text-body);
-    line-height: var(--leading-body);
-    text-wrap: pretty;
-  }
-
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(var(--space-3));
-    transition: opacity 360ms ease-out, transform 360ms ease-out;
-  }
-
-  .hero-actions[data-complete="true"] {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
   }
 
   .hero-action {
@@ -349,7 +330,7 @@ html[data-theme="light"] .floating-nav {
     padding: var(--space-3) var(--space-4);
     border: 1px solid transparent;
     border-radius: var(--radius-terminal-md);
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     font-size: var(--text-kicker);
     font-weight: 600;
     line-height: var(--leading-kicker);
@@ -459,7 +440,7 @@ html[data-theme="light"] .floating-nav {
     align-items: center;
     gap: var(--space-1);
     color: hsl(var(--accent-strong));
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     font-size: var(--text-kicker);
     line-height: var(--leading-kicker);
     opacity: 0;
@@ -503,14 +484,12 @@ html[data-theme="light"] .floating-nav {
     border-radius: var(--radius-terminal-lg);
     background: hsl(var(--surface) / 0.9);
     box-shadow: 0 1.5rem 4rem hsl(0 0% 0% / 0.22);
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     transform: perspective(var(--perspective-terminal)) rotateX(var(--terminal-tilt-x, 0deg)) rotateY(var(--terminal-tilt-y, 0deg));
     transform-style: preserve-3d;
     transition: box-shadow 180ms ease-out, transform 180ms ease-out;
     will-change: transform;
   }
-
-  .terminal--booting { cursor: pointer; }
 
   @media (hover: hover) and (pointer: fine) {
     .terminal:hover {
@@ -567,23 +546,30 @@ html[data-theme="light"] .floating-nav {
   .terminal-command,
   .terminal-idle {
     color: hsl(var(--foreground));
-    font-size: var(--text-body);
-    line-height: var(--leading-body);
+    font-size: var(--text-terminal);
+    line-height: var(--leading-terminal);
+    overflow-wrap: anywhere;
   }
 
   .terminal-result {
     color: hsl(var(--muted));
-    font-size: var(--text-body);
-    line-height: var(--leading-body);
+    font-size: var(--text-terminal);
+    line-height: var(--leading-terminal);
+    overflow-wrap: anywhere;
   }
 
-  .terminal-progress-cell {
-    color: hsl(var(--border));
+  .terminal-comment {
+    color: hsl(var(--info));
+    font-size: var(--text-terminal);
+    font-style: italic;
+    line-height: var(--leading-terminal);
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
   }
 
-  .terminal-progress-cell--filled {
-    color: hsl(var(--accent));
-    box-shadow: 0 0 var(--space-3) hsl(var(--accent) / 0.8);
+  .terminal-result-highlight {
+    color: hsl(var(--accent-strong));
+    text-shadow: 0 0 var(--space-3) hsl(var(--accent) / 0.22);
   }
 
   .terminal-prompt {
@@ -604,36 +590,12 @@ html[data-theme="light"] .floating-nav {
     animation: terminal-caret 1s steps(1, end) infinite;
   }
 
-  .terminal-skip {
-    justify-self: start;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: hsl(var(--muted));
-    font: inherit;
-    font-size: var(--text-kicker);
-    text-decoration: underline;
-    text-decoration-color: hsl(var(--border));
-    text-underline-offset: var(--space-1);
-    cursor: pointer;
-  }
-
-  .terminal-skip:hover {
-    color: hsl(var(--accent-hover));
-    text-decoration-color: currentcolor;
-  }
-
-  .terminal-skip:focus-visible {
-    outline: 2px solid hsl(var(--accent));
-    outline-offset: var(--space-2);
-  }
-
   .terminal-next {
     display: flex;
     align-items: baseline;
     gap: var(--space-3);
     color: hsl(var(--muted));
-    font-family: var(--font-geist-mono), monospace;
+    font-family: var(--font-hanken-grotesk), sans-serif;
     font-size: var(--text-kicker);
     line-height: var(--leading-body);
     opacity: 0;
@@ -693,7 +655,7 @@ html[data-theme="light"] .floating-nav {
 
     .hero-grid {
       grid-template-columns: minmax(0, 0.85fr) minmax(var(--measure-terminal), 1.15fr);
-      align-items: start;
+      align-items: center;
       gap: var(--space-24);
     }
 

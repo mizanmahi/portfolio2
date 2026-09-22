@@ -11,7 +11,7 @@ This doc is the single source of truth for design decisions on this project. Che
 - Hero section opens as a terminal boot sequence (auto-typing, realistic speed, skippable, respects `prefers-reduced-motion`)
 - Once the sequence finishes, the rest of the site unfolds as a bento-grid dashboard, projects, experience, skills, contact, each as a card in the grid
 - The terminal panel supplies the hero depth accent through a bounded hover parallax tilt
-- A third typography layer, "agentic mono," is used sparingly for system-style status text (see Typography section), separate from the main serif identity and sans body text
+- Terminal/system text uses the same Hanken Grotesk family as the rest of the site, with spacing, color, and cursor styling creating the terminal character
 
 **Why this concept:** Terminal/IDE and Bento are the two developer-portfolio styles that read as memorable and recruiter-friendly rather than generic. Combining them gives a strong entrance plus a scannable, information-dense body.
 
@@ -28,13 +28,13 @@ This doc is the single source of truth for design decisions on this project. Che
 
 ## Typography
 
-Three distinct type roles, never mixed:
+One font family, applied with distinct roles:
 
 | Role | Font | Use |
 |---|---|---|
-| Display | Serif (current heading font) | Name/identity heading only |
-| Body | Sans | Paragraphs, nav, labels, buttons |
-| Agentic mono | Monospace, pixel-adjacent (e.g. a grid/blocky mono font) | Short system-style status lines only, e.g. a rotating tagline under "Developer profile". Rendered with a soft accent glow (text-shadow) and a blinking cursor block at the end, never used for body copy or headings |
+| Display | Hanken Grotesk | Name/identity heading only |
+| Body | Hanken Grotesk | Paragraphs, nav, labels, buttons |
+| Terminal/system | Hanken Grotesk | Terminal output and short system-style status lines, differentiated by spacing, color, soft accent glow, and the blinking cursor block |
 
 **Agentic mono treatment spec:**
 - Letter-spacing slightly widened
@@ -168,3 +168,4 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 - **Theme system:** Added theme toggler to nav, implemented light-mode tokens, split `--accent` from `--accent-strong`.
 - **Bugfix:** Light mode shipped with broken name-shimmer (frozen orange letters) and an overly saturated solid theme-toggle icon. Root cause was reusing dark-mode-only values (`--name-highlight`, full-fill icon buttons) without a light-mode-specific variant. Fixed by adding a theme-aware `--name-highlight` token and switching icon-only buttons to ghost style.
 - **Typography:** Added a third type layer, "agentic mono," a monospace status-text treatment with accent glow and blinking cursor, used for short system-style taglines only, kept separate from the serif name and sans body text.
+- **Typography:** Set Hanken Grotesk as the sole project font, self-hosted through `next/font` for performant, stable rendering. Terminal/system styling comes from its visual treatment rather than a separate typeface.
