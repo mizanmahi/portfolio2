@@ -11,8 +11,14 @@ type BootSequenceContextValue = ReturnType<typeof useTerminalBoot>;
 
 const BootSequenceContext = createContext<BootSequenceContextValue | null>(null);
 
-export function BootSequenceProvider({ children }: { children: ReactNode }) {
-  const bootSequence = useTerminalBoot();
+export function BootSequenceProvider({
+  children,
+  shouldStart,
+}: {
+  children: ReactNode;
+  shouldStart: boolean;
+}) {
+  const bootSequence = useTerminalBoot(shouldStart);
 
   return (
     <BootSequenceContext.Provider value={bootSequence}>

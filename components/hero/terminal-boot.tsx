@@ -6,9 +6,44 @@ import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const maximumTilt = 4;
+const programmingHeroRole = "Full-Stack Web Developer L2 @ Programming Hero, Dhaka, Bangladesh";
+const projectDirectory = "edulavo/  phitron/  programming-hero/  next-level/  mentora/  solruf/  scroll down to explore →";
+
+function TerminalResult({
+  command,
+  isComplete,
+  output,
+}: {
+  command: string;
+  isComplete: boolean;
+  output: string;
+}) {
+  if (command === "cat role.txt" && output === programmingHeroRole) {
+    return (
+      <p className="terminal-result">
+        Full-Stack Web Developer L2 @{" "}
+        <span className="terminal-result-highlight">Programming Hero</span>, Dhaka, Bangladesh
+      </p>
+    );
+  }
+
+  if (command === "ls ./projects" && output === projectDirectory && isComplete) {
+    return (
+      <p className="terminal-result terminal-projects">
+        <a className="terminal-project-link" href="https://www.edulavo.com/" rel="noreferrer" target="_blank">edulavo/</a>{"  "}
+        <a className="terminal-project-link" href="https://phitron.io/" rel="noreferrer" target="_blank">phitron/</a>{"  "}
+        <a className="terminal-project-link" href="https://web.programming-hero.com/home" rel="noreferrer" target="_blank">programming-hero/</a>{"  "}
+        <a className="terminal-project-link" href="https://next.programming-hero.com/" rel="noreferrer" target="_blank">next-level/</a>{"  "}
+        mentora/{"  "}solruf/{"  "}scroll down to explore →
+      </p>
+    );
+  }
+
+  return <p className="terminal-result">{output}</p>;
+}
 
 export function TerminalBoot() {
-  const { announcement, isComplete, lines, skip } = useBootSequence();
+  const { announcement, isComplete, lines } = useBootSequence();
   const terminalRef = useRef<HTMLElement>(null);
   const [supportsNativeGlitch, setSupportsNativeGlitch] = useState(false);
 
@@ -66,8 +101,7 @@ export function TerminalBoot() {
   const terminal = (
     <section
       aria-label="Profile terminal"
-      className={`terminal${isComplete ? "" : " terminal--booting"}`}
-      onClick={isComplete ? undefined : skip}
+      className="terminal"
       onPointerLeave={resetParallax}
       onPointerMove={updateParallax}
       ref={terminalRef}
@@ -85,7 +119,7 @@ export function TerminalBoot() {
           {announcement}
         </p>
 
-        <div className="terminal-output" aria-hidden="true">
+        <div className="terminal-output" aria-hidden={!isComplete}>
           {lines.map((line, index) =>
             line.command || line.output ? (
               <div className="terminal-entry" key={index}>
@@ -99,28 +133,13 @@ export function TerminalBoot() {
                     {line.command}
                   </p>
                 )}
-                {line.output &&
-                  (line.progress === undefined ? (
-                    <p className="terminal-result">{line.output}</p>
-                  ) : (
-                    <p className="terminal-result terminal-progress">
-                      {line.output} [
-                      {Array.from({ length: 10 }, (_, segment) => {
-                        const isFilled =
-                          segment < Math.round((line.progress ?? 0) * 10);
-
-                        return (
-                          <span
-                            className={`terminal-progress-cell${isFilled ? " terminal-progress-cell--filled" : ""}`}
-                            key={segment}
-                          >
-                            {isFilled ? "█" : "░"}
-                          </span>
-                        );
-                      })}
-                      ]
-                    </p>
-                  ))}
+                {line.output && (
+                  <TerminalResult
+                    command={line.command}
+                    isComplete={isComplete}
+                    output={line.output}
+                  />
+                )}
               </div>
             ) : null,
           )}
@@ -131,19 +150,6 @@ export function TerminalBoot() {
             </p>
           )}
         </div>
-
-        {!isComplete && (
-          <button
-            className="terminal-skip"
-            onClick={(event) => {
-              event.stopPropagation();
-              skip();
-            }}
-            type="button"
-          >
-            Skip boot
-          </button>
-        )}
       </div>
     </section>
   );
