@@ -47,6 +47,10 @@
   --hero-terminal-shadow: 0 0% 0%;
   --hero-terminal-shadow-opacity: 0.22;
   --hero-terminal-shadow-hover-opacity: 0.28;
+  --hero-secondary-hover-background: var(--surface);
+  --hero-secondary-hover-background-opacity: 0.92;
+  --hero-secondary-hover-border: var(--accent);
+  --hero-secondary-hover-foreground: var(--accent-hover);
   --aura-page-background: var(--background);
   --aura-layer-1-background: radial-gradient(55.8% 55.49% at 50% 100%, hsl(var(--accent) / 0.76) 0%, transparent 100%);
   --aura-layer-1-blend: screen;
@@ -129,6 +133,10 @@ html[data-theme="light"] {
   --hero-terminal-shadow: var(--foreground);
   --hero-terminal-shadow-opacity: 0.1;
   --hero-terminal-shadow-hover-opacity: 0.14;
+  --hero-secondary-hover-background: var(--accent);
+  --hero-secondary-hover-background-opacity: 0.1;
+  --hero-secondary-hover-border: var(--accent-strong);
+  --hero-secondary-hover-foreground: var(--accent-strong);
   --aura-page-background: var(--background);
   --aura-layer-1-background: radial-gradient(72% 76% at 0% 0%, hsl(var(--accent) / 0.24) 0%, transparent 72%), radial-gradient(58% 68% at 100% 16%, hsl(var(--accent-strong) / 0.1) 0%, transparent 74%);
   --aura-layer-1-blend: normal;
@@ -418,13 +426,9 @@ html[data-theme="light"] .floating-nav {
   }
 
   .hero-action--secondary:hover {
-    border-color: hsl(var(--muted));
-    color: hsl(var(--accent-hover));
-  }
-
-  html[data-theme="dark"] .hero-action--secondary:hover {
-    border-color: hsl(var(--accent) / 0.58);
-    background: hsl(var(--surface) / 0.92);
+    border-color: hsl(var(--hero-secondary-hover-border));
+    background: hsl(var(--hero-secondary-hover-background) / var(--hero-secondary-hover-background-opacity));
+    color: hsl(var(--hero-secondary-hover-foreground));
   }
 
   .hero-action:focus-visible {

@@ -145,6 +145,7 @@ Hero-specific values are semantic tokens alongside the color system; components 
 | `--aura-*` | CRT-like amber beam, screen blends, and grain | Saffron-silk mesh of low-opacity accent radial layers |
 | `--hero-name-*` | IBM Plex Mono foreground with serif shadow | Serif foreground with a restrained IBM Plex Mono shadow |
 | `--hero-terminal-shadow-*` | Deep black panel depth | Low-opacity foreground shadow for soft elevation |
+| `--hero-secondary-hover-*` | Surface elevation with bright amber text | Soft amber wash with accent-strong text and border |
 
 This keeps future theme refinements in `globals.css`: update the token values rather than duplicating component styles or adding theme conditionals to React.
 
