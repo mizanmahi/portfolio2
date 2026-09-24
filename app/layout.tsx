@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Hanken_Grotesk } from "next/font/google";
+import { Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const hankenGrotesk = Hanken_Grotesk({
+  display: "swap",
   variable: "--font-hanken-grotesk",
   subsets: ["latin"],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-mono",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -18,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       data-theme="dark"
       lang="en"
-      className={`h-full ${hankenGrotesk.variable}`}
+      className={`h-full ${hankenGrotesk.variable} ${ibmPlexMono.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

@@ -6,6 +6,7 @@ import { ScrollCue } from "@/components/hero/scroll-cue";
 import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 import { AuraBackground } from "@/components/ui/ambient-glow";
+import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useState } from "react";
 
@@ -76,9 +77,17 @@ export function HeroEntrance() {
               <motion.div className="hero-intro" variants={entranceVariants.intro}>
                 <p className="hero-kicker">Developer profile</p>
 
-                <h1 id="hero-title" className="hero-title">
+                <LineShadowText
+                  aria-label="Mizanur Rahman"
+                  as="h1"
+                  className="hero-title"
+                  id="hero-title"
+                  shadowClassName="hero-title-system-shadow"
+                  shadowColor="hsl(var(--name-shadow))"
+                  shadowTextClassName="hero-title-system-shadow-text"
+                >
                   Mizanur Rahman
-                </h1>
+                </LineShadowText>
 
                 <HeroActions />
               </motion.div>

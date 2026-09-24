@@ -8,5 +8,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+<!-- for the typography -->
+look at the typography.md file for the font, size, and weight rules. This file is a single source of truth for typography on this project. Check it before adding anything new, fonts, sizes, weights, so later sections stay consistent with week 1.
+
 <!-- for the design -->
 look at the design.md file for the design decisions, color palette, and tech stack. This file is a single source of truth for design decisions on this project. Check it before adding anything new, colors, spacing, components, so later sections stay consistent with week 1.

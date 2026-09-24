@@ -6,14 +6,35 @@ import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const maximumTilt = 4;
-const programmingHeroRole = "Full-stack developer L2 at Programming Hero";
+const programmingHeroRole = "Full-Stack Web Developer L2 @ Programming Hero, Dhaka, Bangladesh";
+const projectDirectory = "edulavo/  phitron/  programming-hero/  next-level/  mentora/  solruf/  scroll down to explore →";
 
-function TerminalResult({ command, output }: { command: string; output: string }) {
+function TerminalResult({
+  command,
+  isComplete,
+  output,
+}: {
+  command: string;
+  isComplete: boolean;
+  output: string;
+}) {
   if (command === "cat role.txt" && output === programmingHeroRole) {
     return (
       <p className="terminal-result">
-        Full-stack developer L2 at{" "}
-        <span className="terminal-result-highlight">Programming Hero</span>
+        Full-Stack Web Developer L2 @{" "}
+        <span className="terminal-result-highlight">Programming Hero</span>, Dhaka, Bangladesh
+      </p>
+    );
+  }
+
+  if (command === "ls ./projects" && output === projectDirectory && isComplete) {
+    return (
+      <p className="terminal-result terminal-projects">
+        <a className="terminal-project-link" href="https://www.edulavo.com/" rel="noreferrer" target="_blank">edulavo/</a>{"  "}
+        <a className="terminal-project-link" href="https://phitron.io/" rel="noreferrer" target="_blank">phitron/</a>{"  "}
+        <a className="terminal-project-link" href="https://web.programming-hero.com/home" rel="noreferrer" target="_blank">programming-hero/</a>{"  "}
+        <a className="terminal-project-link" href="https://next.programming-hero.com/" rel="noreferrer" target="_blank">next-level/</a>{"  "}
+        mentora/{"  "}solruf/{"  "}scroll down to explore →
       </p>
     );
   }
@@ -39,7 +60,6 @@ export function TerminalBoot() {
     lines.some(
       (line, index) =>
         Boolean(line.output) &&
-        (!line.commentExpected || Boolean(line.comment)) &&
         (index === lines.length - 1 || !lines[index + 1].command),
     );
   const activeCommandIndex = lines.findIndex(
@@ -99,7 +119,7 @@ export function TerminalBoot() {
           {announcement}
         </p>
 
-        <div className="terminal-output" aria-hidden="true">
+        <div className="terminal-output" aria-hidden={!isComplete}>
           {lines.map((line, index) =>
             line.command || line.output ? (
               <div className="terminal-entry" key={index}>
@@ -114,9 +134,12 @@ export function TerminalBoot() {
                   </p>
                 )}
                 {line.output && (
-                  <TerminalResult command={line.command} output={line.output} />
+                  <TerminalResult
+                    command={line.command}
+                    isComplete={isComplete}
+                    output={line.output}
+                  />
                 )}
-                {line.comment && <p className="terminal-comment"># {line.comment}</p>}
               </div>
             ) : null,
           )}

@@ -11,7 +11,7 @@ This doc is the single source of truth for design decisions on this project. Che
 - Hero section opens as a terminal boot sequence (auto-typing, realistic speed, skippable, respects `prefers-reduced-motion`)
 - Once the sequence finishes, the rest of the site unfolds as a bento-grid dashboard, projects, experience, skills, contact, each as a card in the grid
 - The terminal panel supplies the hero depth accent through a bounded hover parallax tilt
-- Terminal/system text uses the same Hanken Grotesk family as the rest of the site, with spacing, color, and cursor styling creating the terminal character
+- Terminal/system text uses IBM Plex Mono, while the hero name reverses the pairing: IBM Plex Mono is the visible identity layer and the serif layer drifts behind it as a decorative shadow
 
 **Why this concept:** Terminal/IDE and Bento are the two developer-portfolio styles that read as memorable and recruiter-friendly rather than generic. Combining them gives a strong entrance plus a scannable, information-dense body.
 
@@ -32,9 +32,9 @@ One font family, applied with distinct roles:
 
 | Role | Font | Use |
 |---|---|---|
-| Display | Hanken Grotesk | Name/identity heading only |
+| Display | IBM Plex Mono | Name/identity heading only |
 | Body | Hanken Grotesk | Paragraphs, nav, labels, buttons |
-| Terminal/system | Hanken Grotesk | Terminal output and short system-style status lines, differentiated by spacing, color, soft accent glow, and the blinking cursor block |
+| Terminal/system | IBM Plex Mono | Terminal output, short system-style status lines, and the visible hero name |
 
 **Agentic mono treatment spec:**
 - Letter-spacing slightly widened
@@ -168,4 +168,6 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 - **Theme system:** Added theme toggler to nav, implemented light-mode tokens, split `--accent` from `--accent-strong`.
 - **Bugfix:** Light mode shipped with broken name-shimmer (frozen orange letters) and an overly saturated solid theme-toggle icon. Root cause was reusing dark-mode-only values (`--name-highlight`, full-fill icon buttons) without a light-mode-specific variant. Fixed by adding a theme-aware `--name-highlight` token and switching icon-only buttons to ghost style.
 - **Typography:** Added a third type layer, "agentic mono," a monospace status-text treatment with accent glow and blinking cursor, used for short system-style taglines only, kept separate from the serif name and sans body text.
-- **Typography:** Set Hanken Grotesk as the sole project font, self-hosted through `next/font` for performant, stable rendering. Terminal/system styling comes from its visual treatment rather than a separate typeface.
+- **Typography:** Hanken Grotesk remains the body/UI font; IBM Plex Mono is loaded once at the root through `next/font` for terminal/system text, avoiding runtime font loading.
+- **Typography scale:** Aligned UI labels/buttons to 14px and terminal content to 18px, with the terminal's fixed height and hero measures expanded to preserve readable wrapping and layout stability.
+- **Name interaction:** Added a GSAP ScrambleText decryption effect on hover for the hero name, while retaining its semantic name for assistive technology and disabling the effect for reduced-motion users.

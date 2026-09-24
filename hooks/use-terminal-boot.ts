@@ -5,32 +5,31 @@ import { useCallback, useEffect, useState } from "react";
 export type TerminalLine = {
   command: string;
   output: string;
-  comment?: string;
-  commentExpected?: boolean;
 };
 
 const bootLines: TerminalLine[] = [
   {
     command: "whoami",
-    output: "Full-Stack Web Developer based in Dhaka, Bangladesh, with 4+ years of experience.",
+    output: "Mizanur Rahman",
   },
   {
     command: "cat role.txt",
-    output: "Full-stack developer L2 at Programming Hero",
+    output: "Full-Stack Web Developer L2 @ Programming Hero, Dhaka, Bangladesh",
   },
   {
-    command: 'docker ps --format "{{.Names}}"',
-    output: "tailscale, adguard-home, jellyfin, caddy",
-    commentExpected: true,
-    comment: "yeah, my mini homelab works harder",
+    command: "cat mentorship.log",
+    output: "2,500+ developers mentored and placed worldwide",
+  },
+  {
+    command: "ls ./projects",
+    output: "edulavo/  phitron/  programming-hero/  next-level/  mentora/  solruf/  scroll down to explore →",
   },
 ];
 
 const emptyLines = (): TerminalLine[] =>
-  bootLines.map((line) => ({
+  bootLines.map(() => ({
     command: "",
     output: "",
-    commentExpected: line.commentExpected,
   }));
 const finalLines = (): TerminalLine[] => bootLines.map((line) => ({ ...line }));
 const pause = (duration: number) => new Promise<void>((resolve) => window.setTimeout(resolve, duration));
@@ -91,11 +90,6 @@ export function useTerminalBoot(shouldStart: boolean) {
         await pause(180 + Math.random() * 220);
         const outputTyped = await typeText(lineIndex, "output", line.output);
         if (!outputTyped || cancelled) return;
-        if (line.comment) {
-          await pause(180 + Math.random() * 220);
-          const commentTyped = await typeText(lineIndex, "comment", line.comment);
-          if (!commentTyped || cancelled) return;
-        }
         setAnnouncement(line.output);
         await pause(340 + Math.random() * 360);
       }
