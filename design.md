@@ -11,7 +11,7 @@ This doc is the single source of truth for design decisions on this project. Che
 - Hero section opens as a terminal boot sequence (auto-typing, realistic speed, skippable, respects `prefers-reduced-motion`)
 - Once the sequence finishes, the rest of the site unfolds as a bento-grid dashboard, projects, experience, skills, contact, each as a card in the grid
 - The terminal panel supplies the hero depth accent through a bounded hover parallax tilt
-- Terminal/system text uses IBM Plex Mono, while the hero name reverses the pairing: IBM Plex Mono is the visible identity layer and the serif layer drifts behind it as a decorative shadow
+- Terminal/system text uses IBM Plex Mono. The hero name uses theme-aware type layering: terminal-forward in dark mode, serif-forward in light mode, with the alternate register as a decorative shadow
 
 **Why this concept:** Terminal/IDE and Bento are the two developer-portfolio styles that read as memorable and recruiter-friendly rather than generic. Combining them gives a strong entrance plus a scannable, information-dense body.
 
@@ -32,7 +32,7 @@ One font family, applied with distinct roles:
 
 | Role | Font | Use |
 |---|---|---|
-| Display | IBM Plex Mono | Name/identity heading only |
+| Display | Theme-aware: IBM Plex Mono (dark), Georgia (light) | Name/identity heading only |
 | Body | Hanken Grotesk | Paragraphs, nav, labels, buttons |
 | Terminal/system | IBM Plex Mono | Terminal output, short system-style status lines, and the visible hero name |
 
@@ -59,6 +59,7 @@ Dark-first, with a warm light-mode counterpart.
 | Muted | `#8A8A8A` | `0 0% 54%` | Secondary text |
 | Accent | `#F5A623` | `38 91% 58%` | Fills, buttons, progress bars |
 | Accent strong | `#F5A623` | `38 91% 58%` | Same as accent, already AA-safe as text on dark bg |
+| Accent fill | `#F5A623` | `38 91% 58%` | High-emphasis button fill |
 | Accent hover | `#FFC15E` | `38 100% 68%` | Hover state, goes lighter |
 | Name shimmer highlight | `#FFFFFF` at 40% opacity | `0 0% 100%` | The moving highlight band in the name's shimmer sweep, light-on-dark |
 | Success | `#4ADE80` | `142 71% 65%` | Positive states |
@@ -77,6 +78,7 @@ Dark-first, with a warm light-mode counterpart.
 | Border | `#E5E1DC` | `35 16% 88%` | Dividers, card outlines, MUST be visible against surface, add a subtle shadow too, border alone is too faint on near-white |
 | Accent | `#F5A623` | `38 91% 58%` | Fills, buttons, progress bars only, never raw icon-only buttons at full saturation, pair with a ghost/outline style instead |
 | Accent strong | `#B2530A` | `26 89% 37%` | Text, links, active nav state, name shimmer highlight |
+| Accent fill | `#F5A623` | `38 91% 58%` | Primary-button fill; paired with dark foreground text for contrast |
 | Accent hover | `#DB8D1F` | `35 75% 49%` | Hover state, goes darker (opposite direction from dark mode) |
 | Name shimmer highlight | `#B2530A` at 55% opacity | `26 89% 37%` | The moving highlight band in the name's shimmer sweep, must use accent-strong, NOT white, white-on-dark-text produces no visible effect and causes the frozen-letter bug |
 | Success | `#16A249` | `142 76% 36%` | Positive states |
@@ -86,7 +88,7 @@ Dark-first, with a warm light-mode counterpart.
 
 **Why warm off-white instead of pure white:** keeps continuity with the CRT-nostalgia concept from dark mode instead of making light mode feel like a disconnected second theme.
 
-**Why `--accent-strong` is separate:** raw accent amber fails AA contrast as text on light backgrounds, so `--accent` is reserved for fills and buttons while `--accent-strong` handles text, links, active states, and the name shimmer highlight.
+**Why `--accent-strong` is separate:** raw accent amber fails AA contrast as text on light backgrounds, so `--accent` is reserved for decorative fills and ambient layers while `--accent-strong` handles text, links, active states, and the name shimmer highlight. In light mode, primary buttons retain the familiar accent fill and use a dark foreground token for contrast.
 
 **Known bug fixed here:** the name shimmer effect was using a single hardcoded highlight color across both themes. It must be theme-aware, white-based highlight for dark mode, accent-strong-based highlight for light mode, otherwise the sweep either doesn't render or freezes on individual letters like the orange "M" and "R" bug.
 
@@ -102,6 +104,9 @@ Dark-first, with a warm light-mode counterpart.
   --accent: 38 91% 58%;
   --accent-strong: 38 91% 58%;
   --accent-hover: 38 100% 68%;
+  --accent-fill: var(--accent);
+  --accent-fill-hover: var(--accent-hover);
+  --accent-fill-foreground: var(--background);
   --name-highlight: 0 0% 100%;
   --success: 142 71% 65%;
   --destructive: 0 91% 71%;
@@ -118,6 +123,9 @@ Dark-first, with a warm light-mode counterpart.
   --accent: 38 91% 58%;
   --accent-strong: 26 89% 37%;
   --accent-hover: 35 75% 49%;
+  --accent-fill: var(--accent);
+  --accent-fill-hover: var(--accent-hover);
+  --accent-fill-foreground: var(--foreground);
   --name-highlight: 26 89% 37%;
   --success: 142 76% 36%;
   --destructive: 0 72% 51%;
@@ -127,6 +135,19 @@ Dark-first, with a warm light-mode counterpart.
 ```
 
 Reference these as Tailwind theme colors, never hardcode hex in components.
+
+### Hero theme architecture
+
+Hero-specific values are semantic tokens alongside the color system; components never branch on the active theme.
+
+| Token group | Dark mode | Light mode |
+|---|---|---|
+| `--aura-*` | CRT-like amber beam, screen blends, and grain | Saffron-silk mesh of low-opacity accent radial layers |
+| `--hero-name-*` | IBM Plex Mono foreground with serif shadow | Serif foreground with a restrained IBM Plex Mono shadow |
+| `--hero-terminal-shadow-*` | Deep black panel depth | Low-opacity foreground shadow for soft elevation |
+| `--hero-secondary-hover-*` | Surface elevation with bright amber text | Soft amber wash with accent-strong text and border |
+
+This keeps future theme refinements in `globals.css`: update the token values rather than duplicating component styles or adding theme conditionals to React.
 
 ---
 
@@ -170,4 +191,5 @@ Reference these as Tailwind theme colors, never hardcode hex in components.
 - **Typography:** Added a third type layer, "agentic mono," a monospace status-text treatment with accent glow and blinking cursor, used for short system-style taglines only, kept separate from the serif name and sans body text.
 - **Typography:** Hanken Grotesk remains the body/UI font; IBM Plex Mono is loaded once at the root through `next/font` for terminal/system text, avoiding runtime font loading.
 - **Typography scale:** Aligned UI labels/buttons to 14px and terminal content to 18px, with the terminal's fixed height and hero measures expanded to preserve readable wrapping and layout stability.
-- **Name interaction:** Added a GSAP ScrambleText decryption effect on hover for the hero name, while retaining its semantic name for assistive technology and disabling the effect for reduced-motion users.
+- **Name interaction:** Customized Magic UI's Line Shadow Text into an accessible two-register name treatment. The shadow is decorative and `aria-hidden`; its type role, color, opacity, and motion are all theme tokens.
+- **Hero theming:** Replaced hardcoded Aura blend layers with semantic `--aura-*` and `--hero-*` tokens. Light mode uses a warm saffron-silk mesh rather than dark-mode blend layers.

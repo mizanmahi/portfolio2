@@ -16,7 +16,7 @@ Never mix these. Never use a role's font for a purpose outside its defined use.
 
 ### 1. Display (identity)
 
-**Font:** IBM Plex Mono (Google Fonts, OFL)
+**Font:** Theme-aware: IBM Plex Mono in dark mode and Georgia in light mode
 **Use:** the hero name heading ONLY. Nowhere else on the site.
 **Alternatives if swapping:** Instrument Serif (Google Fonts, OFL) or Bricolage Grotesque (Google Fonts, variable, OFL), both fresher than Fraunces/Playfair which are now common defaults.
 **Rules:**
