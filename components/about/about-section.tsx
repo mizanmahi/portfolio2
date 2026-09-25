@@ -46,14 +46,19 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
   return (
     <section aria-labelledby="about-title" className={styles.section} id="about" ref={sectionRef}>
       <div className={styles.grid}>
-        <motion.div
-          animate={isRevealed ? "visible" : "hidden"}
-          className={styles.photoColumn}
-          initial={prefersReducedMotion ? false : "hidden"}
-          variants={entranceVariants.photo}
-        >
-          <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
-        </motion.div>
+        <div className={styles.photoColumn}>
+          <span aria-hidden="true" className={styles.photoHook} />
+          <div className={styles.photoHanger}>
+            <motion.div
+              animate={isRevealed ? "visible" : "hidden"}
+              className={styles.photoReveal}
+              initial={prefersReducedMotion ? false : "hidden"}
+              variants={entranceVariants.photo}
+            >
+              <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
+            </motion.div>
+          </div>
+        </div>
 
         <motion.div
           animate={isRevealed ? "visible" : "hidden"}
