@@ -1,10 +1,12 @@
+import styles from "@/components/ui/ambient-glow.module.css";
+
 export function AuraBackground() {
   return (
-    <>
-      <div aria-hidden="true" className="aura-layer-1" />
-      <div aria-hidden="true" className="aura-layer-2" />
-      <div aria-hidden="true" className="aura-layer-3" />
-      <div aria-hidden="true" className="aura-grain">
+    <div aria-hidden="true" className={styles.background}>
+      <div className={`${styles.layer} ${styles.layerOne}`} />
+      <div className={`${styles.layer} ${styles.layerTwo}`} />
+      <div className={`${styles.layer} ${styles.layerThree}`} />
+      <div className={`${styles.layer} ${styles.grain}`}>
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <filter id="aura-grain-filter">
             <feTurbulence
@@ -24,6 +26,6 @@ export function AuraBackground() {
           <rect width="100%" height="100%" filter="url(#aura-grain-filter)" />
         </svg>
       </div>
-    </>
+    </div>
   );
 }

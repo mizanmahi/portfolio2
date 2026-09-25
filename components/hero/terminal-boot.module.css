@@ -1,0 +1,45 @@
+.journey { position: relative; z-index: 1; display: grid; gap: var(--space-6); }
+.glitch { block-size: calc(var(--space-terminal-body) + var(--space-12)); overflow: hidden; border-radius: var(--radius-terminal-lg); }
+.glitch > canvas { border-radius: inherit; }
+.glitch canvas, .glitch canvas > div, .glitch > div { overflow: hidden !important; scrollbar-width: none; }
+.glitch canvas::-webkit-scrollbar, .glitch canvas > div::-webkit-scrollbar, .glitch > div::-webkit-scrollbar { display: none; }
+
+.terminal {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-lg);
+  background: hsl(var(--surface) / 0.9);
+  box-shadow: 0 1.5rem 4rem hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity));
+  font-family: var(--font-mono), monospace;
+  transform: perspective(var(--perspective-terminal)) rotateX(var(--terminal-tilt-x, 0deg)) rotateY(var(--terminal-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: box-shadow 180ms ease-out, transform 180ms ease-out;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) { .terminal:hover { box-shadow: 0 var(--space-8) var(--space-24) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-hover-opacity)); } }
+
+.bar { display: flex; align-items: center; gap: var(--space-2); min-height: var(--space-12); padding-inline: var(--space-4); border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--muted)); font-size: var(--text-sm); line-height: var(--leading-sm); }
+.indicator { width: var(--space-2); aspect-ratio: 1; border-radius: 999px; background: hsl(var(--accent)); }
+.file { color: hsl(var(--foreground)); }
+.state { margin-left: auto; }
+.body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--space-6); block-size: var(--space-terminal-body); padding: var(--space-6); }
+.output { display: grid; min-block-size: 0; align-content: start; gap: var(--space-6); }
+.entry { display: grid; gap: var(--space-2); }
+.command, .idle { color: hsl(var(--foreground)); font-size: var(--text-terminal); line-height: var(--leading-terminal); overflow-wrap: anywhere; }
+.result { color: hsl(var(--muted)); font-size: var(--text-terminal); line-height: var(--leading-terminal); overflow-wrap: anywhere; }
+.comment { color: hsl(var(--info)); font-size: var(--text-terminal); font-style: italic; line-height: var(--leading-terminal); overflow-wrap: anywhere; text-wrap: pretty; }
+.resultHighlight { color: hsl(var(--accent-strong)); text-shadow: 0 0 var(--space-3) hsl(var(--accent) / 0.22); }
+.projects { white-space: pre-wrap; }
+.projectLink { color: hsl(var(--accent-strong)); text-decoration: underline; text-decoration-color: hsl(var(--accent) / 0.42); text-underline-offset: var(--space-1); transition: color 180ms ease-out, text-decoration-color 180ms ease-out; }
+.projectLink:hover { color: hsl(var(--accent-hover)); text-decoration-color: currentcolor; }
+.projectLink:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: var(--space-1); }
+.prompt { color: hsl(var(--accent-strong)); }
+.inactivePrompt { color: hsl(var(--muted)); }
+.caret { display: inline-block; width: 0.6ch; height: 1em; margin-left: var(--space-1); translate: 0 0.15em; background: hsl(var(--accent)); animation: caret 1s steps(1, end) infinite; }
+
+@keyframes caret { 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) { .caret, .terminal { animation: none; transition: none; } .terminal { transform: none; } }
+@media (max-width: 30rem) { .glitch { block-size: calc(var(--space-terminal-body-compact) + var(--space-12)); } .body { block-size: var(--space-terminal-body-compact); } }

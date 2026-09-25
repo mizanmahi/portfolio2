@@ -6,6 +6,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import styles from "@/components/hero/terminal-webgl-glitch.module.css";
 
 type TerminalWebGlGlitchProps = {
   children: ReactNode;
@@ -286,13 +287,13 @@ export function TerminalWebGlGlitch({
 
   return (
     <div className={className} style={{ position: "relative" }}>
-      <div className="terminal-webgl-glitch-content" ref={contentRef}>
+      <div className={styles.content} ref={contentRef}>
         {children}
       </div>
       {!prefersReducedMotion && (
         <canvas
           aria-hidden="true"
-          className="terminal-webgl-glitch-output"
+          className={styles.output}
           ref={outputRef}
         />
       )}

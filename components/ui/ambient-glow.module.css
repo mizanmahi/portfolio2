@@ -1,0 +1,7 @@
+.background { position: absolute; inset: 0; pointer-events: none; }
+.layer { position: absolute; inset: 0; pointer-events: none; transform: translateZ(0); will-change: transform; }
+.layerOne { background: var(--aura-layer-1-background); mix-blend-mode: var(--aura-layer-1-blend); opacity: var(--aura-layer-1-opacity); }
+.layerTwo { background: var(--aura-layer-2-background); background-size: var(--aura-layer-2-size); mix-blend-mode: var(--aura-layer-2-blend); filter: blur(75px); opacity: var(--aura-layer-2-opacity); }
+.layerThree { background: var(--aura-layer-3-background); mix-blend-mode: var(--aura-layer-3-blend); opacity: var(--aura-layer-3-opacity); }
+.grain { mix-blend-mode: overlay; opacity: var(--aura-grain-opacity); }
+@media (min-width: 64rem) { .layerTwo { filter: blur(108px); } }

@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { motion, type Variants } from "motion/react";
+import styles from "@/components/navigation/floating-nav.module.css";
 
 const navigationItems = [
   { href: "#top", label: "Home" },
@@ -10,15 +11,15 @@ export function FloatingNav({ variants }: { variants: Variants }) {
   return (
     <motion.nav
       aria-label="Primary navigation"
-      className="floating-nav"
+      className={styles.nav}
       variants={variants}
     >
-      <ul className="floating-nav-list">
+      <ul className={styles.list}>
         {navigationItems.map((item) => (
           <li key={item.href}>
             <a
               aria-current={item.href === "#top" ? "page" : undefined}
-              className="floating-nav-link"
+              className={styles.link}
               href={item.href}
             >
               {item.label}
@@ -26,7 +27,7 @@ export function FloatingNav({ variants }: { variants: Variants }) {
           </li>
         ))}
         <li>
-          <ThemeToggle />
+          <ThemeToggle className={styles.themeToggle} />
         </li>
       </ul>
     </motion.nav>
