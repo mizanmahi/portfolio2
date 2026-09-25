@@ -6,7 +6,7 @@ import { useRef, type CSSProperties, type PointerEvent } from "react";
 
 import styles from "@/components/about/photo-frame.module.css";
 
-type PhotoFrameProps = {
+export type PhotoFrameProps = {
   alt: string;
   isRevealed?: boolean;
   src: string;
