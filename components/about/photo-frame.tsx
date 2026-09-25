@@ -60,7 +60,7 @@ export function PhotoFrame({ alt, isRevealed = false, src }: PhotoFrameProps) {
       <figcaption className={styles.header}>
         <span aria-hidden="true" className={styles.indicator} />
         <span className={styles.filename}>profile.jpg</span>
-        <span className={styles.status}>Session active</span>
+        <span className={styles.status}>Mizanur Rahman</span>
       </figcaption>
 
       <div className={styles.imageArea}>

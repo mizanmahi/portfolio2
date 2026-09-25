@@ -7,7 +7,7 @@ export default function Home() {
       <Hero />
       <AboutSection
         photoAlt="Mizanur Rahman, a full-stack web developer based in Dhaka, Bangladesh"
-        photoSrc="/images/mizanur-rahman.jpg"
+        photoSrc="/images/mizanur-rahman.png"
       />
     </>
   );

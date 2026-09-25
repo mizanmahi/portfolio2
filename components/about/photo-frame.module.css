@@ -30,7 +30,7 @@
 
 .imageArea { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: hsl(var(--background)); }
 
-.baseImage, .colorImage { object-fit: cover; }
+.baseImage, .colorImage { object-fit: cover; object-position: center calc(50% + var(--space-4)); }
 .baseImage { filter: saturate(0.48) brightness(0.74); }
 
 .colorImage {

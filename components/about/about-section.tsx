@@ -1,6 +1,7 @@
 "use client";
 
 import { PhotoFrame } from "@/components/about/photo-frame";
+import { Highlighter } from "@/components/ui/highlighter";
 import styles from "@/components/about/about-section.module.css";
 import { motion, useInView, useReducedMotion, type Variants } from "motion/react";
 import { useRef } from "react";
@@ -10,7 +11,7 @@ type AboutSectionProps = {
   photoSrc: string;
 };
 
-const entranceVariants: Record<"photo" | "content" | "item" | "stats", Variants> = {
+const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   photo: {
     hidden: { clipPath: "circle(0% at 50% 50%)", scale: 0.88 },
     visible: {
@@ -31,17 +32,10 @@ const entranceVariants: Record<"photo" | "content" | "item" | "stats", Variants>
       transition: { duration: 0.48, ease: [0.16, 1, 0.3, 1] },
     },
   },
-  stats: {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.08 } },
-  },
 };
 
-const stats = [
-  { label: "Experience", value: "4+ years" },
-  { label: "Mentorship", value: "2,500+ developers" },
-  { label: "Location", value: "Dhaka, Bangladesh" },
-];
+const highlightMarkerColor = "hsl(var(--accent) / 0.28)";
+const underlineMarkerColor = "hsl(var(--accent-strong))";
 
 export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -67,24 +61,22 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
           initial={prefersReducedMotion ? false : "hidden"}
           variants={entranceVariants.content}
         >
-          <motion.p className={styles.eyebrow} variants={entranceVariants.item}>System profile</motion.p>
           <motion.h2 className={styles.title} id="about-title" variants={entranceVariants.item}>About</motion.h2>
-          <motion.p className={styles.summary} variants={entranceVariants.item}>
-            I&apos;m a <span className={styles.highlight}>Full-Stack</span> developer
-            based in Dhaka with <span className={styles.highlight}>4+ years</span> of
-            experience building useful web products. As an <span className={styles.highlight}>L2 Developer</span> at <span className={styles.highlight}>Programming Hero</span>,
-            I&apos;ve also mentored <span className={styles.highlight}>2,500+ developers</span>
-            as they grow into global careers.
-          </motion.p>
+          <motion.div className={styles.summaries} variants={entranceVariants.item}>
+            <p className={styles.summary}>
+              I&apos;m Mizanur Rahman, a <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Web Developer L2</Highlighter></span> at <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Programming Hero</Highlighter></span> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software, and I&apos;ve taught and mentored <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>2,500+ students</Highlighter></span>.
+            </p>
+            <p className={styles.summary}>
+              I work across the stack with <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>React, Next.js, Node.js, PostgreSQL, MongoDB, Prisma, Golang, Python, Docker, and AWS</Highlighter></span>. I&apos;ve also built projects around <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>AI agents and intelligent systems</Highlighter></span>, using AI to create practical solutions and automate real-world workflows.
+            </p>
+            <p className={styles.summary}>
+              Beyond writing code, I enjoy system design, backend engineering, code reviews, and solving complex technical problems. My experience as a mentor has shaped how I approach engineering, with a strong focus on clear communication, knowledge sharing, and helping others grow.
+            </p>
+            <p className={styles.summary}>
+              I&apos;m driven by curiosity and continuous improvement, always looking for better ways to design systems, solve problems, and turn ideas into reliable software. For me, software engineering is about turning ideas into <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>well-designed systems</Highlighter></span> that are useful, scalable, and built to last.
+            </p>
+          </motion.div>
 
-          <motion.dl className={styles.stats} variants={entranceVariants.stats}>
-            {stats.map((stat) => (
-              <motion.div className={styles.stat} key={stat.label} variants={entranceVariants.item}>
-                <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
-              </motion.div>
-            ))}
-          </motion.dl>
         </motion.div>
       </div>
     </section>
