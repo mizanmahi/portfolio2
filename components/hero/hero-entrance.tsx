@@ -7,6 +7,7 @@ import { TerminalBoot } from "@/components/hero/terminal-boot";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 import { AuraBackground } from "@/components/ui/ambient-glow";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
+import styles from "@/components/hero/hero-entrance.module.css";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useState } from "react";
 
@@ -69,22 +70,22 @@ export function HeroEntrance() {
       variants={entranceVariants.container}
     >
       <FloatingNav variants={entranceVariants.nav} />
-      <motion.main className="aura-page" variants={entranceVariants.main}>
+      <motion.main className={styles.page} variants={entranceVariants.main}>
         <BootSequenceProvider shouldStart={shouldSkipEntrance || isTerminalReady}>
-          <section aria-labelledby="hero-title" className="hero-shell aura-bg">
+          <section aria-labelledby="hero-title" className={styles.shell}>
             <AuraBackground />
-            <motion.div className="hero-grid" variants={entranceVariants.grid}>
-              <motion.div className="hero-intro" variants={entranceVariants.intro}>
-                <p className="hero-kicker">Developer profile</p>
+            <motion.div className={styles.grid} variants={entranceVariants.grid}>
+              <motion.div className={styles.intro} variants={entranceVariants.intro}>
+                <p className={styles.kicker}>Developer profile</p>
 
                 <LineShadowText
                   aria-label="Mizanur Rahman"
                   as="h1"
-                  className="hero-title"
+                  className={styles.title}
                   id="hero-title"
-                  shadowClassName="hero-title-system-shadow"
+                  shadowClassName={styles.titleSystemShadow}
                   shadowColor="hsl(var(--name-shadow))"
-                  shadowTextClassName="hero-title-system-shadow-text"
+                  shadowTextClassName={styles.titleSystemShadowText}
                 >
                   Mizanur Rahman
                 </LineShadowText>
@@ -93,7 +94,7 @@ export function HeroEntrance() {
               </motion.div>
 
               <motion.div
-                className="hero-terminal-wrap"
+                className={styles.terminalWrap}
                 onAnimationComplete={handleTerminalEntranceComplete}
                 variants={entranceVariants.terminal}
               >
@@ -102,7 +103,7 @@ export function HeroEntrance() {
             </motion.div>
             <ScrollCue />
           </section>
-          <div id="projects" className="future-section-anchor" aria-hidden="true" />
+          <div id="projects" className={styles.futureSectionAnchor} aria-hidden="true" />
         </BootSequenceProvider>
       </motion.main>
     </motion.div>

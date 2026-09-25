@@ -3,6 +3,7 @@
 import { useBootSequence } from "@/components/hero/boot-sequence-provider";
 import { Glitch, supportsHtmlInCanvas } from "@/components/canvasui/Glitch";
 import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
+import styles from "@/components/hero/terminal-boot.module.css";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const maximumTilt = 4;
@@ -20,26 +21,26 @@ function TerminalResult({
 }) {
   if (command === "cat role.txt" && output === programmingHeroRole) {
     return (
-      <p className="terminal-result">
+      <p className={styles.result}>
         Full-Stack Web Developer L2 @{" "}
-        <span className="terminal-result-highlight">Programming Hero</span>, Dhaka, Bangladesh
+        <span className={styles.resultHighlight}>Programming Hero</span>, Dhaka, Bangladesh
       </p>
     );
   }
 
   if (command === "ls ./projects" && output === projectDirectory && isComplete) {
     return (
-      <p className="terminal-result terminal-projects">
-        <a className="terminal-project-link" href="https://www.edulavo.com/" rel="noreferrer" target="_blank">edulavo/</a>{"  "}
-        <a className="terminal-project-link" href="https://phitron.io/" rel="noreferrer" target="_blank">phitron/</a>{"  "}
-        <a className="terminal-project-link" href="https://web.programming-hero.com/home" rel="noreferrer" target="_blank">programming-hero/</a>{"  "}
-        <a className="terminal-project-link" href="https://next.programming-hero.com/" rel="noreferrer" target="_blank">next-level/</a>{"  "}
+      <p className={`${styles.result} ${styles.projects}`}>
+        <a className={styles.projectLink} href="https://www.edulavo.com/" rel="noreferrer" target="_blank">edulavo/</a>{"  "}
+        <a className={styles.projectLink} href="https://phitron.io/" rel="noreferrer" target="_blank">phitron/</a>{"  "}
+        <a className={styles.projectLink} href="https://web.programming-hero.com/home" rel="noreferrer" target="_blank">programming-hero/</a>{"  "}
+        <a className={styles.projectLink} href="https://next.programming-hero.com/" rel="noreferrer" target="_blank">next-level/</a>{"  "}
         mentora/{"  "}solruf/{"  "}scroll down to explore →
       </p>
     );
   }
 
-  return <p className="terminal-result">{output}</p>;
+  return <p className={styles.result}>{output}</p>;
 }
 
 export function TerminalBoot() {
@@ -101,32 +102,32 @@ export function TerminalBoot() {
   const terminal = (
     <section
       aria-label="Profile terminal"
-      className="terminal"
+      className={styles.terminal}
       onPointerLeave={resetParallax}
       onPointerMove={updateParallax}
       ref={terminalRef}
     >
-      <header className="terminal-bar">
-        <span className="terminal-indicator" aria-hidden="true" />
-        <span className="terminal-file">profile.sh</span>
-        <span className="terminal-state">
+      <header className={styles.bar}>
+        <span className={styles.indicator} aria-hidden="true" />
+        <span className={styles.file}>profile.sh</span>
+        <span className={styles.state}>
           {isComplete ? "Session active" : "Booting"}
         </span>
       </header>
 
-      <div className="terminal-body">
+      <div className={styles.body}>
         <p className="sr-only" role="status" aria-atomic="true">
           {announcement}
         </p>
 
-        <div className="terminal-output" aria-hidden={!isComplete}>
+        <div className={styles.output} aria-hidden={!isComplete}>
           {lines.map((line, index) =>
             line.command || line.output ? (
-              <div className="terminal-entry" key={index}>
+              <div className={styles.entry} key={index}>
                 {line.command && (
-                  <p className="terminal-command">
+                  <p className={styles.command}>
                     <span
-                      className={`terminal-prompt${index === activeCommandIndex ? "" : " terminal-prompt--inactive"}`}
+                      className={`${styles.prompt}${index === activeCommandIndex ? "" : ` ${styles.inactivePrompt}`}`}
                     >
                       $
                     </span>{" "}
@@ -144,9 +145,9 @@ export function TerminalBoot() {
             ) : null,
           )}
           {showIdlePrompt && (
-            <p className="terminal-idle">
-              <span className="terminal-prompt">$</span>
-              <span className="terminal-caret" aria-hidden="true" />
+            <p className={styles.idle}>
+              <span className={styles.prompt}>$</span>
+              <span className={styles.caret} aria-hidden="true" />
             </p>
           )}
         </div>
@@ -155,11 +156,11 @@ export function TerminalBoot() {
   );
 
   return (
-    <div className="terminal-journey" data-complete={isComplete}>
+    <div className={styles.journey} data-complete={isComplete}>
       {supportsNativeGlitch ? (
         <Glitch
           blocks={0.5}
-          className="terminal-glitch"
+          className={styles.glitch}
           duration={0.4}
           intensity={1}
           interval={5}
@@ -173,7 +174,7 @@ export function TerminalBoot() {
       ) : (
         <TerminalWebGlGlitch
           blocks={0.5}
-          className="terminal-glitch"
+          className={styles.glitch}
           duration={0.4}
           intensity={1}
           interval={5}
@@ -185,10 +186,6 @@ export function TerminalBoot() {
           {terminal}
         </TerminalWebGlGlitch>
       )}
-      {/* <p className="terminal-next" aria-hidden={!isComplete}>
-        <span className="terminal-next-marker" aria-hidden="true" />
-        Next: the bento dashboard for experience, projects, and skills.
-      </p> */}
     </div>
   );
 }
