@@ -1,0 +1,105 @@
+.section {
+  position: relative;
+  padding: var(--space-section) var(--space-page);
+  background: hsl(var(--background));
+}
+
+.grid {
+  display: grid;
+  width: min(100%, var(--measure-hero));
+  gap: var(--space-12);
+  margin-inline: auto;
+}
+
+.photoColumn {
+  position: relative;
+  order: -1;
+  align-self: start;
+}
+
+.photoHook {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--space-section) * -1);
+  left: 50%;
+  width: var(--space-4);
+  aspect-ratio: 1;
+  border: 1px solid hsl(var(--accent-strong));
+  border-radius: 999px;
+  background: hsl(var(--surface));
+  box-shadow: 0 0 var(--space-3) hsl(var(--accent) / 0.32);
+  transform: translate(-50%, -50%);
+}
+
+.photoHanger {
+  position: relative;
+  padding-top: var(--space-section);
+  margin-top: calc(var(--space-section) * -1);
+  transform-origin: center top;
+  animation: photo-hang 8s ease-in-out infinite;
+}
+
+.photoHanger::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: var(--space-section);
+  content: "";
+  background: linear-gradient(to bottom, hsl(var(--accent-strong) / 0.88), hsl(var(--border)));
+  transform: translateX(-50%);
+}
+
+.photoReveal { position: relative; z-index: 1; }
+
+.content {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+.title {
+  color: hsl(var(--foreground));
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.summaries {
+  display: grid;
+  max-width: 60ch;
+  gap: var(--space-4);
+}
+
+.summary {
+  max-width: 60ch;
+  color: hsl(var(--foreground));
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
+}
+
+.highlight { color: hsl(var(--accent-strong)); }
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: var(--space-24);
+  }
+
+  .content { grid-column: 1; grid-row: 1; justify-items: start; text-align: left; }
+  .photoColumn { grid-column: 2; grid-row: 1; order: initial; }
+}
+
+@keyframes photo-hang {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photoHanger { animation: none; }
+}

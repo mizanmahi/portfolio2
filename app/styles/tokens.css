@@ -54,7 +54,7 @@
   --space-page: clamp(var(--space-6), 5vw, var(--space-24));
   --space-section: clamp(var(--space-16), 10vw, var(--space-32));
   --space-terminal-body: 30rem;
-  --space-terminal-body-compact: 34rem;
+  --space-terminal-body-compact: 40rem;
   --measure-hero: 88rem;
   --measure-terminal: 32rem;
 

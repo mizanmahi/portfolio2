@@ -4,6 +4,7 @@ import styles from "@/components/navigation/floating-nav.module.css";
 
 const navigationItems = [
   { href: "#top", label: "Home" },
+  { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
 ];
 

@@ -1,0 +1,81 @@
+.frame {
+  --spotlight-radius: 22%;
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+  --spotlight-opacity: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-lg);
+  background: hsl(var(--surface));
+  box-shadow: 0 var(--space-6) var(--space-16) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity));
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--space-12);
+  padding-inline: var(--space-4);
+  border-bottom: 1px solid hsl(var(--border));
+  color: hsl(var(--muted));
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+}
+
+.indicator { width: var(--space-2); aspect-ratio: 1; border-radius: 999px; background: hsl(var(--accent)); }
+.filename { color: hsl(var(--foreground)); }
+.status { margin-left: auto; }
+
+.imageArea { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: hsl(var(--background)); }
+
+.baseImage, .colorImage { object-fit: cover; object-position: center calc(50% + var(--space-4)); }
+.baseImage { filter: saturate(0.48) brightness(0.74); }
+
+.colorImage {
+  opacity: var(--spotlight-opacity);
+  clip-path: circle(var(--spotlight-radius) at var(--spotlight-x) var(--spotlight-y));
+  transition: opacity 240ms ease-out;
+}
+
+.scanlines, .vignette, .spotlightRing, .beam { position: absolute; inset: 0; pointer-events: none; }
+
+.scanlines {
+  background: repeating-linear-gradient(to bottom, hsl(var(--foreground) / 0.07) 0 1px, transparent 1px var(--space-1));
+  opacity: 0.3;
+}
+
+.vignette { background: radial-gradient(ellipse at center, transparent 45%, hsl(var(--background) / 0.42) 100%); }
+
+.spotlightRing {
+  opacity: var(--spotlight-opacity);
+  background: radial-gradient(
+    circle var(--spotlight-radius) at var(--spotlight-x) var(--spotlight-y),
+    transparent calc(var(--spotlight-radius) - var(--space-1)),
+    hsl(var(--accent) / 0.58) calc(var(--spotlight-radius) - var(--space-1)),
+    hsl(var(--accent) / 0.16) var(--spotlight-radius),
+    transparent calc(var(--spotlight-radius) + var(--space-2))
+  );
+  filter: blur(var(--space-1));
+  transition: opacity 240ms ease-out;
+}
+
+.beam {
+  opacity: 0;
+  background: linear-gradient(120deg, transparent 42%, hsl(var(--accent) / 0.08) 48%, hsl(var(--accent) / 0.28) 50%, hsl(var(--accent) / 0.08) 52%, transparent 58%);
+  transform: translateX(-120%);
+}
+
+.frame[data-revealed="true"] .beam { animation: wake-beam 1200ms ease-out both; }
+
+@keyframes wake-beam {
+  0% { opacity: 0; transform: translateX(-120%); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .baseImage { filter: none; }
+  .colorImage, .spotlightRing, .beam { display: none; }
+}
