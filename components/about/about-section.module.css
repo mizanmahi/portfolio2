@@ -1,14 +1,32 @@
 .section {
   position: relative;
+  isolation: isolate;
   padding: var(--space-section) var(--space-page);
   background: hsl(var(--background));
 }
 
+.section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='about-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23about-noise)' opacity='.72'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
 .grid {
   display: grid;
+  position: relative;
   width: min(100%, var(--measure-hero));
   gap: var(--space-12);
   margin-inline: auto;
+}
+
+:global(html[data-theme="light"]) .section::before {
+  mix-blend-mode: multiply;
+  opacity: 0.055;
 }
 
 .photoColumn {
@@ -83,7 +101,7 @@
 
 .title {
   color: hsl(var(--foreground));
-  font-size: var(--text-3xl);
+  font-size: var(--text-section-heading);
   font-weight: 600;
   line-height: 1.2;
   text-wrap: balance;
@@ -98,7 +116,7 @@
 .summary {
   max-width: 60ch;
   color: hsl(var(--foreground));
-  font-size: var(--text-lg);
+  font-size: var(--text-section-copy);
   line-height: var(--leading-body);
   text-wrap: pretty;
 }

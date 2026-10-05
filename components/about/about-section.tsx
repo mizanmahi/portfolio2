@@ -97,7 +97,7 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
           <motion.h2 className={styles.title} id="about-title" variants={entranceVariants.item}>About</motion.h2>
           <motion.div className={styles.summaries} variants={entranceVariants.item}>
             <p className={styles.summary}>
-              I&apos;m Mizanur Rahman, a <Highlighter action="underline" color={underlineColor}>Web Developer L2</Highlighter> at <Highlighter action="underline" color={underlineColor}>Programming Hero</Highlighter> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software.
+              I&apos;m Mizanur Rahman, a <Highlighter action="underline" color={underlineColor}>Web Developer L2</Highlighter> at <Highlighter action="underline" color={underlineColor}>Programming Hero</Highlighter> building modern, scalable web applications. My path from teaching to production engineering has helped me mentor <Highlighter action="underline" color={underlineColor}>2,500+ students</Highlighter> while designing software that holds up in the real world.
             </p>
             <div className={styles.techStack}>
               <p className={styles.summary}>Works across the stack with:</p>
@@ -110,13 +110,10 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
               </ul>
             </div>
             <p className={styles.summary}>
-              I&apos;ve also built projects around AI agents and intelligent systems, using AI to create practical solutions and automate real-world workflows.
+              I work on system design, backend engineering, code reviews, and AI agents or intelligent systems that automate useful workflows. Mentorship keeps my approach grounded in clear communication, knowledge sharing, and helping other developers grow.
             </p>
             <p className={styles.summary}>
-              Beyond writing code, I enjoy system design, backend engineering, code reviews, and solving complex technical problems. My experience as a mentor has shaped how I approach engineering, with a strong focus on clear communication, knowledge sharing, and helping others grow.
-            </p>
-            <p className={styles.summary}>
-              I&apos;m driven by curiosity and continuous improvement, always looking for better ways to design systems, solve problems, and turn ideas into reliable software. For me, software engineering is about turning ideas into well-designed systems that are useful, scalable, and built to last. That same mindset shapes how I&apos;ve taught and mentored <Highlighter action="underline" color={underlineColor}>2,500+ students</Highlighter>.
+              Driven by curiosity, I turn ideas into reliable, well-designed systems built to last.
             </p>
           </motion.div>
 

@@ -61,14 +61,18 @@ Do not use arbitrary pixel values anywhere (`text-[15px]`, `text-[22px]`, etc). 
 | `text-xs` | 12px | 1.4 | Timestamps, fine print, badge labels |
 | `text-sm` | 14px | 1.5 | Secondary text, nav items, muted captions |
 | `text-base` | 16px | 1.6 | Body paragraphs (minimum readable size) |
-| `text-lg` | 18px | 1.6 | Lead paragraphs, larger body text |
-| `text-xl` | 20px | 1.4 | Card titles, small headings |
+| `text-lg` | 18px | 1.6 | Secondary lead text, larger body text |
+| `text-xl` | 20px | 1.4 | Standard editorial section copy, card titles, small headings |
 | `text-2xl` | 24px | 1.3 | Section subheadings |
-| `text-3xl` | 32px | 1.2 | Section headings |
-| `text-4xl` | 40px | 1.15 | Larger section headings |
+| `text-3xl` | 32px | 1.2 | Compact section headings |
+| `text-4xl` | 40px | 1.15 | Standard section headings |
 | `text-5xl`+ | 56px+ | 1.05–1.1 | Hero display name only |
 
 Spacing between text elements should also snap to the existing 4px/8px spacing grid used across the rest of the site, defined in `DESIGN.md`, not one-off margin/padding values.
+
+### Section typography defaults
+
+Use `--text-section-heading` (`text-4xl`) for standard section headings and `--text-section-copy` (`text-xl`) for editorial copy such as About-section paragraphs. This keeps future sections at the same readable scale without introducing per-component sizes.
 
 ---
 

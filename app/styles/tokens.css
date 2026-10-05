@@ -75,6 +75,8 @@
   --text-kicker: var(--text-xs);
   --text-terminal: var(--text-lg);
   --text-body: var(--text-base);
+  --text-section-copy: var(--text-xl);
+  --text-section-heading: var(--text-4xl);
   --text-display: clamp(var(--text-5xl), 9vw, var(--text-8xl));
   --leading-kicker: 1.4;
   --leading-sm: 1.5;
