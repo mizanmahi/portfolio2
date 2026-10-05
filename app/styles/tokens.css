@@ -24,6 +24,10 @@
   --hero-secondary-hover-background-opacity: 0.92;
   --hero-secondary-hover-border: var(--accent);
   --hero-secondary-hover-foreground: var(--accent-hover);
+  --photo-duotone-opacity: 0.1;
+  --photo-scanline-opacity: 0.04;
+  --photo-spotlight-radius: calc(var(--space-24) * 2);
+  --texture-scanline-gap: 0.1875rem;
   --aura-page-background: var(--background);
   --aura-layer-1-background: radial-gradient(55.8% 55.49% at 50% 100%, hsl(var(--accent) / 0.76) 0%, transparent 100%);
   --aura-layer-1-blend: screen;
@@ -71,6 +75,8 @@
   --text-kicker: var(--text-xs);
   --text-terminal: var(--text-lg);
   --text-body: var(--text-base);
+  --text-section-copy: var(--text-xl);
+  --text-section-heading: var(--text-4xl);
   --text-display: clamp(var(--text-5xl), 9vw, var(--text-8xl));
   --leading-kicker: 1.4;
   --leading-sm: 1.5;
@@ -110,6 +116,8 @@ html[data-theme="light"] {
   --hero-secondary-hover-background-opacity: 0.1;
   --hero-secondary-hover-border: var(--accent-strong);
   --hero-secondary-hover-foreground: var(--accent-strong);
+  --photo-duotone-opacity: 0.065;
+  --photo-scanline-opacity: 0.03;
   --aura-page-background: var(--background);
   --aura-layer-1-background: radial-gradient(72% 76% at 0% 0%, hsl(var(--accent) / 0.24) 0%, transparent 72%), radial-gradient(58% 68% at 100% 16%, hsl(var(--accent-strong) / 0.1) 0%, transparent 74%);
   --aura-layer-1-blend: normal;

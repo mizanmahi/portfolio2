@@ -11,6 +11,21 @@ type AboutSectionProps = {
   photoSrc: string;
 };
 
+const underlineColor = "hsl(var(--accent-strong))";
+
+const technologies = [
+  "React",
+  "Next.js",
+  "Node.js",
+  "PostgreSQL",
+  "MongoDB",
+  "Prisma",
+  "Golang",
+  "Python",
+  "Docker",
+  "AWS",
+];
+
 const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   photo: {
     hidden: { clipPath: "circle(0% at 50% 50%)", scale: 0.88 },
@@ -34,9 +49,6 @@ const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   },
 };
 
-const highlightMarkerColor = "hsl(var(--accent) / 0.28)";
-const underlineMarkerColor = "hsl(var(--accent-strong))";
-
 export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion() ?? false;
@@ -48,16 +60,32 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
       <div className={styles.grid}>
         <div className={styles.photoColumn}>
           <span aria-hidden="true" className={styles.photoHook} />
-          <div className={styles.photoHanger}>
-            <motion.div
-              animate={isRevealed ? "visible" : "hidden"}
-              className={styles.photoReveal}
-              initial={prefersReducedMotion ? false : "hidden"}
-              variants={entranceVariants.photo}
-            >
-              <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
-            </motion.div>
-          </div>
+          <motion.div
+            animate={prefersReducedMotion ? { rotate: 0 } : { rotate: 0.6 }}
+            className={styles.photoHanger}
+            initial={prefersReducedMotion ? false : { rotate: -0.6 }}
+            transition={prefersReducedMotion ? { duration: 0 } : {
+              type: "spring",
+              stiffness: 12,
+              damping: 5,
+              mass: 1.4,
+              repeat: Infinity,
+              repeatType: "mirror",
+              repeatDelay: 0.6,
+            }}
+          >
+            <div className={styles.photoHangerAssembly}>
+              <span aria-hidden="true" className={styles.hangerTag}>v1.0</span>
+              <motion.div
+                animate={isRevealed ? "visible" : "hidden"}
+                className={styles.photoReveal}
+                initial={prefersReducedMotion ? false : "hidden"}
+                variants={entranceVariants.photo}
+              >
+                <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
 
         <motion.div
@@ -69,16 +97,23 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
           <motion.h2 className={styles.title} id="about-title" variants={entranceVariants.item}>About</motion.h2>
           <motion.div className={styles.summaries} variants={entranceVariants.item}>
             <p className={styles.summary}>
-              I&apos;m Mizanur Rahman, a <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Web Developer L2</Highlighter></span> at <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Programming Hero</Highlighter></span> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software, and I&apos;ve taught and mentored <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>2,500+ students</Highlighter></span>.
+              I&apos;m Mizanur Rahman, a <Highlighter action="underline" color={underlineColor}>Web Developer L2</Highlighter> at <Highlighter action="underline" color={underlineColor}>Programming Hero</Highlighter> building modern, scalable web applications. My path from teaching to production engineering has helped me mentor <Highlighter action="underline" color={underlineColor}>2,500+ students</Highlighter> while designing software that holds up in the real world.
+            </p>
+            <div className={styles.techStack}>
+              <p className={styles.summary}>Works across the stack with:</p>
+              <ul className={styles.techList}>
+                {technologies.map((technology) => (
+                  <li key={technology}>
+                    <span className={styles.techChip}>{technology}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className={styles.summary}>
+              I work on system design, backend engineering, code reviews, and AI agents or intelligent systems that automate useful workflows. Mentorship keeps my approach grounded in clear communication, knowledge sharing, and helping other developers grow.
             </p>
             <p className={styles.summary}>
-              I work across the stack with <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>React, Next.js, Node.js, PostgreSQL, MongoDB, Prisma, Golang, Python, Docker, and AWS</Highlighter></span>. I&apos;ve also built projects around <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>AI agents and intelligent systems</Highlighter></span>, using AI to create practical solutions and automate real-world workflows.
-            </p>
-            <p className={styles.summary}>
-              Beyond writing code, I enjoy system design, backend engineering, code reviews, and solving complex technical problems. My experience as a mentor has shaped how I approach engineering, with a strong focus on clear communication, knowledge sharing, and helping others grow.
-            </p>
-            <p className={styles.summary}>
-              I&apos;m driven by curiosity and continuous improvement, always looking for better ways to design systems, solve problems, and turn ideas into reliable software. For me, software engineering is about turning ideas into <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>well-designed systems</Highlighter></span> that are useful, scalable, and built to last.
+              Driven by curiosity, I turn ideas into reliable, well-designed systems built to last.
             </p>
           </motion.div>
 

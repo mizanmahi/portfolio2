@@ -66,6 +66,7 @@ export function Highlighter({
       const currentAnnotation = annotate(element, annotationConfig)
       annotation = currentAnnotation
       currentAnnotation.show()
+
     }
 
     return () => {
