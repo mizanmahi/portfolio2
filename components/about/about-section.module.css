@@ -24,7 +24,7 @@
   z-index: 0;
   top: 50%;
   left: 50%;
-  width: max(100%, var(--measure-hero));
+  width: 100%;
   height: auto;
   color: hsl(var(--accent-strong) / 0.26);
   opacity: 0.56;
