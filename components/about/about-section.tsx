@@ -13,6 +13,19 @@ type AboutSectionProps = {
 
 const underlineColor = "hsl(var(--accent-strong))";
 
+const technologies = [
+  "React",
+  "Next.js",
+  "Node.js",
+  "PostgreSQL",
+  "MongoDB",
+  "Prisma",
+  "Golang",
+  "Python",
+  "Docker",
+  "AWS",
+];
+
 const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   photo: {
     hidden: { clipPath: "circle(0% at 50% 50%)", scale: 0.88 },
@@ -70,8 +83,18 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
             <p className={styles.summary}>
               I&apos;m Mizanur Rahman, a <Highlighter action="underline" color={underlineColor}>Web Developer L2</Highlighter> at <Highlighter action="underline" color={underlineColor}>Programming Hero</Highlighter> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software.
             </p>
+            <div className={styles.techStack}>
+              <p className={styles.summary}>Works across the stack with:</p>
+              <ul className={styles.techList}>
+                {technologies.map((technology) => (
+                  <li key={technology}>
+                    <span className={styles.techChip}>{technology}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <p className={styles.summary}>
-              I work across the stack with React, Next.js, Node.js, PostgreSQL, MongoDB, Prisma, Golang, Python, Docker, and AWS. I&apos;ve also built projects around AI agents and intelligent systems, using AI to create practical solutions and automate real-world workflows.
+              I&apos;ve also built projects around AI agents and intelligent systems, using AI to create practical solutions and automate real-world workflows.
             </p>
             <p className={styles.summary}>
               Beyond writing code, I enjoy system design, backend engineering, code reviews, and solving complex technical problems. My experience as a mentor has shaped how I approach engineering, with a strong focus on clear communication, knowledge sharing, and helping others grow.
