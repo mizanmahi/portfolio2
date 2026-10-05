@@ -2,12 +2,15 @@
   position: relative;
   isolation: isolate;
   padding: var(--space-section) var(--space-page);
-  background: hsl(var(--background));
+  background:
+    radial-gradient(ellipse 56% 62% at 82% 42%, hsl(var(--accent) / 0.1), transparent 72%),
+    radial-gradient(ellipse 42% 48% at 12% 74%, hsl(var(--foreground) / 0.035), transparent 74%),
+    hsl(var(--background));
 }
 
 .section::before {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
   content: "";
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='about-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23about-noise)' opacity='.72'/%3E%3C/svg%3E");
@@ -16,9 +19,28 @@
   pointer-events: none;
 }
 
+.calibrationField {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--measure-hero));
+  height: auto;
+  color: hsl(var(--accent-strong) / 0.26);
+  opacity: 0.56;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.calibrationLines { stroke: currentColor; stroke-width: 1; }
+.calibrationInner { opacity: 0.42; }
+.calibrationTicks { opacity: 0.5; stroke-dasharray: 2 8; }
+.calibrationCross { opacity: 0.66; }
+
 .grid {
   display: grid;
   position: relative;
+  z-index: 1;
   width: min(100%, var(--measure-hero));
   gap: var(--space-12);
   margin-inline: auto;
@@ -28,6 +50,15 @@
   mix-blend-mode: multiply;
   opacity: 0.055;
 }
+
+:global(html[data-theme="light"]) .section {
+  background:
+    radial-gradient(ellipse 56% 62% at 82% 42%, hsl(var(--accent) / 0.075), transparent 72%),
+    radial-gradient(ellipse 42% 48% at 12% 74%, hsl(var(--accent-strong) / 0.03), transparent 74%),
+    hsl(var(--background));
+}
+
+:global(html[data-theme="light"]) .calibrationField { opacity: 0.3; }
 
 .photoColumn {
   position: relative;

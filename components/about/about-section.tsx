@@ -49,6 +49,29 @@ const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   },
 };
 
+function ProfileCalibrationField() {
+  return (
+    <svg aria-hidden="true" className={styles.calibrationField} fill="none" viewBox="0 0 1440 900">
+      <g className={styles.calibrationLines}>
+        <path d="M0 132H248C336 132 364 236 462 236H640" />
+        <path d="M1440 742H1216C1122 742 1098 636 996 636H804" />
+        <path d="M1042 0V168C1042 226 994 274 936 274H772" />
+        <path d="M346 900V744C346 684 394 636 454 636H588" />
+        <path d="M76 498H196C254 498 300 544 300 602V816" />
+        <path d="M1364 402H1238C1178 402 1130 354 1130 294V82" />
+        <rect x="860" y="112" width="370" height="612" rx="18" />
+        <rect x="884" y="136" width="322" height="564" rx="12" className={styles.calibrationInner} />
+        <circle cx="936" cy="274" r="12" />
+        <circle cx="996" cy="636" r="12" />
+        <circle cx="300" cy="602" r="10" />
+        <circle cx="1130" cy="294" r="10" />
+        <path d="M792 418H1276M792 450H1276M792 482H1276" className={styles.calibrationTicks} />
+        <path d="M160 212H262M211 161V263M1300 662H1402M1351 611V713" className={styles.calibrationCross} />
+      </g>
+    </svg>
+  );
+}
+
 export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion() ?? false;
@@ -57,6 +80,7 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
 
   return (
     <section aria-labelledby="about-title" className={styles.section} id="about" ref={sectionRef}>
+      <ProfileCalibrationField />
       <div className={styles.grid}>
         <div className={styles.photoColumn}>
           <span aria-hidden="true" className={styles.photoHook} />
