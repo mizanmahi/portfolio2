@@ -60,16 +60,32 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
       <div className={styles.grid}>
         <div className={styles.photoColumn}>
           <span aria-hidden="true" className={styles.photoHook} />
-          <div className={styles.photoHanger}>
-            <motion.div
-              animate={isRevealed ? "visible" : "hidden"}
-              className={styles.photoReveal}
-              initial={prefersReducedMotion ? false : "hidden"}
-              variants={entranceVariants.photo}
-            >
-              <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
-            </motion.div>
-          </div>
+          <motion.div
+            animate={prefersReducedMotion ? { rotate: 0 } : { rotate: 0.6 }}
+            className={styles.photoHanger}
+            initial={prefersReducedMotion ? false : { rotate: -0.6 }}
+            transition={prefersReducedMotion ? { duration: 0 } : {
+              type: "spring",
+              stiffness: 12,
+              damping: 5,
+              mass: 1.4,
+              repeat: Infinity,
+              repeatType: "mirror",
+              repeatDelay: 0.6,
+            }}
+          >
+            <div className={styles.photoHangerAssembly}>
+              <span aria-hidden="true" className={styles.hangerTag}>v1.0</span>
+              <motion.div
+                animate={isRevealed ? "visible" : "hidden"}
+                className={styles.photoReveal}
+                initial={prefersReducedMotion ? false : "hidden"}
+                variants={entranceVariants.photo}
+              >
+                <PhotoFrame alt={photoAlt} isRevealed={isRevealed} src={photoSrc} />
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
 
         <motion.div

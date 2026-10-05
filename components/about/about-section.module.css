@@ -36,18 +36,39 @@
   padding-top: var(--space-section);
   margin-top: calc(var(--space-section) * -1);
   transform-origin: center top;
-  animation: photo-hang 8s ease-in-out infinite;
 }
 
-.photoHanger::before {
+.photoHangerAssembly {
+  position: relative;
+  transform-origin: center top;
+}
+
+.photoHangerAssembly::before {
   position: absolute;
-  top: 0;
+  bottom: 100%;
   left: 50%;
   width: 1px;
   height: var(--space-section);
   content: "";
   background: linear-gradient(to bottom, hsl(var(--accent-strong) / 0.88), hsl(var(--border)));
   transform: translateX(-50%);
+}
+
+.hangerTag {
+  position: absolute;
+  z-index: 2;
+  bottom: calc(100% + (var(--space-section) / 2));
+  left: calc(50% + var(--space-3));
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-sm);
+  background: hsl(var(--surface));
+  box-shadow: 0 var(--space-1) var(--space-2) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity));
+  color: hsl(var(--muted));
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-xs);
+  line-height: var(--leading-kicker);
+  white-space: nowrap;
 }
 
 .photoReveal { position: relative; z-index: 1; }
@@ -128,11 +149,7 @@
   .photoColumn { grid-column: 2; grid-row: 1; order: initial; }
 }
 
-@keyframes photo-hang {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .photoHanger { animation: none; }
+  .photoHanger,
+  .photoHangerAssembly { transform: none; }
 }
