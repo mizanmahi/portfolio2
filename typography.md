@@ -74,6 +74,8 @@ Spacing between text elements should also snap to the existing 4px/8px spacing g
 
 Use `--text-section-heading` (`text-4xl`) for standard section headings and `--text-section-copy` (`text-xl`) for editorial copy such as About-section paragraphs. This keeps future sections at the same readable scale without introducing per-component sizes.
 
+`--text-section-copy` is also the minimum for descriptive card content. Smaller scale tokens remain reserved for UI labels, navigation, badge labels, and terminal metadata rather than visitor-facing reading copy.
+
 ---
 
 ## Loading fonts (performance)

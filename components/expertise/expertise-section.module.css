@@ -133,7 +133,7 @@
 .cardDescription {
   max-width: 39ch;
   color: hsl(var(--muted));
-  font-size: var(--text-base);
+  font-size: var(--text-section-copy);
   line-height: var(--leading-body);
   text-wrap: pretty;
 }
