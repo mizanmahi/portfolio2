@@ -11,6 +11,8 @@ type AboutSectionProps = {
   photoSrc: string;
 };
 
+const underlineColor = "hsl(var(--accent-strong))";
+
 const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
   photo: {
     hidden: { clipPath: "circle(0% at 50% 50%)", scale: 0.88 },
@@ -33,9 +35,6 @@ const entranceVariants: Record<"photo" | "content" | "item", Variants> = {
     },
   },
 };
-
-const highlightMarkerColor = "hsl(var(--accent) / 0.28)";
-const underlineMarkerColor = "hsl(var(--accent-strong))";
 
 export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -69,16 +68,16 @@ export function AboutSection({ photoAlt, photoSrc }: AboutSectionProps) {
           <motion.h2 className={styles.title} id="about-title" variants={entranceVariants.item}>About</motion.h2>
           <motion.div className={styles.summaries} variants={entranceVariants.item}>
             <p className={styles.summary}>
-              I&apos;m Mizanur Rahman, a <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Web Developer L2</Highlighter></span> at <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>Programming Hero</Highlighter></span> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software, and I&apos;ve taught and mentored <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>2,500+ students</Highlighter></span>.
+              I&apos;m Mizanur Rahman, a <Highlighter action="underline" color={underlineColor}>Web Developer L2</Highlighter> at <Highlighter action="underline" color={underlineColor}>Programming Hero</Highlighter> with several years of experience building modern, scalable web applications. My journey has grown from teaching and mentoring developers to designing and developing production-ready software.
             </p>
             <p className={styles.summary}>
-              I work across the stack with <span className={styles.highlight}><Highlighter color={highlightMarkerColor}>React, Next.js, Node.js, PostgreSQL, MongoDB, Prisma, Golang, Python, Docker, and AWS</Highlighter></span>. I&apos;ve also built projects around <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>AI agents and intelligent systems</Highlighter></span>, using AI to create practical solutions and automate real-world workflows.
+              I work across the stack with React, Next.js, Node.js, PostgreSQL, MongoDB, Prisma, Golang, Python, Docker, and AWS. I&apos;ve also built projects around AI agents and intelligent systems, using AI to create practical solutions and automate real-world workflows.
             </p>
             <p className={styles.summary}>
               Beyond writing code, I enjoy system design, backend engineering, code reviews, and solving complex technical problems. My experience as a mentor has shaped how I approach engineering, with a strong focus on clear communication, knowledge sharing, and helping others grow.
             </p>
             <p className={styles.summary}>
-              I&apos;m driven by curiosity and continuous improvement, always looking for better ways to design systems, solve problems, and turn ideas into reliable software. For me, software engineering is about turning ideas into <span className={styles.highlight}><Highlighter action="underline" color={underlineMarkerColor}>well-designed systems</Highlighter></span> that are useful, scalable, and built to last.
+              I&apos;m driven by curiosity and continuous improvement, always looking for better ways to design systems, solve problems, and turn ideas into reliable software. For me, software engineering is about turning ideas into well-designed systems that are useful, scalable, and built to last. That same mindset shapes how I&apos;ve taught and mentored <Highlighter action="underline" color={underlineColor}>2,500+ students</Highlighter>.
             </p>
           </motion.div>
 
