@@ -1,4 +1,5 @@
 import { AboutSection } from "@/components/about/about-section";
+import { ExpertiseSection } from "@/components/expertise/expertise-section";
 import { Hero } from "@/components/hero/hero";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
         photoAlt="Mizanur Rahman, a full-stack web developer based in Dhaka, Bangladesh"
         photoSrc="/images/mizanur-rahman.png"
       />
+      <ExpertiseSection />
     </>
   );
 }

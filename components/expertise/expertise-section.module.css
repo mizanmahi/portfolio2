@@ -1,0 +1,187 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-section) var(--space-page);
+  background: hsl(var(--background));
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, var(--measure-hero));
+  margin-inline: auto;
+}
+
+.diagram {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--measure-hero));
+  height: auto;
+  color: hsl(var(--accent-strong) / 0.18);
+  opacity: 0.62;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.diagram path,
+.diagram circle { stroke: currentColor; stroke-width: 1; }
+.diagramCore { fill: currentColor; }
+
+.intro {
+  display: grid;
+  max-width: 48rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+.eyebrow,
+.index {
+  color: hsl(var(--accent-strong));
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  line-height: var(--leading-kicker);
+}
+
+.title {
+  color: hsl(var(--foreground));
+  font-size: var(--text-section-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 42ch;
+  color: hsl(var(--muted));
+  font-size: var(--text-section-copy);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  min-height: calc(var(--space-32) * 2);
+  align-content: space-between;
+  gap: var(--space-12);
+  overflow: hidden;
+  padding: var(--space-6);
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-lg);
+  background: hsl(var(--surface) / 0.88);
+  box-shadow: 0 var(--space-1) var(--space-2) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity));
+  transition: border-color 220ms ease-out, box-shadow 220ms ease-out, transform 220ms ease-out;
+}
+
+.cardGlow {
+  position: absolute;
+  inset: calc(var(--space-12) * -1);
+  background: radial-gradient(circle at 18% 16%, hsl(var(--accent) / 0.22), transparent 38%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease-out;
+}
+
+.cardHeader,
+.cardBody {
+  position: relative;
+  z-index: 1;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.iconBox {
+  display: grid;
+  width: var(--space-12);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-md);
+  background: hsl(var(--background) / 0.52);
+  color: hsl(var(--accent-strong));
+  transition: background 220ms ease-out, color 220ms ease-out, transform 220ms ease-out;
+}
+
+.cardBody { display: grid; gap: var(--space-3); }
+
+.cardTitle {
+  color: hsl(var(--foreground));
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.cardDescription {
+  max-width: 39ch;
+  color: hsl(var(--muted));
+  font-size: var(--text-section-copy);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
+}
+
+.cardSignal {
+  position: absolute;
+  z-index: 1;
+  right: var(--space-4);
+  bottom: var(--space-3);
+  color: hsl(var(--accent-strong));
+  font-size: var(--text-xs);
+  line-height: 1;
+  opacity: 0.52;
+}
+
+.fullStack { grid-column: auto; }
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: hsl(var(--accent-strong) / 0.72);
+    box-shadow: 0 var(--space-3) var(--space-8) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-hover-opacity));
+    transform: translateY(calc(var(--space-1) * -1));
+  }
+
+  .card:hover .cardGlow { opacity: 1; }
+  .card:hover .iconBox { background: hsl(var(--accent) / 0.12); color: hsl(var(--accent-strong)); transform: rotate(-6deg) scale(1.06); }
+}
+
+@media (min-width: 48rem) {
+  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .fullStack { grid-column: span 4; }
+  .systemDesign { grid-column: span 2; }
+  .codeReview { grid-column: span 2; }
+  .devOps { grid-column: span 3; }
+  .mentorship { grid-column: span 3; }
+}
+
+@media (min-width: 64rem) {
+  .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .fullStack { grid-column: span 7; }
+  .systemDesign { grid-column: span 5; }
+  .codeReview { grid-column: span 4; }
+  .devOps { grid-column: span 5; }
+  .mentorship { grid-column: span 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardGlow,
+  .iconBox { transition: none; }
+}
