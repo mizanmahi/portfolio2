@@ -1,5 +1,5 @@
 .frame {
-  --spotlight-radius: 22%;
+  --spotlight-radius: var(--photo-spotlight-radius);
   --spotlight-x: 50%;
   --spotlight-y: 50%;
   --spotlight-opacity: 0;
@@ -39,14 +39,22 @@
   transition: opacity 240ms ease-out;
 }
 
-.scanlines, .vignette, .spotlightRing, .beam { position: absolute; inset: 0; pointer-events: none; }
+.duotone, .scanlines, .vignette, .spotlightRing, .beam { position: absolute; inset: 0; pointer-events: none; }
 
-.scanlines {
-  background: repeating-linear-gradient(to bottom, hsl(var(--foreground) / 0.07) 0 1px, transparent 1px var(--space-1));
-  opacity: 0.3;
+.duotone {
+  background: hsl(var(--accent));
+  mix-blend-mode: multiply;
+  opacity: var(--photo-duotone-opacity);
 }
 
-.vignette { background: radial-gradient(ellipse at center, transparent 45%, hsl(var(--background) / 0.42) 100%); }
+.scanlines {
+  background: repeating-linear-gradient(to bottom, hsl(var(--foreground) / var(--photo-scanline-opacity)) 0 1px, transparent 1px var(--texture-scanline-gap));
+}
+
+.vignette {
+  background: radial-gradient(ellipse at center, transparent 45%, hsl(var(--hero-terminal-shadow) / 0.24) 100%);
+  box-shadow: inset 0 0 var(--space-12) hsl(var(--hero-terminal-shadow) / 0.46);
+}
 
 .spotlightRing {
   opacity: var(--spotlight-opacity);
@@ -77,5 +85,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .baseImage { filter: none; }
-  .colorImage, .spotlightRing, .beam { display: none; }
+  .colorImage, .duotone, .spotlightRing, .beam { display: none; }
 }
