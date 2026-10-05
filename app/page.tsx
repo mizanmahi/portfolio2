@@ -1,6 +1,7 @@
 import { AboutSection } from "@/components/about/about-section";
 import { ExpertiseSection } from "@/components/expertise/expertise-section";
 import { Hero } from "@/components/hero/hero";
+import { TechToolsSection } from "@/components/tech-tools/tech-tools-section";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         photoSrc="/images/mizanur-rahman.png"
       />
       <ExpertiseSection />
+      <TechToolsSection />
     </>
   );
 }
