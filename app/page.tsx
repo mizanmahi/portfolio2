@@ -8,10 +8,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <AboutSection
+      {/* <AboutSection
         photoAlt="Mizanur Rahman, a full-stack web developer based in Dhaka, Bangladesh"
         photoSrc="/images/mizanur-rahman.png"
-      />
+      /> */}
       <AboutScrollSection
         photoAlt="Mizanur Rahman, a full-stack web developer based in Dhaka, Bangladesh"
         photoSrc="/images/mizanur-rahman.png"
