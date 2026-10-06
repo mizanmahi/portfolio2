@@ -102,7 +102,10 @@ export function ExpertiseSection() {
           variants={revealVariants.container}
         >
           <motion.p className={styles.eyebrow} variants={revealVariants.item}>Engineering focus</motion.p>
-          <motion.h2 className={styles.title} id="expertise-title" variants={revealVariants.item}>Expertise shaped by building and teaching</motion.h2>
+          <motion.h2 className={styles.title} id="expertise-title" variants={revealVariants.item}>
+            Expertise shaped by{" "}
+            <span className={styles.titleContinuation}>building and teaching.</span>
+          </motion.h2>
           <motion.p className={styles.description} variants={revealVariants.item}>
             A practical engineering toolkit for taking useful ideas from first sketch to reliable release.
           </motion.p>

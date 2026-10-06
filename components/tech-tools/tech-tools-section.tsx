@@ -1,123 +1,93 @@
 "use client";
 
-import {
-  CloudServerIcon,
-  CodeSquareIcon,
-  Database02Icon,
-  ServerStack02Icon,
-  Structure02Icon,
-} from "@hugeicons/core-free-icons";
+import { CloudServerIcon, CodeSquareIcon, Database02Icon, ServerStack02Icon, Structure02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion, useInView, useReducedMotion, type Variants } from "motion/react";
-import { useRef } from "react";
-
+import { motion, useReducedMotion } from "motion/react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import styles from "@/components/tech-tools/tech-tools-section.module.css";
 
-const toolGroups = [
-  {
-    icon: CodeSquareIcon,
-    index: "01",
-    title: "Frontend and languages",
-    tools: ["JavaScript", "TypeScript", "React", "Next.js"],
-    className: styles.frontend,
-  },
-  {
-    icon: ServerStack02Icon,
-    index: "02",
-    title: "Backend and APIs",
-    tools: ["Node.js", "Express.js", "Python", "tRPC", "Golang", "Echo", "gRPC"],
-    className: styles.backend,
-  },
-  {
-    icon: Database02Icon,
-    index: "03",
-    title: "Data and persistence",
-    tools: ["PostgreSQL", "MongoDB", "Redis", "Prisma"],
-    className: styles.data,
-  },
-  {
-    icon: CloudServerIcon,
-    index: "04",
-    title: "Cloud and delivery",
-    tools: ["AWS", "Docker", "CI/CD"],
-    className: styles.cloud,
-  },
-  {
-    icon: Structure02Icon,
-    index: "05",
-    title: "Systems and architecture",
-    tools: ["System design", "Security", "Performance", "Code review"],
-    className: styles.systems,
-  },
+const layers = [
+  { id: "frontend", icon: CodeSquareIcon, title: "Frontend and languages", label: "Interface", description: "Thoughtful interfaces, built on a typed foundation. From the first interaction to the last detail.", tools: ["JavaScript", "TypeScript", "React", "Next.js"] },
+  { id: "backend", icon: ServerStack02Icon, title: "Backend and APIs", label: "Logic", description: "The logic behind the experience. Services and APIs that keep the moving parts working together.", tools: ["Node.js", "Express.js", "Python", "tRPC", "Golang", "Echo", "gRPC"] },
+  { id: "data", icon: Database02Icon, title: "Data and persistence", label: "Data", description: "A dependable home for application data. Structured storage, flexible models, and fast access.", tools: ["PostgreSQL", "MongoDB", "Redis", "Prisma"] },
+  { id: "cloud", icon: CloudServerIcon, title: "Cloud and delivery", label: "Delivery", description: "From local development to production. Repeatable environments and a clear path to shipping.", tools: ["AWS", "Docker", "CI/CD"] },
+  { id: "systems", icon: Structure02Icon, title: "Systems and architecture", label: "Foundation", description: "The decisions that hold everything together. Designing for maintainability, security, and performance.", tools: ["System design", "Security", "Performance", "Code review"] },
 ] as const;
 
-const revealVariants: Record<"container" | "item", Variants> = {
-  container: {
-    hidden: {},
-    visible: { transition: { delayChildren: 0.08, staggerChildren: 0.1 } },
-  },
-  item: {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
-  },
-};
-
-function StackMap() {
+function StackBlueprint({ selected, reducedMotion }: { selected: number; reducedMotion: boolean }) {
   return (
-    <svg aria-hidden="true" className={styles.stackMap} fill="none" viewBox="0 0 1440 760">
-      <path d="M0 482H214C318 482 356 354 472 354H610C724 354 752 530 882 530H1440" />
-      <path d="M154 0V130C154 204 214 264 288 264H398C470 264 528 322 528 394V760" />
-      <path d="M1292 0V120C1292 188 1236 244 1168 244H1058C988 244 932 300 932 370V614" />
-      <circle cx="472" cy="354" r="10" />
-      <circle cx="882" cy="530" r="10" />
-      <circle cx="288" cy="264" r="8" />
-      <circle cx="1168" cy="244" r="8" />
-      <circle cx="720" cy="430" r="90" className={styles.mapRing} />
-      <circle cx="720" cy="430" r="6" className={styles.mapCore} />
+    <svg className={styles.blueprint} viewBox="0 0 640 500" fill="none" aria-hidden="true">
+      <path className={styles.guides} d="M64 348 320 220 576 348 320 476Z M320 24V428 M64 348V112 M576 348V112" />
+      {[...layers].reverse().map((layer, reverseIndex) => {
+        const index = layers.length - 1 - reverseIndex;
+        const y = 60 + index * 58;
+        return (
+          <motion.g key={layer.id} animate={{ y: selected === index ? -12 : 0 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} className={selected === index ? styles.activePlane : styles.plane}>
+            <path className={styles.planeEdge} d={`M128 ${y + 80} 320 ${y + 176} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
+            <path className={styles.planeFace} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80} 320 ${y + 176}Z`} />
+            <path className={styles.planeGrid} d={`M192 ${y + 48} 384 ${y + 144} M256 ${y + 16} 448 ${y + 112} M192 ${y + 112} 384 ${y + 16} M256 ${y + 144} 448 ${y + 48}`} />
+            <path className={styles.trace} d={`M224 ${y + 80} 288 ${y + 48} 352 ${y + 80} 416 ${y + 48}`} />
+            <circle className={styles.node} cx="224" cy={y + 80} r="4" /><circle className={styles.node} cx="416" cy={y + 48} r="4" />
+            <path className={styles.callout} d={`M512 ${y + 80}H548`} /><text x="560" y={y + 85} className={styles.planeNumber}>0{index + 1}</text>
+          </motion.g>
+        );
+      })}
     </svg>
   );
 }
 
 export function TechToolsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const prefersReducedMotion = useReducedMotion() ?? false;
-  const isInView = useInView(sectionRef, { amount: 0.18, once: true });
-  const isRevealed = prefersReducedMotion || isInView;
-
+  const [selected, setSelected] = useState(0);
+  const buttons = useRef<(HTMLButtonElement | null)[]>([]);
+  const reducedMotion = useReducedMotion() ?? false;
+  const layer = layers[selected];
+  function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next = index;
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % layers.length;
+    else if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (index + layers.length - 1) % layers.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = layers.length - 1;
+    else return;
+    event.preventDefault(); setSelected(next); buttons.current[next]?.focus();
+  }
   return (
-    <section aria-labelledby="tech-tools-title" className={styles.section} id="tech-tools" ref={sectionRef}>
-      <StackMap />
-      <motion.div
-        animate={isRevealed ? "visible" : "hidden"}
-        className={styles.content}
-        initial={prefersReducedMotion ? false : "hidden"}
-        variants={revealVariants.container}
-      >
-        <motion.header className={styles.intro} variants={revealVariants.item}>
+    <section aria-labelledby="tech-tools-title" className={styles.section} id="tech-tools">
+      <div className={styles.content}>
+        <header className={styles.intro}>
           <p className={styles.eyebrow}>The workbench</p>
-          <h2 className={styles.title} id="tech-tools-title">Tech and tools I use</h2>
-          <p className={styles.description}>A connected toolkit for designing, building, and operating dependable software.</p>
-        </motion.header>
-
-        <motion.ul className={styles.grid} variants={revealVariants.container}>
-          {toolGroups.map(({ className, icon, index, title, tools }) => (
-            <motion.li className={`${styles.card} ${className}`} key={index} variants={revealVariants.item}>
-              <div className={styles.cardHeader}>
-                <span className={styles.iconBox}><HugeiconsIcon aria-hidden="true" icon={icon} size="1.5em" /></span>
-                <span className={styles.index}>/{index}</span>
+          <h2 className={styles.title} id="tech-tools-title">
+            <span className={styles.titleLead}>Good software.</span>{" "}
+            <span className={styles.titleOffset}>Every layer <span className={styles.titleAccent}>considered.</span></span>
+          </h2>
+          <p className={styles.description}>The technologies I reach for to turn an idea into a dependable product. Explore the stack, layer by layer.</p>
+        </header>
+        <motion.div className={styles.workbench} initial={false} whileInView={reducedMotion ? undefined : { opacity: [0.65, 1], y: [20, 0] }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65 }}>
+          <div className={styles.navigator}>
+            <div className={styles.navigatorHeader}><span>Tech and tools</span><span>05 layers</span></div>
+            <div role="tablist" aria-label="Technology layers" aria-orientation="vertical" className={styles.tabs}>
+              {layers.map((item, index) => (
+                <button key={item.id} ref={(element) => { buttons.current[index] = element; }} type="button" role="tab" id={`tech-tab-${item.id}`} aria-selected={selected === index} aria-controls={`tech-panel-${item.id}`} tabIndex={selected === index ? 0 : -1} className={styles.tab} onClick={() => setSelected(index)} onKeyDown={(event) => handleKeyDown(event, index)}>
+                  <span className={styles.tabNumber}>0{index + 1}</span><HugeiconsIcon icon={item.icon} size={24} aria-hidden="true" />
+                  <span className={styles.tabTitle}>{item.title}<span className={styles.tabMeta}>{item.tools.length} tools & practices</span></span><span className={styles.tabArrow} aria-hidden="true">↗</span>
+                </button>
+              ))}
+            </div>
+            <p className={styles.navigatorFooter}>From the interface to the infrastructure.</p>
+          </div>
+          <div className={styles.explorer}>
+            <div className={styles.diagramHeader}><span className={styles.systemLabel}>stack / {layer.id}</span><span className={styles.diagramCaption}>Architecture view</span></div>
+            <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} /><span className={styles.diagramLabel}>{layer.label}</span></div>
+            {layers.map((item, index) => (
+              <div key={item.id} role="tabpanel" id={`tech-panel-${item.id}`} aria-labelledby={`tech-tab-${item.id}`} hidden={selected !== index} tabIndex={0} className={styles.panel}>
+                {selected === index && <motion.div initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
+                  <div className={styles.panelHeading}><h3>{item.title}</h3><span>0{index + 1} / 05</span></div><p className={styles.panelCopy}>{item.description}</p>
+                  <ul className={styles.tools}>{item.tools.map((tool, toolIndex) => <motion.li key={tool} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.25, delay: reducedMotion ? 0 : toolIndex * 0.035 }}><span aria-hidden="true" />{tool}</motion.li>)}</ul>
+                </motion.div>}
               </div>
-              <h3 className={styles.cardTitle}>{title}</h3>
-              <div className={styles.toolChips}>
-                {tools.map((tool) => <span className={styles.toolChip} key={tool}>{tool}</span>)}
-              </div>
-            </motion.li>
-          ))}
-        </motion.ul>
-      </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
