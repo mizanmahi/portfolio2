@@ -10,7 +10,7 @@ export function ScrollCue() {
     <a
       className={styles.scrollCue}
       data-visible={isComplete}
-      href="#projects"
+      href="#about"
     >
       <span>scroll↓</span>
       <span aria-hidden="true" className={styles.scrollCueCaret} />

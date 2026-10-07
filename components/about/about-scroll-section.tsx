@@ -1,118 +1,96 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { useRef } from "react";
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { useRef, type PointerEvent } from "react";
 
+import { Highlighter } from "@/components/ui/highlighter";
 import styles from "./about-scroll-section.module.css";
-
-const chapters = [
-  {
-    label: "The builder",
-    title: "Curiosity becomes code.",
-    text: "I'm Mizanur Rahman, a Web Developer L2 at Programming Hero building modern, scalable web applications. Driven by curiosity, I turn ideas into reliable, well-designed systems built to last.",
-    note: "Web Developer L2 / Programming Hero",
-  },
-  {
-    label: "The mentor",
-    title: "Knowledge moves forward.",
-    text: "My path from teaching to production engineering has helped me mentor 2,500+ students while designing software that holds up in the real world. Mentorship keeps my approach grounded in clear communication, knowledge sharing, and helping other developers grow.",
-    note: "2,500+ students mentored",
-  },
-  {
-    label: "The systems thinker",
-    title: "Look beyond the interface.",
-    text: "I work on system design, backend engineering, code reviews, and AI agents or intelligent systems that automate useful workflows. From the first idea to the systems behind it, I work across the stack.",
-    note: "Design / Build / Review / Improve",
-  },
-] as const;
-
-const technologies = ["React", "Next.js", "Node.js", "PostgreSQL", "MongoDB", "Prisma", "Golang", "Python", "Docker", "AWS"];
-
-function RevealWord({ word, progress, start, end, reduced }: { word: string; progress: MotionValue<number>; start: number; end: number; reduced: boolean }) {
-  const emphasis = useTransform(progress, [start, end], [0, 100]);
-  const color = useTransform(emphasis, (value) => `color-mix(in srgb, hsl(var(--foreground)) ${value}%, hsl(var(--muted)))`);
-  return <motion.span style={{ color: reduced ? "hsl(var(--foreground))" : color }}>{word} </motion.span>;
-}
-
-function Chapter({ chapter, index, reduced }: { chapter: typeof chapters[number]; index: number; reduced: boolean }) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 70%"] });
-  const y = useTransform(scrollYProgress, [0, 1], [32, 0]);
-  const words = chapter.text.split(" ");
-
-  return (
-    <motion.article className={styles.chapter} ref={ref} style={{ y: reduced ? 0 : y }} aria-labelledby={`about-story-chapter-${index}`}>
-      <p className={styles.chapterLabel}><span>0{index + 1}</span>{chapter.label}</p>
-      <h3 id={`about-story-chapter-${index}`} className={styles.chapterTitle}>{chapter.title}</h3>
-      <p className={styles.chapterCopy}>
-        <span className="sr-only">{chapter.text}</span>
-        <span aria-hidden="true">{words.map((word, i) => <RevealWord key={`${i}-${word}`} word={word} progress={scrollYProgress} start={i / words.length} end={(i + 1) / words.length} reduced={reduced} />)}</span>
-      </p>
-      <p className={styles.chapterNote}>{chapter.note}</p>
-      {index === chapters.length - 1 && <ul className={styles.technologies} aria-label="Technologies I work with">{technologies.map((tool) => <li key={tool}>{tool}</li>)}</ul>}
-    </motion.article>
-  );
-}
 
 export function AboutScrollSection({ photoSrc, photoAlt }: { photoSrc: string; photoAlt: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() ?? false;
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbitRotate = useTransform(scrollYProgress, [0, 1], [-35, 105]);
-  const orbitScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.65, 1.1, 1.5]);
-  const beamX = useTransform(scrollYProgress, [0, 1], ["-25%", "25%"]);
-  const photoRotate = useTransform(scrollYProgress, [0, 0.4, 1], [-5, 0, 3]);
-  const photoScale = useTransform(scrollYProgress, [0, 0.55, 1], [1.12, 1, 1.04]);
-  const photoColor = useTransform(scrollYProgress, [0.1, 0.5], ["grayscale(100%)", "grayscale(0%)"]);
-  const scanY = useTransform(scrollYProgress, [0.12, 0.65], ["0%", "100%"]);
+  const portraitScale = useTransform(scrollYProgress, [0, 0.5], [1.1, 1]);
+  const portraitClip = useTransform(scrollYProgress, [0, 0.4], ["inset(0% 0% 12% 0%)", "inset(0% 0% 0% 0%)"]);
+  const contourY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const contourDraw = useTransform(scrollYProgress, [0.05, 0.65], [0.12, 1]);
+  const rotateX = useSpring(0, { stiffness: 160, damping: 24 });
+  const rotateY = useSpring(0, { stiffness: 160, damping: 24 });
+  const lift = useSpring(0, { stiffness: 160, damping: 24 });
+  const lightX = useSpring(50, { stiffness: 160, damping: 24 });
+  const lightY = useSpring(50, { stiffness: 160, damping: 24 });
+  const lightOpacity = useSpring(0, { stiffness: 160, damping: 24 });
+  const sheen = useMotionTemplate`radial-gradient(circle at ${lightX}% ${lightY}%, hsl(var(--accent) / 0.18), transparent 65%)`;
+
+  function movePortrait(event: PointerEvent<HTMLElement>) {
+    if (reduced || event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+    const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
+    rotateX.set((0.5 - y) * 8);
+    rotateY.set((x - 0.5) * 8);
+    lift.set(-8);
+    lightX.set(x * 100);
+    lightY.set(y * 100);
+    lightOpacity.set(1);
+  }
+
+  function resetPortrait() {
+    rotateX.set(0);
+    rotateY.set(0);
+    lift.set(0);
+    lightOpacity.set(0);
+  }
 
   return (
-    <section id="about-story" aria-labelledby="about-story-title" className={styles.section} ref={sectionRef}>
-      <div className={styles.background} aria-hidden="true">
-        <div className={styles.backgroundScene}>
-          <motion.div className={styles.beam} style={{ x: reduced ? 0 : beamX }} />
-          <motion.svg className={styles.orbits} viewBox="0 0 1000 1000" fill="none" style={{ rotate: reduced ? 0 : orbitRotate, scale: reduced ? 1 : orbitScale }}>
-            <circle cx="500" cy="500" r="440" />
-            <circle cx="500" cy="500" r="360" strokeDasharray="2 14" />
-            <circle cx="500" cy="500" r="280" />
-            <ellipse cx="500" cy="500" rx="440" ry="150" transform="rotate(-35 500 500)" />
-            <ellipse cx="500" cy="500" rx="440" ry="150" transform="rotate(35 500 500)" />
-            <path d="M500 24V120M500 880V976M24 500H120M880 500H976" />
-            <circle className={styles.orbitNode} cx="500" cy="60" r="8" />
-            <circle className={styles.orbitNode} cx="780" cy="500" r="6" />
-          </motion.svg>
-          <div className={styles.grain} />
-        </div>
+    <section id="about" aria-labelledby="about-story-title" className={styles.section} ref={sectionRef}>
+      <span id="about-story" className={styles.anchor} aria-hidden="true" />
+      <div className={styles.atmosphere} aria-hidden="true">
+        <motion.svg className={styles.contours} viewBox="0 0 1440 1000" fill="none" preserveAspectRatio="xMidYMid slice" style={{ y: reduced ? 0 : contourY }}>
+          {[0, 1, 2, 3, 4, 5].map((line) => (
+            <path key={line} transform={`translate(${line * 32} ${line * 24})`} d="M-320 700C-80 700 40 240 340 240S660 740 1000 740 1300 400 1540 400" />
+          ))}
+          <motion.path className={styles.activeContour} d="M-256 748C-16 748 104 288 404 288S724 788 1064 788 1364 448 1604 448" style={{ pathLength: reduced ? 1 : contourDraw }} />
+        </motion.svg>
+        <div className={styles.paperGrid} />
       </div>
 
       <div className={styles.content}>
-        <header className={styles.header}>
-          <p className={styles.eyebrow}>About / A closer look</p>
-          <h2 id="about-story-title" className={styles.title}>Behind the code,<br /><span>a curious mind.</span></h2>
-          <p className={styles.headerNote}>A builder. A mentor.<br />Always a student.</p>
-        </header>
+        <div className={styles.composition}>
+          <figure className={styles.portrait} onPointerMove={movePortrait} onPointerLeave={resetPortrait} onPointerCancel={resetPortrait}>
+            <motion.div className={styles.portraitSurface} style={{ rotateX: reduced ? 0 : rotateX, rotateY: reduced ? 0 : rotateY, y: reduced ? 0 : lift, transformPerspective: 1000 }}>
+              <motion.div className={styles.photoWindow} style={{ clipPath: reduced ? "none" : portraitClip }}>
+                <motion.div className={styles.photo} style={{ scale: reduced ? 1 : portraitScale }}>
+                  <Image src={photoSrc} alt={photoAlt} fill sizes="(min-width: 1280px) 490px, (min-width: 768px) 42vw, 85vw" className={styles.image} />
+                </motion.div>
+                <span className={styles.photoShade} aria-hidden="true" />
+                <span className={styles.photoSignature} aria-hidden="true">Mizanur Rahman</span>
+                <motion.span className={styles.photoSheen} aria-hidden="true" style={{ background: sheen, opacity: reduced ? 0 : lightOpacity }} />
+              </motion.div>
+            </motion.div>
+          </figure>
 
-        <div className={styles.story}>
-          <div className={styles.portraitColumn}>
-            <div className={styles.pinnedPortrait}>
-              <motion.figure className={styles.portrait} style={{ rotate: reduced ? 0 : photoRotate }}>
-                <div className={styles.photoWindow}>
-                  <motion.div className={styles.photo} style={{ scale: reduced ? 1 : photoScale, filter: reduced ? "none" : photoColor }}>
-                    <Image src={photoSrc} alt={photoAlt} fill sizes="(min-width: 768px) 40vw, 85vw" className={styles.image} />
-                  </motion.div>
-                  {!reduced && <motion.span aria-hidden="true" className={styles.scan} style={{ top: scanY }} />}
-                  <span className={styles.photoCorner} aria-hidden="true" />
-                </div>
-                <figcaption className={styles.caption}><span>Mizanur Rahman</span><span>Dhaka, Bangladesh</span></figcaption>
-              </motion.figure>
-              <div className={styles.readingTrack} aria-hidden="true"><motion.span style={{ scaleX: reduced ? 1 : scrollYProgress }} /></div>
-              <p className={styles.portraitNote}>Building software. Sharing what I learn.</p>
+          <div className={styles.profile}>
+            <h2 id="about-story-title" className={styles.title}>I like seeing<br />the whole picture.</h2>
+            <div className={styles.copy}>
+              <p>
+                I&apos;m Mizanur, a Web Developer L2 at{" "}
+                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>Programming Hero</Highlighter>.
+                {" "}I build web applications end to end, connecting thoughtful interfaces with the APIs, databases, and systems behind them.
+              </p>
+              <p>
+                My work spans backend engineering, system design, and code reviews. I care about clear architecture and maintainable code, so a product feels straightforward to use and stays practical to develop.
+              </p>
+              <p>
+                I also build AI agents and{" "}
+                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>useful automation</Highlighter>
+                {" "}that take repetitive work off people&apos;s hands. Along the way, I&apos;ve shared what I learn with 2,500+ students.
+              </p>
             </div>
+            <a className={styles.exploreLink} href="#expertise">My engineering focus <span aria-hidden="true">↗</span></a>
           </div>
-          <div className={styles.chapters}>{chapters.map((chapter, index) => <Chapter key={chapter.label} chapter={chapter} index={index} reduced={reduced} />)}</div>
         </div>
-        <p className={styles.closing}>Stay curious.<span>Keep building.</span><span aria-hidden="true">↗</span></p>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-.background { position: absolute; inset: 0; pointer-events: none; }
+.background { position: absolute; inset: 0; pointer-events: none; mask-image: linear-gradient(black 55%, transparent 100%); }
 .layer { position: absolute; inset: 0; pointer-events: none; transform: translateZ(0); will-change: transform; }
 .layerOne { background: var(--aura-layer-1-background); mix-blend-mode: var(--aura-layer-1-blend); opacity: var(--aura-layer-1-opacity); }
 .layerTwo { background: var(--aura-layer-2-background); background-size: var(--aura-layer-2-size); mix-blend-mode: var(--aura-layer-2-blend); filter: blur(75px); opacity: var(--aura-layer-2-opacity); }

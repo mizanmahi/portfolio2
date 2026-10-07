@@ -8,6 +8,14 @@
   overflow: hidden;
 }
 
+.shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 65% var(--section-bridge-depth) at 50% 100%, hsl(var(--accent) / var(--section-bridge-opacity)), transparent 100%);
+}
+
 .grid {
   position: relative;
   z-index: 1;

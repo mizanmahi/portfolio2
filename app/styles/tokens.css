@@ -57,6 +57,8 @@
   --space-32: 8rem;
   --space-page: clamp(var(--space-6), 5vw, var(--space-24));
   --space-section: clamp(var(--space-16), 10vw, var(--space-32));
+  --section-bridge-depth: calc(var(--space-32) * 3);
+  --section-bridge-opacity: 0.16;
   --space-terminal-body: 30rem;
   --space-terminal-body-compact: 40rem;
   --measure-hero: 88rem;
@@ -91,6 +93,7 @@
 }
 
 html[data-theme="light"] {
+  --section-bridge-opacity: 0.1;
   --background: 36 24% 96%;
   --surface: 0 0% 100%;
   --foreground: 0 0% 10%;
