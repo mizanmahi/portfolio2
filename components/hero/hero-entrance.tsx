@@ -72,7 +72,7 @@ export function HeroEntrance() {
       <FloatingNav variants={entranceVariants.nav} />
       <motion.main className={styles.page} variants={entranceVariants.main}>
         <BootSequenceProvider shouldStart={shouldSkipEntrance || isTerminalReady}>
-          <section aria-labelledby="hero-title" className={styles.shell}>
+          <section id="top" aria-labelledby="hero-title" className={styles.shell}>
             <AuraBackground />
             <motion.div className={styles.grid} variants={entranceVariants.grid}>
               <motion.div className={styles.intro} variants={entranceVariants.intro}>

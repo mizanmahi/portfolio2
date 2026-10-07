@@ -4,6 +4,7 @@
   overflow: hidden;
   padding: var(--space-section) var(--space-page);
   background: hsl(var(--background));
+  scroll-margin-top: var(--space-24);
 }
 
 .content {
