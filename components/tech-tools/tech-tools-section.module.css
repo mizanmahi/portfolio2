@@ -67,6 +67,11 @@
 .blueprint { width: min(100%, 36rem); height: auto; overflow: visible; }
 .guides { stroke: hsl(var(--border)); stroke-dasharray: 4 8; }
 .plane, .activePlane { stroke-linejoin: round; }
+.layerButton { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.layerVisual { pointer-events: none; }
+.layerHitArea { fill: transparent; pointer-events: all; }
+.layerButton:focus { outline: none; }
+.layerButton:focus-visible .planeFace { stroke: hsl(var(--accent-strong)); stroke-width: 3; stroke-dasharray: 6 4; }
 .planeFace { fill: hsl(var(--surface) / 0.94); stroke: hsl(var(--muted) / 0.42); transition: fill 400ms, stroke 400ms; }
 .planeEdge { fill: hsl(var(--background)); stroke: hsl(var(--border)); transition: fill 400ms, stroke 400ms; }
 .planeGrid { stroke: hsl(var(--muted) / 0.12); }
@@ -80,6 +85,12 @@
 .activePlane .trace { stroke: hsl(var(--accent-strong)); animation: trace 850ms ease-out both; }
 .activePlane .node, .activePlane .planeNumber { fill: hsl(var(--accent-strong)); }
 .activePlane .callout { stroke: hsl(var(--accent-strong)); }
+.layerButton[data-highlighted="true"] .planeFace { fill: color-mix(in srgb, hsl(var(--accent)) 22%, hsl(var(--surface))); stroke: hsl(var(--accent-strong)); }
+.layerButton[data-highlighted="true"] .planeEdge { fill: color-mix(in srgb, hsl(var(--accent)) 26%, hsl(var(--surface))); stroke: hsl(var(--accent-strong)); }
+.layerButton[data-highlighted="true"] .trace,
+.layerButton[data-highlighted="true"] .callout { stroke: hsl(var(--accent-strong)); }
+.layerButton[data-highlighted="true"] .planeNumber,
+.layerButton[data-highlighted="true"] .node { fill: hsl(var(--accent-strong)); }
 .diagramLabel { position: absolute; bottom: var(--space-4); left: var(--space-8); font-size: var(--text-xs); color: hsl(var(--muted)); }
 .panel { padding: var(--space-6) var(--space-8) var(--space-8); border-top: 1px solid hsl(var(--border)); min-height: calc(var(--space-32) * 2 + var(--space-4)); }
 .panelHeading h3 { font-size: var(--text-2xl); font-weight: 500; line-height: 1.3; text-wrap: balance; }

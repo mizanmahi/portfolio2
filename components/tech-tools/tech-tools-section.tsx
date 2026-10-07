@@ -14,15 +14,50 @@ const layers = [
   { id: "systems", icon: Structure02Icon, title: "Systems and architecture", label: "Foundation", description: "The decisions that hold everything together. Designing for maintainability, security, and performance.", tools: ["System design", "Security", "Performance", "Code review"] },
 ] as const;
 
-function StackBlueprint({ selected, reducedMotion }: { selected: number; reducedMotion: boolean }) {
+function StackBlueprint({ selected, reducedMotion, onSelect }: { selected: number; reducedMotion: boolean; onSelect: (index: number) => void }) {
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [focused, setFocused] = useState<number | null>(null);
+  const layerButtons = useRef<(SVGGElement | null)[]>([]);
+
+  function handleLayerKeyDown(event: KeyboardEvent<SVGGElement>, index: number) {
+    let next = index;
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % layers.length;
+    else if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (index + layers.length - 1) % layers.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = layers.length - 1;
+    else if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    onSelect(next);
+    layerButtons.current[next]?.focus();
+  }
+
   return (
-    <svg className={styles.blueprint} viewBox="0 0 640 500" fill="none" aria-hidden="true">
+    <svg className={styles.blueprint} viewBox="0 0 640 500" fill="none" role="group" aria-label="Interactive technology stack">
       <path className={styles.guides} d="M64 348 320 220 576 348 320 476Z M320 24V428 M64 348V112 M576 348V112" />
       {[...layers].reverse().map((layer, reverseIndex) => {
         const index = layers.length - 1 - reverseIndex;
         const y = 60 + index * 58;
+        const highlighted = hovered === index || focused === index;
         return (
-          <motion.g key={layer.id} animate={{ y: selected === index ? -12 : 0 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} className={selected === index ? styles.activePlane : styles.plane}>
+          <g
+            key={layer.id}
+            ref={(element) => { layerButtons.current[index] = element; }}
+            className={styles.layerButton}
+            role="button"
+            aria-label={`Select ${layer.title}`}
+            aria-pressed={selected === index}
+            aria-controls={`tech-panel-${layer.id}`}
+            tabIndex={selected === index ? 0 : -1}
+            data-highlighted={highlighted}
+            onClick={() => onSelect(index)}
+            onKeyDown={(event) => handleLayerKeyDown(event, index)}
+            onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(index); }}
+            onPointerLeave={() => setHovered(null)}
+            onPointerCancel={() => setHovered(null)}
+            onFocus={() => setFocused(index)}
+            onBlur={() => setFocused(null)}
+          >
+          <motion.g aria-hidden="true" className={`${styles.layerVisual} ${selected === index ? styles.activePlane : styles.plane}`} animate={{ y: (selected === index ? -12 : 0) - (highlighted && !reducedMotion ? 8 : 0) }} transition={{ duration: reducedMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}>
             <path className={styles.planeEdge} d={`M128 ${y + 80} 320 ${y + 176} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
             <path className={styles.planeFace} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80} 320 ${y + 176}Z`} />
             <path className={styles.planeGrid} d={`M192 ${y + 48} 384 ${y + 144} M256 ${y + 16} 448 ${y + 112} M192 ${y + 112} 384 ${y + 16} M256 ${y + 144} 448 ${y + 48}`} />
@@ -30,6 +65,10 @@ function StackBlueprint({ selected, reducedMotion }: { selected: number; reduced
             <circle className={styles.node} cx="224" cy={y + 80} r="4" /><circle className={styles.node} cx="416" cy={y + 48} r="4" />
             <path className={styles.callout} d={`M512 ${y + 80}H548`} /><text x="560" y={y + 85} className={styles.planeNumber}>0{index + 1}</text>
           </motion.g>
+          {/* Fixed hit areas keep the pointer stable while the visible layer lifts. */}
+          <path className={styles.layerHitArea} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
+          <rect className={styles.layerHitArea} x="540" y={y + 56} width="56" height="48" />
+          </g>
         );
       })}
     </svg>
@@ -76,7 +115,7 @@ export function TechToolsSection() {
           </div>
           <div className={styles.explorer}>
             <div className={styles.diagramHeader}><span className={styles.systemLabel}>stack / {layer.id}</span><span className={styles.diagramCaption}>Architecture view</span></div>
-            <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} /><span className={styles.diagramLabel}>{layer.label}</span></div>
+            <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} onSelect={setSelected} /><span className={styles.diagramLabel}>{layer.label}</span></div>
             {layers.map((item, index) => (
               <div key={item.id} role="tabpanel" id={`tech-panel-${item.id}`} aria-labelledby={`tech-tab-${item.id}`} hidden={selected !== index} tabIndex={0} className={styles.panel}>
                 {selected === index && <motion.div initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
