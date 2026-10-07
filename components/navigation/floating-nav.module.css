@@ -1,9 +1,69 @@
-.nav { position: fixed; z-index: 20; top: var(--space-4); left: 50%; width: max-content; max-width: calc(100% - var(--space-12)); border: 1px solid hsl(var(--border)); border-radius: 999px; background: hsl(var(--surface) / 0.88); box-shadow: 0 var(--space-2) var(--space-12) hsl(var(--hero-terminal-shadow) / 0.16); backdrop-filter: blur(var(--space-4)); }
-.list { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-1); }
-.link { display: block; padding: var(--space-2) var(--space-3); border-radius: 999px; color: hsl(var(--muted)); font-size: var(--text-sm); line-height: var(--leading-sm); text-decoration: none; transition: color 180ms ease-out, background-color 180ms ease-out; }
-.link:hover, .link[aria-current="page"] { color: hsl(var(--accent-strong)); }
-.link:focus-visible, .themeToggle:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: var(--space-1); }
-.themeToggle { display: grid; width: var(--space-8); aspect-ratio: 1; place-items: center; border: 1px solid hsl(var(--border)); border-radius: 999px; background: hsl(var(--surface) / 0.56); box-shadow: 0 var(--space-1) var(--space-3) hsl(var(--hero-terminal-shadow) / 0.12); color: hsl(var(--foreground)); font-size: var(--text-body); cursor: pointer; transition: background-color 180ms ease-out, box-shadow 180ms ease-out, color 180ms ease-out, transform 180ms ease-out; }
-.themeToggle:hover { border-color: hsl(var(--accent-strong)); background: hsl(var(--accent) / 0.12); box-shadow: 0 var(--space-2) var(--space-4) hsl(var(--accent) / 0.18); color: hsl(var(--accent-strong)); transform: scale(1.08); }
-.themeToggle:active { background: hsl(var(--accent) / 0.2); color: hsl(var(--accent-strong)); }
-@media (prefers-reduced-motion: reduce) { .themeToggle { transition: none; } }
+.nav {
+  position: fixed;
+  z-index: 20;
+  top: var(--space-4);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: min(calc(100% - var(--space-page) * 2), 72rem);
+  padding: var(--space-2) var(--space-6);
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-terminal-md);
+  background: hsl(var(--surface) / 0.95);
+  box-shadow: 0 var(--space-2) var(--space-8) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity));
+  backdrop-filter: blur(var(--space-4));
+}
+.nav::before, .nav::after { content: ''; position: absolute; width: var(--space-4); height: var(--space-4); pointer-events: none; border-color: hsl(var(--accent-strong) / 0.65); }
+.nav::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; border-top-left-radius: var(--radius-terminal-md); color: hsl(var(--accent-strong) / 0.65); }
+.nav::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; border-bottom-right-radius: var(--radius-terminal-md); color: hsl(var(--accent-strong) / 0.65); }
+.signature { display: grid; place-items: center; min-width: var(--space-12); min-height: var(--space-12); color: hsl(var(--foreground)); font-size: var(--text-2xl); font-weight: 600; line-height: 1.3; text-decoration: none; }
+.signatureSlash { display: inline-block; color: hsl(var(--accent-strong)); margin-inline: var(--space-1); transition: transform 300ms ease; }
+.signature:hover .signatureSlash { transform: rotate(25deg); }
+.list { display: flex; align-items: center; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.link { position: relative; display: flex; align-items: center; justify-content: center; min-height: var(--space-12); padding: var(--space-3) var(--space-4); color: hsl(var(--foreground)); font-size: var(--text-lg); font-weight: 500; line-height: var(--leading-sm); text-decoration: none; }
+.labelWindow { display: block; height: 1.5em; overflow: hidden; }
+.labelRoll { display: flex; flex-direction: column; transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+.labelRoll > span { display: block; line-height: 1.5; }
+.labelRoll > :last-child { color: hsl(var(--accent-strong)); }
+.link[aria-current="location"] { color: hsl(var(--accent-strong)); }
+.activeIndicator { position: absolute; bottom: 0; left: calc(50% - var(--space-1)); width: var(--space-2); height: 2px; background: hsl(var(--accent-strong)); pointer-events: none; }
+.link:focus-visible, .signature:focus-visible, .themeToggle:focus-visible, .menuButton:focus-visible { outline: 2px solid hsl(var(--accent-strong)); outline-offset: var(--space-1); border-radius: var(--radius-terminal-sm); }
+.utilities { display: flex; align-items: center; gap: var(--space-6); }
+.sectionCounter { display: flex; align-items: center; gap: var(--space-2); color: hsl(var(--muted)); font-size: var(--text-base); font-variant-numeric: tabular-nums; line-height: 1.5; }
+.counterWindow { display: block; height: 1.5em; overflow: hidden; color: hsl(var(--accent-strong)); }
+.counterWindow > span { display: block; }
+.counterDivider { color: hsl(var(--border)); }
+.themeToggle { display: grid; width: var(--space-12); aspect-ratio: 1; place-items: center; border-left: 1px solid hsl(var(--border)); background: transparent; color: hsl(var(--foreground)); font-size: var(--text-xl); cursor: pointer; transition: color 200ms ease; }
+.themeToggle svg { transition: transform 350ms ease; }
+.themeToggle:hover { color: hsl(var(--accent-strong)); }
+.themeToggle:hover svg { transform: rotate(35deg); }
+.menuButton, .mobileIndex, .mobileArrow { display: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .link:hover .labelRoll { transform: translateY(-50%); } }
+.link:focus-visible .labelRoll { transform: translateY(-50%); }
+@media (max-width: 55.999rem) {
+  .nav { width: calc(100% - var(--space-8)); gap: var(--space-4); padding-inline: var(--space-4); }
+  .menuButton { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-height: var(--space-12); padding-inline: var(--space-4); margin-left: auto; color: hsl(var(--foreground)); font-size: var(--text-lg); line-height: var(--leading-sm); cursor: pointer; }
+  .menuGlyph { display: grid; gap: var(--space-2); width: var(--space-6); }
+  .menuGlyph > span { display: block; height: 1px; background: currentColor; transition: transform 250ms ease; }
+  .menuGlyph > :last-child { width: 65%; justify-self: end; }
+  .menuButton[aria-expanded="true"] .menuGlyph > :first-child { transform: translateY(var(--space-1)) rotate(45deg); }
+  .menuButton[aria-expanded="true"] .menuGlyph > :last-child { width: 100%; transform: translateY(calc(var(--space-1) * -1)) rotate(-45deg); }
+  .sectionCounter { display: none; }
+  .utilities { gap: 0; }
+  .list { display: none; position: absolute; top: calc(100% + var(--space-2)); left: -1px; right: -1px; padding: var(--space-4); border: 1px solid hsl(var(--border)); border-radius: var(--radius-terminal-md); background: hsl(var(--surface)); box-shadow: 0 var(--space-4) var(--space-8) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity)); }
+  .list[data-open="true"] { display: grid; gap: 0; animation: menu-enter 220ms ease-out; }
+  .list li + li { border-top: 1px solid hsl(var(--border)); }
+  .link { justify-content: flex-start; gap: var(--space-6); padding: var(--space-4); font-size: var(--text-xl); }
+  .mobileIndex { display: block; color: hsl(var(--muted)); font-size: var(--text-base); font-variant-numeric: tabular-nums; }
+  .mobileArrow { display: block; margin-left: auto; color: hsl(var(--muted)); }
+  .link[aria-current="location"] .mobileIndex, .link[aria-current="location"] .mobileArrow { color: hsl(var(--accent-strong)); }
+  .activeIndicator { left: 0; top: var(--space-6); bottom: var(--space-6); width: 2px; height: auto; }
+}
+@keyframes menu-enter { from { opacity: 0; transform: translateY(calc(var(--space-2) * -1)); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .signatureSlash, .labelRoll, .themeToggle, .themeToggle svg, .menuGlyph > span { transition: none; }
+  .list[data-open="true"] { animation: none; }
+  .link:focus-visible .labelRoll, .signature:hover .signatureSlash, .themeToggle:hover svg { transform: none; }
+}
