@@ -42,7 +42,7 @@
 .menuButton, .mobileIndex, .mobileArrow { display: none; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .link:hover .labelRoll { transform: translateY(-50%); } }
 .link:focus-visible .labelRoll { transform: translateY(-50%); }
-@media (max-width: 55.999rem) {
+@media (max-width: 63.999rem) {
   .nav { width: calc(100% - var(--space-8)); gap: var(--space-4); padding-inline: var(--space-4); }
   .menuButton { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-height: var(--space-12); padding-inline: var(--space-4); margin-left: auto; color: hsl(var(--foreground)); font-size: var(--text-lg); line-height: var(--leading-sm); cursor: pointer; }
   .menuGlyph { display: grid; gap: var(--space-2); width: var(--space-6); }
@@ -53,7 +53,7 @@
   .sectionCounter { display: none; }
   .utilities { gap: 0; }
   .list { display: none; position: absolute; top: calc(100% + var(--space-2)); left: -1px; right: -1px; padding: var(--space-4); border: 1px solid hsl(var(--border)); border-radius: var(--radius-terminal-md); background: hsl(var(--surface)); box-shadow: 0 var(--space-4) var(--space-8) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity)); }
-  .list[data-open="true"] { display: grid; gap: 0; animation: menu-enter 220ms ease-out; }
+  .list[data-open="true"] { display: grid; gap: 0; max-height: calc(100dvh - var(--space-32)); overflow-y: auto; animation: menu-enter 220ms ease-out; }
   .list li + li { border-top: 1px solid hsl(var(--border)); }
   .link { justify-content: flex-start; gap: var(--space-6); padding: var(--space-4); font-size: var(--text-xl); }
   .mobileIndex { display: block; color: hsl(var(--muted)); font-size: var(--text-base); font-variant-numeric: tabular-nums; }

@@ -40,6 +40,9 @@
 
   Public profile links in the repository:
 
-  - GitHub: https://github.com/mizanurrahman
-  - LinkedIn: https://linkedin.com/in/mizanurrahman
+  - GitHub: https://github.com/mizanmahi
+  - LinkedIn: https://www.linkedin.com/in/mizan-mahi/
+  - Facebook: https://www.facebook.com/mizanmahi24/
+  - YouTube: https://www.youtube.com/@devdive24
+  - X: https://x.com/mizan__mahi
   - Contact email: mizanmahi24@gmail.com
