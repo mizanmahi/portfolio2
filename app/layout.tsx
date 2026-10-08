@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import favicon from "./favicon.png";
 import "./globals.css";
 
 const hankenGrotesk = Hanken_Grotesk({
@@ -17,8 +18,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mizanur Rahman — Full-Stack Web Developer",
+  title: "Mizanur Rahman - Full-Stack Web Developer",
   description: "Portfolio of Mizanur Rahman, a Full-Stack Web Developer based in Dhaka, Bangladesh.",
+  icons: {
+    icon: { url: favicon.src, type: "image/png", sizes: `${favicon.width}x${favicon.height}` },
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
