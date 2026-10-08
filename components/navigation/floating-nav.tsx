@@ -11,6 +11,7 @@ const navigationItems = [
   { id: "about", label: "About" },
   { id: "expertise", label: "Expertise" },
   { id: "tech-tools", label: "Stack" },
+  { id: "contact", label: "Contact" },
 ];
 
 export function FloatingNav({ variants }: { variants: Variants }) {
@@ -69,7 +70,7 @@ export function FloatingNav({ variants }: { variants: Variants }) {
         menuButtonRef.current?.focus();
       }
     }
-    const desktop = window.matchMedia("(min-width: 56rem)");
+    const desktop = window.matchMedia("(min-width: 64rem)");
     function closeOnDesktop() { if (desktop.matches) setMenuOpen(false); }
     document.addEventListener("pointerdown", closeOutside);
     document.addEventListener("keydown", closeOnEscape);
@@ -115,7 +116,7 @@ export function FloatingNav({ variants }: { variants: Variants }) {
       <div className={styles.utilities}>
         <div className={styles.sectionCounter} aria-hidden="true">
           <span className={styles.counterWindow}><motion.span key={activeId} initial={reduced ? false : { y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: reduced ? 0 : 0.25 }}>0{activeIndex + 1}</motion.span></span>
-          <span className={styles.counterDivider}>/</span><span>04</span>
+          <span className={styles.counterDivider}>/</span><span>{String(navigationItems.length).padStart(2, "0")}</span>
         </div>
         <ThemeToggle className={styles.themeToggle} />
       </div>
