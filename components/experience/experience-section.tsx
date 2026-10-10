@@ -88,7 +88,7 @@ export function ExperienceSection() {
       <div className={styles.content}>
         <header className={styles.intro}>
           <div><p className={styles.eyebrow}>Work experience</p><h2 className={styles.title} id="experience-title">Every role,<br /><span>a new perspective.</span></h2></div>
-          <div className={styles.introAside}><p>From teaching the fundamentals to building the products. The work that shaped how I engineer.</p><span>3 teams <span aria-hidden="true">/</span> 8 roles <span aria-hidden="true">/</span> 2019 to now</span></div>
+          <div className={styles.introAside}><p>From teaching the fundamentals to building the products. The work that shaped how I engineer.</p><span>3 teams <span aria-hidden="true">/</span> 8 roles <span aria-hidden="true">/</span> 2019 - now</span></div>
         </header>
         <div className={styles.employers}>{employers.map((employer) => <EmployerTimeline key={employer.id} employer={employer} reduced={reduced} />)}</div>
         <p className={styles.timelineNote}>Some roles overlap. Dates reflect each position independently.</p>
