@@ -10,6 +10,7 @@ const navigationItems = [
   { id: "top", label: "Home" },
   { id: "about", label: "About" },
   { id: "expertise", label: "Expertise" },
+  { id: "experience", label: "Experience" },
   { id: "tech-tools", label: "Stack" },
   { id: "contact", label: "Contact" },
 ];
@@ -70,7 +71,7 @@ export function FloatingNav({ variants }: { variants: Variants }) {
         menuButtonRef.current?.focus();
       }
     }
-    const desktop = window.matchMedia("(min-width: 64rem)");
+    const desktop = window.matchMedia("(min-width: 72rem)");
     function closeOnDesktop() { if (desktop.matches) setMenuOpen(false); }
     document.addEventListener("pointerdown", closeOutside);
     document.addEventListener("keydown", closeOnEscape);

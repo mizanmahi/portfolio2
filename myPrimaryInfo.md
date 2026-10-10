@@ -6,23 +6,29 @@
 
   Work experience:
 
-  - Web Developer L2, Programming Hero — Jan 2026–Present
-    Leads web-development initiatives and creates educational content.
+  - Web Developer L2, Programming Hero — Jan 2026–Present | Dhaka, Bangladesh
+    Builds core learning platforms, integrates RAG and vector search, applies agentic workflows, and owns CI/CD and Redis performance work.
 
-  - Web Developer, Programming Hero — Jan 2025–Dec 2025
-    Leads web-development initiatives and creates educational content.
+  - Web Developer, Programming Hero — Jan 2025–Dec 2025 | Dhaka, Bangladesh
+    Implemented OIDC single sign-on, contributed to Edulavo's multi-agent learning platform, and built Go/Python services using gRPC and tRPC.
 
-  - Senior Mentor, Advanced Web Course, Programming Hero — Jan 2024–Mar 2025
-    Mentored 10000+ students in advanced web development, React, and full-stack topics.
+  - Senior Mentor, Advance Web Course, Programming Hero — Jan 2024–Dec 2024 | Banani
+    Trained and placed skilled programmers; 2,500+ Programming Hero students now work worldwide. Mentored architecture, containerization, AWS deployment, and testing.
 
-  - Web Instructor and Mentor, Complete web development course, Programming Hero — Jan 2022–dec 2023
-    Mentored 10000+ students in web development, React, and full-stack topics.
+  - Senior Web Instructor, Programming Hero — Jan 2023–Dec 2023 | Banani, Dhaka
+    Taught advanced full-stack development, TypeScript, databases, Docker, and CI/CD.
 
-  - Lead React Developer, SOLRUF — Mar 2022–Jun 2022
-    Led frontend work for a solar-marketplace platform.
+  - Web Instructor, Programming Hero — Jan 2022–Dec 2022 | Banani, Dhaka
+    Taught React, Node.js, Express, and MongoDB fundamentals.
 
-  - Web Developer Intern, eSoftArena — Feb 2019–Apr 2019
-    Worked on web-development fundamentals and collaborative coding.
+  - Lead React Developer, SOLRUF — Mar 2022–Jun 2022 | India
+    Led frontend development for the solar marketplace and installation platform.
+
+  - Frontend Developer, SOLRUF — Dec 2021–Feb 2022 | Maharashtra, India
+    Stack: React, Material UI, Firebase, API integration.
+
+  - Web Development Intern, eSoftArena Ltd. — Feb 2019–Apr 2019 | Bangladesh
+    Stack: HTML, CSS, JavaScript, PHP.
 
   Technical skills:
 
