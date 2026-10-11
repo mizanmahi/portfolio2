@@ -11,9 +11,9 @@ export function HeroActions() {
     >
       <a
         className={`${styles.action} ${styles.primaryAction}`}
-        href="#projects"
+        href="#experience"
       >
-        View projects
+        Explore my experience
         <HugeiconsIcon
           aria-hidden="true"
           className={styles.actionArrow}

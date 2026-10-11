@@ -1,7 +1,6 @@
 .section { position: relative; isolation: isolate; padding: var(--space-section) var(--space-page); background: hsl(var(--background)); scroll-margin-top: var(--space-24); }
 .atmosphere { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; mask-image: linear-gradient(transparent, black 8%, black 92%, transparent); }
-.ambient { position: absolute; inset: 0; background: radial-gradient(ellipse 45% 18% at 0% 15%, hsl(var(--accent) / 0.13), transparent), radial-gradient(ellipse 45% 20% at 100% 55%, hsl(var(--accent) / 0.07), transparent), radial-gradient(ellipse 55% 18% at 0% 85%, hsl(var(--accent) / 0.09), transparent); }
-.circuit { position: absolute; top: 0; left: 0; height: 100%; width: 32%; stroke: hsl(var(--accent-strong) / 0.1); stroke-width: 1; mask-image: linear-gradient(90deg, black, transparent); }
+.ambient { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 25% at 0% 25%, hsl(var(--accent) / 0.05), transparent), radial-gradient(ellipse 45% 25% at 100% 80%, hsl(var(--accent) / 0.03), transparent); }
 .content { width: min(100%, var(--measure-hero)); margin-inline: auto; }
 .intro { display: flex; align-items: end; justify-content: space-between; gap: var(--space-12); margin-bottom: var(--space-16); }
 .eyebrow { margin-bottom: var(--space-4); color: hsl(var(--accent-strong)); font-size: var(--text-base); }
@@ -40,7 +39,7 @@
 @keyframes currentBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 .roleHeading { display: flex; align-items: start; gap: var(--space-3); margin-top: var(--space-3); }
 .mobileRoleIcon { display: none; flex-shrink: 0; color: hsl(var(--accent-strong)); }
-.roleTitle { font-size: var(--text-2xl); font-weight: 500; line-height: 1.3; text-wrap: balance; }
+.roleTitle { scroll-margin-top: var(--space-32); font-size: var(--text-2xl); font-weight: 500; line-height: 1.3; text-wrap: balance; }
 .roleLocation { margin-top: var(--space-2); }
 .summary { margin-top: var(--space-6); color: hsl(var(--foreground)); font-size: var(--text-section-copy); line-height: var(--leading-body); text-wrap: pretty; }
 .details { margin-top: var(--space-4); }

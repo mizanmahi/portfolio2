@@ -1,17 +1,56 @@
 "use client";
 
-import { CloudServerIcon, CodeSquareIcon, Database02Icon, ServerStack02Icon, Structure02Icon } from "@hugeicons/core-free-icons";
+import { AiBrain03Icon, CloudServerIcon, CodeSquareIcon, Database02Icon, ServerStack02Icon, Structure02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "motion/react";
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import styles from "@/components/tech-tools/tech-tools-section.module.css";
 
+import { useWorkbenchTour } from "./use-workbench-tour";
+
 const layers = [
-  { id: "frontend", icon: CodeSquareIcon, title: "Frontend and languages", label: "Interface", description: "Thoughtful interfaces, built on a typed foundation. From the first interaction to the last detail.", tools: ["JavaScript", "TypeScript", "React", "Next.js"] },
-  { id: "backend", icon: ServerStack02Icon, title: "Backend and APIs", label: "Logic", description: "The logic behind the experience. Services and APIs that keep the moving parts working together.", tools: ["Node.js", "Express.js", "Python", "tRPC", "Golang", "Echo", "gRPC"] },
-  { id: "data", icon: Database02Icon, title: "Data and persistence", label: "Data", description: "A dependable home for application data. Structured storage, flexible models, and fast access.", tools: ["PostgreSQL", "MongoDB", "Redis", "Prisma"] },
-  { id: "cloud", icon: CloudServerIcon, title: "Cloud and delivery", label: "Delivery", description: "From local development to production. Repeatable environments and a clear path to shipping.", tools: ["AWS", "Docker", "CI/CD"] },
-  { id: "systems", icon: Structure02Icon, title: "Systems and architecture", label: "Foundation", description: "The decisions that hold everything together. Designing for maintainability, security, and performance.", tools: ["System design", "Security", "Performance", "Code review"] },
+  {
+    id: "frontend", icon: CodeSquareIcon, title: "Frontend engineering", label: "Interfaces and interaction",
+    description: "I build responsive web interfaces, connecting reusable components with the data and interactions that make a product useful.",
+    tools: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "shadcn/ui", "TanStack", "Material UI"],
+    example: "Led frontend development for SOLRUF’s solar marketplace. Now building learning experiences across Programming Hero, Phitron, and Next Level.",
+    role: "lead-react", context: "SOLRUF & Programming Hero",
+  },
+  {
+    id: "backend", icon: ServerStack02Icon, title: "Backend engineering", label: "Services and APIs",
+    description: "I build APIs, authentication, and services with clear boundaries, typed communication, and testing that supports confident changes.",
+    tools: ["Node.js", "Express.js", "Golang", "Python", "gRPC", "tRPC", "Testing"],
+    example: "Built services in Go and Python with gRPC and tRPC, and implemented OpenID Connect for single sign-on across company products.",
+    role: "developer", context: "Programming Hero",
+  },
+  {
+    id: "systems", icon: Structure02Icon, title: "System design", label: "Architecture and boundaries",
+    description: "I turn product requirements into clear service boundaries and data flows, with attention to maintainability, security, and performance.",
+    tools: ["System design", "Service architecture", "OIDC", "Security", "Performance", "Code review"],
+    example: "Designed centralized authentication across company products and mentored developers through full-stack architecture decisions.",
+    role: "developer", context: "Programming Hero",
+  },
+  {
+    id: "database", icon: Database02Icon, title: "Database", label: "Storage and access",
+    description: "I work with relational and document databases, data modeling, and caching to keep application data organized and accessible.",
+    tools: ["PostgreSQL", "MongoDB", "Mongoose", "Prisma", "Drizzle", "GORM", "Redis", "Firebase"],
+    example: "Handle Redis-backed performance work and have taught database development with MongoDB, PostgreSQL, and Prisma.",
+    role: "senior-mentor", context: "Programming Hero",
+  },
+  {
+    id: "ai", icon: AiBrain03Icon, title: "AI and automation", label: "Agents and workflows",
+    description: "I build AI agents and useful automation, connecting language models with relevant data through RAG and vector search.",
+    tools: ["AI Agent", "RAG", "Vector DB", "Python", "AI integration", "Agentic development"],
+    example: "Contributed to Edulavo’s personalized learning roadmaps using a multi-agent architecture. Now integrating RAG and vector search into learning products.",
+    role: "developer", context: "Edulavo & Programming Hero",
+  },
+  {
+    id: "cloud", icon: CloudServerIcon, title: "Cloud delivery", label: "Deployment and operations",
+    description: "I bring software into production with repeatable deployments, reliable pipelines, and practical cloud infrastructure.",
+    tools: ["AWS", "Docker", "Linux", "Nginx", "CI/CD"],
+    example: "Own CI/CD pipelines at Programming Hero, building on years of mentoring developers through containerization and deployment on AWS.",
+    role: "developer-l2", context: "Programming Hero",
+  },
 ] as const;
 
 function StackBlueprint({ selected, reducedMotion, onSelect }: { selected: number; reducedMotion: boolean; onSelect: (index: number) => void }) {
@@ -32,11 +71,12 @@ function StackBlueprint({ selected, reducedMotion, onSelect }: { selected: numbe
   }
 
   return (
-    <svg className={styles.blueprint} viewBox="0 0 640 500" fill="none" role="group" aria-label="Interactive technology stack">
+    <svg className={styles.blueprint} viewBox="0 0 640 500" fill="none" role="group" aria-label="Interactive engineering capabilities">
       <path className={styles.guides} d="M64 348 320 220 576 348 320 476Z M320 24V428 M64 348V112 M576 348V112" />
       {[...layers].reverse().map((layer, reverseIndex) => {
         const index = layers.length - 1 - reverseIndex;
-        const y = 60 + index * 58;
+        // Keep every layer inside the illustration as categories change.
+        const y = 60 + index * (228 / (layers.length - 1));
         const highlighted = hovered === index || focused === index;
         return (
           <g
@@ -63,11 +103,11 @@ function StackBlueprint({ selected, reducedMotion, onSelect }: { selected: numbe
             <path className={styles.planeGrid} d={`M192 ${y + 48} 384 ${y + 144} M256 ${y + 16} 448 ${y + 112} M192 ${y + 112} 384 ${y + 16} M256 ${y + 144} 448 ${y + 48}`} />
             <path className={styles.trace} d={`M224 ${y + 80} 288 ${y + 48} 352 ${y + 80} 416 ${y + 48}`} />
             <circle className={styles.node} cx="224" cy={y + 80} r="4" /><circle className={styles.node} cx="416" cy={y + 48} r="4" />
-            <path className={styles.callout} d={`M512 ${y + 80}H548`} /><text x="560" y={y + 85} className={styles.planeNumber}>0{index + 1}</text>
+            <path className={styles.callout} d={`M512 ${y + 80}H548`} /><circle cx="560" cy={y + 80} r="4" className={styles.node} />
           </motion.g>
           {/* Fixed hit areas keep the pointer stable while the visible layer lifts. */}
           <path className={styles.layerHitArea} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
-          <rect className={styles.layerHitArea} x="540" y={y + 56} width="56" height="48" />
+          <rect className={styles.layerHitArea} x="540" y={y + 60} width="56" height="40" />
           </g>
         );
       })}
@@ -80,6 +120,11 @@ export function TechToolsSection() {
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const reducedMotion = useReducedMotion() ?? false;
   const layer = layers[selected];
+  const { sectionRef, contentRef, active: tourActive, distance: tourDistance, finish: finishTour } = useWorkbenchTour(layers.length, setSelected);
+  function selectManually(index: number) {
+    if (tourActive) finishTour();
+    setSelected(index);
+  }
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next = index;
     if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % layers.length;
@@ -87,46 +132,52 @@ export function TechToolsSection() {
     else if (event.key === "Home") next = 0;
     else if (event.key === "End") next = layers.length - 1;
     else return;
-    event.preventDefault(); setSelected(next); buttons.current[next]?.focus();
+    event.preventDefault(); selectManually(next); buttons.current[next]?.focus();
   }
   return (
-    <section aria-labelledby="tech-tools-title" className={styles.section} id="tech-tools">
-      <div className={styles.content}>
+    <section ref={sectionRef} aria-labelledby="tech-tools-title" className={styles.section} id="tech-tools" data-tour={tourActive || undefined} style={{ "--tour-distance": `${tourDistance}px` } as CSSProperties}>
+      <div className={styles.content} ref={contentRef}>
         <header className={styles.intro}>
-          <p className={styles.eyebrow}>The workbench</p>
-          <h2 className={styles.title} id="tech-tools-title">
-            <span className={styles.titleLead}>Good software.</span>{" "}
-            <span className={styles.titleOffset}>Every layer <span className={styles.titleAccent}>considered.</span></span>
-          </h2>
-          <p className={styles.description}>The technologies I reach for to turn an idea into a dependable product. Explore the stack, layer by layer.</p>
+          <span className={styles.headingMark} aria-hidden="true"><span /><span /><span /></span>
+          <h2 className={styles.title} id="tech-tools-title">The workbench</h2>
+          <span className={styles.headingRule} aria-hidden="true" />
+          {tourActive && <div className={styles.tourControls}><span>Scroll to explore</span><button type="button" onClick={() => finishTour()}>Skip tour <span aria-hidden="true">↗</span></button></div>}
         </header>
         <motion.div className={styles.workbench} initial={false} whileInView={reducedMotion ? undefined : { opacity: [0.65, 1], y: [20, 0] }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65 }}>
           <div className={styles.navigator}>
-            <div className={styles.navigatorHeader}><span>Tech and tools</span><span>05 layers</span></div>
-            <div role="tablist" aria-label="Technology layers" aria-orientation="vertical" className={styles.tabs}>
+            <div className={styles.navigatorHeader}>Engineering in practice</div>
+            <div role="tablist" aria-label="Engineering capabilities" aria-orientation="vertical" className={styles.tabs}>
               {layers.map((item, index) => (
-                <button key={item.id} ref={(element) => { buttons.current[index] = element; }} type="button" role="tab" id={`tech-tab-${item.id}`} aria-selected={selected === index} aria-controls={`tech-panel-${item.id}`} tabIndex={selected === index ? 0 : -1} className={styles.tab} onClick={() => setSelected(index)} onKeyDown={(event) => handleKeyDown(event, index)}>
-                  <span className={styles.tabNumber}>0{index + 1}</span><HugeiconsIcon icon={item.icon} size={24} aria-hidden="true" />
-                  <span className={styles.tabTitle}>{item.title}<span className={styles.tabMeta}>{item.tools.length} tools & practices</span></span><span className={styles.tabArrow} aria-hidden="true">↗</span>
+                <button key={item.id} ref={(element) => { buttons.current[index] = element; }} type="button" role="tab" id={`tech-tab-${item.id}`} aria-selected={selected === index} aria-controls={`tech-panel-${item.id}`} tabIndex={selected === index ? 0 : -1} className={styles.tab} onClick={() => selectManually(index)} onKeyDown={(event) => handleKeyDown(event, index)}>
+                  <HugeiconsIcon icon={item.icon} size={24} aria-hidden="true" />
+                  <span className={styles.tabTitle}>{item.title}</span><span className={styles.tabArrow} aria-hidden="true">↗</span>
                 </button>
               ))}
             </div>
-            <p className={styles.navigatorFooter}>From the interface to the infrastructure.</p>
+            <p className={styles.navigatorFooter}>Clear architecture.<br />Thoughtful code reviews.<br />Knowledge shared along the way.</p>
           </div>
           <div className={styles.explorer}>
-            <div className={styles.diagramHeader}><span className={styles.systemLabel}>stack / {layer.id}</span><span className={styles.diagramCaption}>Architecture view</span></div>
-            <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} onSelect={setSelected} /><span className={styles.diagramLabel}>{layer.label}</span></div>
+            <div className={styles.diagramHeader}><HugeiconsIcon icon={layer.icon} size={24} aria-hidden="true" /><span>Select a layer to explore</span></div>
+            <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} onSelect={selectManually} /><span className={styles.diagramLabel}>{layer.label}</span></div>
+            <div className={styles.panels}>
             {layers.map((item, index) => (
               <div key={item.id} role="tabpanel" id={`tech-panel-${item.id}`} aria-labelledby={`tech-tab-${item.id}`} hidden={selected !== index} tabIndex={0} className={styles.panel}>
-                {selected === index && <motion.div initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
-                  <div className={styles.panelHeading}><h3>{item.title}</h3><span>0{index + 1} / 05</span></div><p className={styles.panelCopy}>{item.description}</p>
-                  <ul className={styles.tools}>{item.tools.map((tool, toolIndex) => <motion.li key={tool} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.25, delay: reducedMotion ? 0 : toolIndex * 0.035 }}><span aria-hidden="true" />{tool}</motion.li>)}</ul>
-                </motion.div>}
+                <motion.div key={`${item.id}-${selected === index}`} initial={reducedMotion || selected !== index ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
+                  <div className={styles.panelHeading}><h3>{item.title}</h3></div><p className={styles.panelCopy}>{item.description}</p>
+                  <ul className={styles.tools}>{item.tools.map((tool, toolIndex) => <motion.li key={tool} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.25, delay: reducedMotion ? 0 : toolIndex * 0.035 }}>{tool}</motion.li>)}</ul>
+                  <div className={styles.example}>
+                    <p className={styles.exampleLabel}>In practice <span>{item.context}</span></p>
+                    <p className={styles.exampleCopy}>{item.example}</p>
+                    <a href={`#experience-${item.role}`} className={styles.exampleLink}>Explore the role <span aria-hidden="true">↗</span></a>
+                  </div>
+                </motion.div>
               </div>
             ))}
+            </div>
           </div>
         </motion.div>
       </div>
+      {tourActive && <div className={styles.tourRunway} aria-hidden="true" />}
     </section>
   );
 }

@@ -9,9 +9,8 @@ import styles from "@/components/navigation/floating-nav.module.css";
 const navigationItems = [
   { id: "top", label: "Home" },
   { id: "about", label: "About" },
-  { id: "expertise", label: "Expertise" },
+  { id: "tech-tools", label: "Workbench" },
   { id: "experience", label: "Experience" },
-  { id: "tech-tools", label: "Stack" },
   { id: "contact", label: "Contact" },
 ];
 

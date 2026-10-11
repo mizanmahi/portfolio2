@@ -15,8 +15,8 @@
 .composition { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; gap: var(--space-16); }
 .portrait { position: relative; width: 100%; margin: 0; }
 .photoWindow { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: hsl(var(--surface)); }
-.photo { position: absolute; inset: 0; }
-.image { object-fit: cover; object-position: center 35%; transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1); }
+.photo { position: absolute; inset: 0; transform-origin: center top; }
+.image { object-fit: cover; object-position: center top; transform-origin: center top; transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1); }
 .photoShade { position: absolute; inset: 0; background: linear-gradient(transparent 60%, hsl(var(--background)) 100%); }
 .photoSignature { position: absolute; bottom: var(--space-6); left: var(--space-6); color: hsl(var(--foreground)); font-size: var(--text-xl); font-weight: 500; }
 .portraitSurface { position: relative; box-shadow: 0 var(--space-4) var(--space-12) hsl(var(--hero-terminal-shadow) / var(--hero-terminal-shadow-opacity)); transition: box-shadow 350ms ease; }

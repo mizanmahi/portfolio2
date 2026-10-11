@@ -72,23 +72,23 @@ export function AboutScrollSection({ photoSrc, photoAlt }: { photoSrc: string; p
           </figure>
 
           <div className={styles.profile}>
-            <h2 id="about-story-title" className={styles.title}>I like seeing<br />the whole picture.</h2>
+            <h2 id="about-story-title" className={styles.title}>From the interface<br />to the intelligence.</h2>
             <div className={styles.copy}>
               <p>
-                I&apos;m Mizanur, a Web Developer L2 at{" "}
-                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>Programming Hero</Highlighter>.
-                {" "}I build web applications end to end, connecting thoughtful interfaces with the APIs, databases, and systems behind them.
+                I&apos;m Mizanur, a Web Developer L2 at Programming Hero. I build web applications end to end, connecting thoughtful interfaces with the services, APIs, and databases behind them.
               </p>
               <p>
-                My work spans backend engineering, system design, and code reviews. I care about clear architecture and maintainable code, so a product feels straightforward to use and stays practical to develop.
+                I enjoy the decisions behind the code:{" "}
+                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>system design and backend engineering</Highlighter>.
+                {" "}From shared authentication to service communication, I care about clear boundaries, dependable performance, and systems that stay practical to maintain.
               </p>
               <p>
-                I also build AI agents and{" "}
-                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>useful automation</Highlighter>
-                {" "}that take repetitive work off people&apos;s hands. Along the way, I&apos;ve shared what I learn with 2,500+ students.
+                I also build{" "}
+                <Highlighter action="underline" color="hsl(var(--accent-strong))" iterations={1} isView>AI agents and useful automation</Highlighter>,
+                {" "}using RAG and vector search to bring relevant context into learning products. Teaching and mentoring remain part of how I share what I learn along the way.
               </p>
             </div>
-            <a className={styles.exploreLink} href="#expertise">My engineering focus <span aria-hidden="true">↗</span></a>
+            <a className={styles.exploreLink} href="#tech-tools">Inside my workbench <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>

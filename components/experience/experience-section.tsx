@@ -80,10 +80,6 @@ export function ExperienceSection() {
     <section className={styles.section} id="experience" aria-labelledby="experience-title">
       <div className={styles.atmosphere} aria-hidden="true">
         <div className={styles.ambient} />
-        <svg className={styles.circuit} viewBox="0 0 600 1200" fill="none" preserveAspectRatio="xMidYMid slice">
-          <path d="M40 0v160c0 70 100 70 100 140v230c0 80-100 80-100 160v510M200 0v320c0 60 120 60 120 120v280c0 60-120 60-120 120v360M440 0v180c0 80-80 80-80 160v280c0 80 140 80 140 160v420" />
-          <circle cx="140" cy="380" r="8" /><circle cx="320" cy="620" r="8" /><circle cx="200" cy="1000" r="8" />
-        </svg>
       </div>
       <div className={styles.content}>
         <header className={styles.intro}>

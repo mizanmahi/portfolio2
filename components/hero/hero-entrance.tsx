@@ -103,7 +103,6 @@ export function HeroEntrance() {
             </motion.div>
             <ScrollCue />
           </section>
-          <div id="projects" className={styles.futureSectionAnchor} aria-hidden="true" />
         </BootSequenceProvider>
       </motion.main>
     </motion.div>
