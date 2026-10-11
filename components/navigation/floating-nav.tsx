@@ -83,7 +83,6 @@ export function FloatingNav({ variants }: { variants: Variants }) {
     };
   }, [menuOpen]);
 
-  const activeIndex = navigationItems.findIndex(({ id }) => id === activeId);
   const transition = reduced ? { duration: 0 } : { type: "spring" as const, stiffness: 420, damping: 34 };
 
   return (
@@ -96,7 +95,7 @@ export function FloatingNav({ variants }: { variants: Variants }) {
         <span className={styles.menuGlyph} aria-hidden="true"><span /><span /></span>
       </button>
       <ul id="portfolio-navigation-links" className={styles.list} data-open={menuOpen}>
-        {navigationItems.map((item, index) => (
+        {navigationItems.map((item) => (
           <li key={item.id}>
             <a
               aria-current={item.id === activeId ? "location" : undefined}
@@ -104,7 +103,6 @@ export function FloatingNav({ variants }: { variants: Variants }) {
               href={`#${item.id}`}
               onClick={() => setMenuOpen(false)}
             >
-              <span className={styles.mobileIndex} aria-hidden="true">0{index + 1}</span>
               <span className={styles.labelWindow}>
                 <span className={styles.labelRoll}><span>{item.label}</span><span aria-hidden="true">{item.label}</span></span>
               </span>
@@ -115,10 +113,6 @@ export function FloatingNav({ variants }: { variants: Variants }) {
         ))}
       </ul>
       <div className={styles.utilities}>
-        <div className={styles.sectionCounter} aria-hidden="true">
-          <span className={styles.counterWindow}><motion.span key={activeId} initial={reduced ? false : { y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: reduced ? 0 : 0.25 }}>0{activeIndex + 1}</motion.span></span>
-          <span className={styles.counterDivider}>/</span><span>{String(navigationItems.length).padStart(2, "0")}</span>
-        </div>
         <ThemeToggle className={styles.themeToggle} />
       </div>
     </motion.nav>
