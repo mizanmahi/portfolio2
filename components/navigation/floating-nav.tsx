@@ -10,6 +10,7 @@ const navigationItems = [
   { id: "top", label: "Home" },
   { id: "about", label: "About" },
   { id: "tech-tools", label: "Workbench" },
+  { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
