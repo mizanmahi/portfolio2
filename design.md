@@ -142,6 +142,8 @@ The `me` terminal pane keeps its header fixed while the identity, command histor
 
 Terminal hover matches the experience cards: a pointer-following spotlight (480px radius, 9% accent, 300ms fade) and a highlighted outer border with a deeper shadow (250ms transition). Hover effects apply to hover-capable devices; reduced motion disables pointer tracking and transitions.
 
+The terminal reuses the WebGL glitch from `main`: 400ms bursts every 5 seconds, with horizontal tearing, RGB separation, and noise. The overlay is decorative and ignores pointer input. Reduced motion disables it; typing, scrolling, hidden tabs, and offscreen terminals suspend the effect.
+
 ### Hero theme architecture
 
 Hero-specific values are semantic tokens alongside the color system; components never branch on the active theme.

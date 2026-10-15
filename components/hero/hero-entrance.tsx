@@ -1,6 +1,7 @@
 "use client";
 
 import { TerminalWindow } from "@/components/terminal/terminal-window";
+import { TerminalWebGlGlitch } from "@/components/hero/terminal-webgl-glitch";
 import { FloatingNav } from "@/components/navigation/floating-nav";
 import { AuraBackground } from "@/components/ui/ambient-glow";
 import styles from "@/components/hero/hero-entrance.module.css";
@@ -60,7 +61,9 @@ export function HeroEntrance() {
             onAnimationComplete={handleTerminalEntranceComplete}
             variants={entranceVariants.terminal}
           >
-            <TerminalWindow />
+            <TerminalWebGlGlitch>
+              <TerminalWindow />
+            </TerminalWebGlGlitch>
           </motion.div>
         </section>
       </motion.main>
