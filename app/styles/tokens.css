@@ -60,7 +60,7 @@
   --section-bridge-depth: calc(var(--space-32) * 3);
   --section-bridge-opacity: 0.16;
   --space-terminal-body: 30rem;
-  --space-terminal-body-compact: 40rem;
+  --space-terminal-body-compact: 48rem;
   --measure-hero: 88rem;
   --measure-terminal: 32rem;
 

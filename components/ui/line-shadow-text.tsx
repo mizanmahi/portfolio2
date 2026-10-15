@@ -35,6 +35,8 @@ interface LineShadowTextProps
   shadowColor?: string;
   shadowClassName?: string;
   shadowTextClassName?: string;
+  scanClassName?: string;
+  scanTextClassName?: string;
   as?: MotionElementType;
 }
 
@@ -42,6 +44,8 @@ export function LineShadowText({
   children,
   shadowColor = "black",
   className,
+  scanClassName,
+  scanTextClassName,
   shadowClassName,
   shadowTextClassName,
   as: Component = "span",
@@ -61,6 +65,15 @@ export function LineShadowText({
       >
         <span className={shadowTextClassName}>{children}</span>
       </span>
+      {scanClassName && (
+        <span
+          aria-hidden="true"
+          className={cn("pointer-events-none absolute inset-0", scanClassName)}
+          style={{ color: shadowColor } as CSSProperties}
+        >
+          <span className={scanTextClassName}>{children}</span>
+        </span>
+      )}
       <span className="relative z-10">{children}</span>
     </MotionComponent>
   );
