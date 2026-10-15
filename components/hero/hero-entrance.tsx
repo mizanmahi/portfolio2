@@ -55,7 +55,6 @@ export function HeroEntrance() {
       <motion.main className={styles.page} variants={entranceVariants.main}>
         <section id="top" aria-labelledby="hero-title" className={styles.shell}>
           <AuraBackground />
-          <h1 className="sr-only" id="hero-title">Mizanur Rahman</h1>
           <motion.div
             className={styles.terminalWrap}
             onAnimationComplete={handleTerminalEntranceComplete}

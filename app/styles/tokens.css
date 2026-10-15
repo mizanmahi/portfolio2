@@ -3,6 +3,7 @@
   --surface: 0 0% 8%;
   --foreground: 0 0% 89%;
   --muted: 0 0% 54%;
+  --terminal-output-color: color-mix(in srgb, hsl(var(--foreground)) 75%, hsl(var(--muted)));
   --border: 0 0% 16%;
   --accent: 38 91% 58%;
   --accent-strong: 38 91% 58%;

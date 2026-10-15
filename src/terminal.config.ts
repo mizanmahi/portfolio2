@@ -49,7 +49,7 @@ export type TerminalCommandApi = {
 
 export type TerminalCommand = (args: string[]) => ReactNode;
 export type TerminalCommandRegistry = Record<string, TerminalCommand>;
-export const terminalCommandNames = ["help", "whoami", "about", "ls", "cat", "theme", "github", "contact", "clear", "zoom", "sudo hire mizan"] as const;
+export const terminalCommandNames = ["help", "whoami", "about", "cat", "theme", "github", "contact", "clear", "zoom"] as const;
 
 export function createCommandRegistry(api: TerminalCommandApi): TerminalCommandRegistry {
   const projectBySlug = (slug: string) => terminalConfig.projects.find((project) => project.slug === slug);
@@ -61,13 +61,19 @@ export function createCommandRegistry(api: TerminalCommandApi): TerminalCommandR
   );
 
   return {
-    help: () => "help · whoami · about · ls · cat <project> · theme <amber|mono> · github · contact · clear · zoom · sudo hire mizan",
+    help: () => "help · whoami · about · cat <project> · cat links.txt · theme <amber|mono> · github · contact · clear · zoom",
     whoami: () => `${terminalConfig.name} — ${terminalConfig.role}, ${terminalConfig.location}`,
     about: () => terminalConfig.bio,
-    ls: () => terminalConfig.projects.map((project) => project.slug).join("/  ") + "/",
     cat: ([slug]) => {
+      if (slug === "links.txt") return createElement(
+        "span",
+        null,
+        createElement("a", { href: terminalConfig.links.experience }, "Explore my experience →"),
+        " · ",
+        createElement("a", { href: terminalConfig.links.github, rel: "noreferrer", target: "_blank" }, "GitHub ↗"),
+      );
       const project = slug ? projectBySlug(slug) : undefined;
-      return project ? projectNode(project) : "cat: provide a project slug from ls";
+      return project ? projectNode(project) : "cat: provide links.txt or a project slug from the projects pane";
     },
     theme: ([name]) => {
       const theme = terminalConfig.themes.find((item) => item.name === name);
@@ -79,6 +85,5 @@ export function createCommandRegistry(api: TerminalCommandApi): TerminalCommandR
     contact: () => createElement("a", { href: terminalConfig.links.contact }, "mizanmahi24@gmail.com"),
     clear: () => { api.clearOutput(); return null; },
     zoom: () => { api.toggleZoom(); return "pane zoom toggled"; },
-    "sudo hire mizan": () => "Authentication accepted. Let’s build something durable.",
   };
 }

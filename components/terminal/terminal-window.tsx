@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { Pane } from "@/components/terminal/pane";
 import { Prompt } from "@/components/terminal/prompt";
 import { StatusBar } from "@/components/terminal/status-bar";
@@ -35,21 +35,27 @@ function useCountUp(target: number) {
 export function TerminalWindow() {
   const terminal = useTerminal();
   const count = useCountUp(terminalConfig.stats.mentorship);
-  const focus = (pane: number) => terminal.focusPane(pane);
+  const focus = (pane: number) => {
+    terminal.focusPane(pane);
+    if (pane === 0) terminal.focusPrompt();
+  };
   const zoom = (pane: number) => { terminal.focusPane(pane); terminal.toggleZoom(pane); };
-  const style = { "--accent": terminal.theme.hsl } as CSSProperties;
 
-  return <section aria-label="Interactive portfolio terminal" className={styles.window} style={style}>
+  return <section aria-label="Interactive portfolio terminal" className={styles.window} data-terminal-theme={terminal.theme.name}>
     <div className={styles.grid} data-zoomed={terminal.zoomedPane !== null}>
-      <Pane active={terminal.activePane === 0} id={0} label="whoami" onFocus={() => focus(0)} onZoom={() => zoom(0)} zoomed={terminal.zoomedPane === 0}>
-        <pre aria-hidden="true" className={styles.ascii}>{terminalConfig.asciiName}</pre>
-        <p className={styles.command}><span>$</span> cat role.txt</p>
-        <p>{terminalConfig.role}</p><p>{terminalConfig.location}</p>
+      <Pane active={terminal.activePane === 0} id={0} label="me" onFocus={() => focus(0)} onZoom={() => zoom(0)} zoomed={terminal.zoomedPane === 0}>
+        <p className={styles.command}><span>$</span> whoami</p>
+        <h1 className={styles.name} id="hero-title">{terminalConfig.name.split(" ").map((part) => <span key={part}>{part}</span>)}</h1>
+        <div className={styles.identity}>
+          <p className={styles.command}><span>$</span> cat role.txt</p>
+          <p>{terminalConfig.role}<br />{terminalConfig.location}</p>
+        </div>
         <Prompt inputRef={terminal.promptRef} onComplete={terminal.complete} onHistory={terminal.moveHistory} onRun={terminal.runCommand} onValueChange={terminal.setValue} outputs={terminal.outputs} value={terminal.value} />
       </Pane>
 
       <Pane active={terminal.activePane === 1} id={1} label="about" onFocus={() => focus(1)} onZoom={() => zoom(1)} zoomed={terminal.zoomedPane === 1}>
         <p className={styles.command}><span>$</span> cat about.md</p><p className={styles.bio}>{terminalConfig.bio}</p>
+        <p className={styles.command}><span>$</span> cat links.txt</p>
         <div className={styles.actions}><a className={styles.primaryAction} href={terminalConfig.links.experience}>Explore my experience <span aria-hidden="true">→</span></a><a className={styles.secondaryAction} href={terminalConfig.links.github} rel="noreferrer" target="_blank">GitHub</a></div>
       </Pane>
 
@@ -57,8 +63,8 @@ export function TerminalWindow() {
         <p className={styles.command}><span>$</span> tail -n 1 mentorship.log</p><p className={styles.stat}>{count.toLocaleString()}<sup>+</sup></p><p>{terminalConfig.stats.caption}</p>
       </Pane>
 
-      <Pane active={terminal.activePane === 3} id={3} label="work" onFocus={() => focus(3)} onZoom={() => zoom(3)} zoomed={terminal.zoomedPane === 3}>
-        <p className={styles.command}><span>$</span> ls /selected-work</p>
+      <Pane active={terminal.activePane === 3} id={3} label="projects" onFocus={() => focus(3)} onZoom={() => zoom(3)} zoomed={terminal.zoomedPane === 3}>
+        <p className={styles.command}><span>$</span> cd /projects</p>
         <ul className={styles.projects}>{terminalConfig.projects.map((project) => <li key={project.slug}><button onClick={(event) => { event.stopPropagation(); focus(0); terminal.runCommand(`cat ${project.slug}`); terminal.focusPrompt(); }} type="button">{project.slug}/</button></li>)}</ul>
       </Pane>
     </div>

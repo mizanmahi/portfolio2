@@ -136,6 +136,12 @@ Dark-first, with a warm light-mode counterpart.
 
 Reference these as Tailwind theme colors, never hardcode hex in components.
 
+Terminal command text uses `--foreground`; result text uses `--terminal-output-color` (75% foreground, 25% muted) for a subtle distinction in both themes. The hero name and work links retain their display and accent treatments.
+
+The `me` terminal pane keeps its header fixed while the identity, command history, and prompt scroll together below it. It uses a 4px scrollbar (native thin fallback) without arrow buttons and follows the prompt when commands are typed or submitted.
+
+Terminal hover matches the experience cards: a pointer-following spotlight (480px radius, 9% accent, 300ms fade) and a highlighted outer border with a deeper shadow (250ms transition). Hover effects apply to hover-capable devices; reduced motion disables pointer tracking and transitions.
+
 ### Hero theme architecture
 
 Hero-specific values are semantic tokens alongside the color system; components never branch on the active theme.

@@ -19,7 +19,11 @@ export function useTerminal() {
   const [value, setValue] = useState("");
 
   const focusPrompt = useCallback(() => promptRef.current?.focus(), []);
-  const focusPane = useCallback((pane: number) => { setActivePane(pane); setZoomedPane(null); }, []);
+  const focusPane = useCallback((pane: number) => {
+    setActivePane(pane);
+    // Click events precede double-click; preserve this pane's zoom for the toggle.
+    setZoomedPane((current) => current === pane ? current : null);
+  }, []);
   const toggleZoom = useCallback((pane = activePane) => setZoomedPane((current) => current === pane ? null : pane), [activePane]);
   const clearOutput = useCallback(() => setOutputs([]), []);
 
@@ -27,8 +31,7 @@ export function useTerminal() {
     const normalized = rawValue.trim();
     if (!normalized) return;
     const [first, ...args] = normalized.split(/\s+/);
-    const compound = normalized.toLowerCase() === "sudo hire mizan" ? "sudo hire mizan" : first.toLowerCase();
-    const command = createCommandRegistry({ clearOutput, focusPane, focusPrompt, setTheme, toggleZoom })[compound];
+    const command = createCommandRegistry({ clearOutput, focusPane, focusPrompt, setTheme, toggleZoom })[first.toLowerCase()];
     const result = command ? command(args) : "command not found, try help";
     setHistory((current) => [...current, normalized]);
     setHistoryIndex(null);
@@ -39,7 +42,7 @@ export function useTerminal() {
   const complete = useCallback(() => {
     const [first, ...args] = value.trim().split(/\s+/);
     if (!first) return;
-    const options = first === "cat" ? terminalConfig.projects.map((project) => project.slug) : first === "theme" ? terminalConfig.themes.map((theme) => theme.name) : terminalCommandNames;
+    const options = first === "cat" ? ["links.txt", ...terminalConfig.projects.map((project) => project.slug)] : first === "theme" ? terminalConfig.themes.map((theme) => theme.name) : terminalCommandNames;
     const current = args.length ? args[args.length - 1] : first;
     const match = options.find((option) => option.startsWith(current));
     if (!match) return;

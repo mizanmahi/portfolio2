@@ -67,8 +67,11 @@ Do not use arbitrary pixel values anywhere (`text-[15px]`, `text-[22px]`, etc). 
 | `text-3xl` | 32px | 1.2 | Compact section headings |
 | `text-4xl` | 40px | 1.15 | Standard section headings |
 | `text-5xl`+ | 56px+ | 1.05–1.1 | Hero display name only |
+| `text-8xl` | 128px | 1.1 | Terminal hero name; scales with pane width down to `text-5xl` on mobile |
 
 Spacing between text elements should also snap to the existing 4px/8px spacing grid used across the rest of the site, defined in `DESIGN.md`, not one-off margin/padding values.
+
+Terminal commands use the foreground color; results use `--terminal-output-color`, a subtle mix of 75% foreground and 25% muted. Commands and result copy share `--text-terminal` and `--leading-terminal` (1.6). Command-to-result spacing is `--space-3`; consecutive result lines use normal line spacing without extra paragraph gaps. The `whoami` name retains its display treatment, and `work` retains its accent-colored links.
 
 ### Section typography defaults
 
@@ -90,7 +93,7 @@ Use `--text-section-heading` (`text-4xl`) for standard section headings and `--t
 ## Accessibility
 
 - Body text never below 16px
-- Line height never tighter than 1.2 even on large display text, tighter risks readability issues
+- Use line height of at least 1.2, except the two-line terminal hero name, which uses 1.1 for tighter spacing.
 - Color contrast for all text must meet WCAG AA against its background in BOTH light and dark themes, check `--accent-strong` usage per the color guide in `DESIGN.md`, don't use `--accent` as literal text color on light backgrounds
 - The agentic-mono glow effect must not reduce actual text contrast below AA, the glow is decorative, the base text color underneath must still pass on its own
 
