@@ -19,7 +19,7 @@ const projects = [
     imageAlt: "Edulavo website showing an AI-powered skill coach and adaptive learning paths",
     href: "https://www.edulavo.com/",
     host: "edulavo.com",
-    technologies: ["Next.js", "TypeScript", "OpenAI", "Prisma"],
+    technologies: ["Next.js", "TypeScript", "OpenAI", "Python", "gRPC", "tRPC", "CrewAI"],
     className: styles.featured,
   },
   {
@@ -127,7 +127,7 @@ export function ProjectsSection() {
                     alt={project.imageAlt}
                     className={styles.image}
                     fill
-                    sizes={project.id === "edulavo" ? "(min-width: 64rem) 58vw, 100vw" : "(min-width: 64rem) 48vw, 100vw"}
+                    sizes="(min-width: 64rem) 58vw, 100vw"
                     src={project.image}
                   />
                   <span aria-hidden="true" className={styles.imageVeil} />

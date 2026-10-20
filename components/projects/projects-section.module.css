@@ -222,14 +222,14 @@
 @media (min-width: 64rem) {
   .project { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: center; gap: var(--space-12); }
   .visual { grid-column: span 7; }
-  .record { grid-column: 9 / span 4; }
+  .record { grid-column: 8 / span 5; }
   .featured { padding-top: var(--space-16); padding-bottom: var(--space-24); }
-  .featured .visual { grid-column: span 8; aspect-ratio: 16 / 9; }
-  .featured .record { grid-column: 10 / span 3; }
-  .nextLevel .record { grid-column: 1 / span 4; grid-row: 1; }
+  .featured .visual { grid-column: span 7; }
+  .featured .record { grid-column: 8 / span 5; }
+  .nextLevel .record { grid-column: 1 / span 5; grid-row: 1; }
   .nextLevel .visual { grid-column: 6 / span 7; }
   .programmingHero .visual { grid-column: span 7; }
-  .programmingHero .record { grid-column: 9 / span 4; }
+  .programmingHero .record { grid-column: 8 / span 5; }
 }
 
 @media (prefers-reduced-motion: reduce) {
