@@ -1,3 +1,20 @@
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
+packages:
+  - 'apps/*'
+
+allowBuilds:
+  esbuild: true
+  sharp: false
+  unrs-resolver: false
+
+# Exact versions selected before adopting pnpm 12's release-age checks.
+# Keep the default age check for all other versions and dependencies.
+minimumReleaseAgeExclude:
+  - 'turbo@2.11.10'
+  - '@turbo/darwin-64@2.11.10'
+  - '@turbo/darwin-arm64@2.11.10'
+  - '@turbo/linux-64@2.11.10'
+  - '@turbo/linux-arm64@2.11.10'
+  - '@turbo/windows-64@2.11.10'
+  - '@turbo/windows-arm64@2.11.10'
+  - '@fastify/forwarded@3.1.2'
+  - 'set-cookie-parser@3.2.1'
