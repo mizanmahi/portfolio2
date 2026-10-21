@@ -8,6 +8,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Monorepo layout
+
+- `apps/frontend` contains the Next.js app. Read its bundled guides at `apps/frontend/node_modules/next/dist/docs/`.
+- `apps/backend` contains the Fastify TypeScript API.
+- Run workspace commands from this root with pnpm and Turborepo.
+- Keep project skills in the root `.agents/skills/` directory and `skills-lock.json` at the root.
+- `design.md` and `typography.md` below refer to the repository-root documents.
+
 <!-- for the typography -->
 look at the typography.md file for the font, size, and weight rules. This file is a single source of truth for typography on this project. Check it before adding anything new, fonts, sizes, weights, so later sections stay consistent with week 1.
 
