@@ -14,7 +14,7 @@ Install pnpm with its lifecycle scripts enabled so its native launcher is availa
 
 ```text
 apps/
-  frontend/           # Existing Next.js app, components, and public assets
+  frontend/           # Next.js app, components, and public assets
   backend/
     src/
       app.ts          # Fastify factory, also used by request tests
