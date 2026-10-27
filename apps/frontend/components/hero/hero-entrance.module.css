@@ -33,15 +33,6 @@
   text-align: center;
 }
 
-.kicker {
-  color: hsl(var(--accent-strong));
-  font-family: var(--font-hanken-grotesk), sans-serif;
-  font-size: var(--text-kicker);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  line-height: var(--leading-kicker);
-}
-
 .title {
   max-width: 9ch;
   margin-inline: auto;
@@ -162,7 +153,6 @@
   .intro { position: relative; justify-items: start; text-align: left; }
   .title { margin-inline: 0; transform-origin: left center; }
   .actions { justify-content: start; }
-  .kicker { position: absolute; top: calc(var(--space-6) * -1); left: 0; }
   .terminalWrap::before {
     position: absolute; z-index: 2; top: 0; bottom: 0; left: calc(var(--space-12) * -1); width: 1px;
     content: ""; pointer-events: none;

@@ -76,8 +76,6 @@ export function HeroEntrance() {
             <AuraBackground />
             <motion.div className={styles.grid} variants={entranceVariants.grid}>
               <motion.div className={styles.intro} variants={entranceVariants.intro}>
-                <p className={styles.kicker}>Developer profile</p>
-
                 <LineShadowText
                   aria-label="Mizanur Rahman"
                   as="h1"

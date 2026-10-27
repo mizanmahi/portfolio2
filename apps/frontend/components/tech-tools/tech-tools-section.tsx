@@ -19,30 +19,30 @@ const layers = [
   {
     id: "backend", icon: ServerStack02Icon, title: "Backend engineering", label: "Services and APIs",
     description: "I build APIs, authentication, and services with clear boundaries, typed communication, and testing that supports confident changes.",
-    tools: ["Node.js", "Express.js", "Golang", "Python", "gRPC", "tRPC", "Testing"],
-    example: "Built services in Go and Python with gRPC and tRPC, and implemented OpenID Connect for single sign-on across company products.",
-    role: "developer", context: "Programming Hero",
+    tools: ["Node.js", "Express.js", "Golang", "Python", "gRPC", "tRPC", "BullMQ", "FFmpeg", "Testing"],
+    example: "Built Go and Python services with gRPC and tRPC. Mentora uses SSE for streamed answers and BullMQ workers for video ingestion with FFmpeg.",
+    role: "developer", context: "Programming Hero & Mentora",
   },
   {
     id: "systems", icon: Structure02Icon, title: "System design", label: "Architecture and boundaries",
     description: "I turn product requirements into clear service boundaries and data flows, with attention to maintainability, security, and performance.",
-    tools: ["System design", "Service architecture", "OIDC", "Security", "Performance", "Code review"],
-    example: "Designed centralized authentication across company products and mentored developers through full-stack architecture decisions.",
-    role: "developer", context: "Programming Hero",
+    tools: ["System design", "Service architecture", "Background jobs", "Event sourcing", "Turborepo", "OIDC", "Security", "Performance", "Code review"],
+    example: "Designed centralized authentication across company products. Mentora separates interactive requests from background jobs and derives skill mastery from an append-only learning event ledger.",
+    role: "developer", context: "Programming Hero & Mentora",
   },
   {
     id: "database", icon: Database02Icon, title: "Database", label: "Storage and access",
-    description: "I work with relational and document databases, data modeling, and caching to keep application data organized and accessible.",
-    tools: ["PostgreSQL", "MongoDB", "Mongoose", "Prisma", "Drizzle", "GORM", "Redis", "Firebase"],
-    example: "Handle Redis-backed performance work and have taught database development with MongoDB, PostgreSQL, and Prisma.",
-    role: "senior-mentor", context: "Programming Hero",
+    description: "I work with relational and document databases, data modeling, caching, and vector search to keep application data organized and accessible.",
+    tools: ["PostgreSQL", "pgvector", "MongoDB", "Mongoose", "Prisma", "Drizzle", "GORM", "Redis", "Firebase"],
+    example: "Teach database development with PostgreSQL, MongoDB, and Prisma. Mentora combines pgvector similarity with full-text search to retrieve lecture context within a learner’s watch time.",
+    role: "senior-mentor", context: "Programming Hero & Mentora",
   },
   {
     id: "ai", icon: AiBrain03Icon, title: "AI and automation", label: "Agents and workflows",
     description: "I build AI agents and useful automation, connecting language models with relevant data through RAG and vector search.",
-    tools: ["AI Agent", "RAG", "Vector DB", "Python", "AI integration", "Agentic development"],
-    example: "Contributed to Edulavo’s personalized learning roadmaps using a multi-agent architecture. Now integrating RAG and vector search into learning products.",
-    role: "developer", context: "Edulavo & Programming Hero",
+    tools: ["AI Agent", "RAG", "Vector DB", "OpenRouter", "OpenAI SDK", "Deepgram", "Python", "AI integration", "Agentic development"],
+    example: "Contributed to Edulavo’s multi-agent learning roadmaps. Mentora combines Deepgram transcription, OpenAI embeddings, and OpenRouter model routing for cited lecture Q&A and checkpoint quizzes.",
+    role: "developer", context: "Edulavo & Mentora",
   },
   {
     id: "cloud", icon: CloudServerIcon, title: "Cloud delivery", label: "Deployment and operations",
@@ -97,17 +97,17 @@ function StackBlueprint({ selected, reducedMotion, onSelect }: { selected: numbe
             onFocus={() => setFocused(index)}
             onBlur={() => setFocused(null)}
           >
-          <motion.g aria-hidden="true" className={`${styles.layerVisual} ${selected === index ? styles.activePlane : styles.plane}`} animate={{ y: (selected === index ? -12 : 0) - (highlighted && !reducedMotion ? 8 : 0) }} transition={{ duration: reducedMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}>
-            <path className={styles.planeEdge} d={`M128 ${y + 80} 320 ${y + 176} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
-            <path className={styles.planeFace} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80} 320 ${y + 176}Z`} />
-            <path className={styles.planeGrid} d={`M192 ${y + 48} 384 ${y + 144} M256 ${y + 16} 448 ${y + 112} M192 ${y + 112} 384 ${y + 16} M256 ${y + 144} 448 ${y + 48}`} />
-            <path className={styles.trace} d={`M224 ${y + 80} 288 ${y + 48} 352 ${y + 80} 416 ${y + 48}`} />
-            <circle className={styles.node} cx="224" cy={y + 80} r="4" /><circle className={styles.node} cx="416" cy={y + 48} r="4" />
-            <path className={styles.callout} d={`M512 ${y + 80}H548`} /><circle cx="560" cy={y + 80} r="4" className={styles.node} />
-          </motion.g>
-          {/* Fixed hit areas keep the pointer stable while the visible layer lifts. */}
-          <path className={styles.layerHitArea} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
-          <rect className={styles.layerHitArea} x="540" y={y + 60} width="56" height="40" />
+            <motion.g aria-hidden="true" className={`${styles.layerVisual} ${selected === index ? styles.activePlane : styles.plane}`} animate={{ y: (selected === index ? -12 : 0) - (highlighted && !reducedMotion ? 8 : 0) }} transition={{ duration: reducedMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}>
+              <path className={styles.planeEdge} d={`M128 ${y + 80} 320 ${y + 176} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
+              <path className={styles.planeFace} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80} 320 ${y + 176}Z`} />
+              <path className={styles.planeGrid} d={`M192 ${y + 48} 384 ${y + 144} M256 ${y + 16} 448 ${y + 112} M192 ${y + 112} 384 ${y + 16} M256 ${y + 144} 448 ${y + 48}`} />
+              <path className={styles.trace} d={`M224 ${y + 80} 288 ${y + 48} 352 ${y + 80} 416 ${y + 48}`} />
+              <circle className={styles.node} cx="224" cy={y + 80} r="4" /><circle className={styles.node} cx="416" cy={y + 48} r="4" />
+              <path className={styles.callout} d={`M512 ${y + 80}H548`} /><circle cx="560" cy={y + 80} r="4" className={styles.node} />
+            </motion.g>
+            {/* Fixed hit areas keep the pointer stable while the visible layer lifts. */}
+            <path className={styles.layerHitArea} d={`M128 ${y + 80} 320 ${y - 16} 512 ${y + 80}V${y + 92}L320 ${y + 188} 128 ${y + 92}Z`} />
+            <rect className={styles.layerHitArea} x="540" y={y + 60} width="56" height="40" />
           </g>
         );
       })}
@@ -160,19 +160,19 @@ export function TechToolsSection() {
             <div className={styles.diagramHeader}><HugeiconsIcon icon={layer.icon} size={24} aria-hidden="true" /><span>Select a layer to explore</span></div>
             <div className={styles.diagram}><StackBlueprint selected={selected} reducedMotion={reducedMotion} onSelect={selectManually} /><span className={styles.diagramLabel}>{layer.label}</span></div>
             <div className={styles.panels}>
-            {layers.map((item, index) => (
-              <div key={item.id} role="tabpanel" id={`tech-panel-${item.id}`} aria-labelledby={`tech-tab-${item.id}`} hidden={selected !== index} tabIndex={0} className={styles.panel}>
-                <motion.div key={`${item.id}-${selected === index}`} initial={reducedMotion || selected !== index ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
-                  <div className={styles.panelHeading}><h3>{item.title}</h3></div><p className={styles.panelCopy}>{item.description}</p>
-                  <ul className={styles.tools}>{item.tools.map((tool, toolIndex) => <motion.li key={tool} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.25, delay: reducedMotion ? 0 : toolIndex * 0.035 }}>{tool}</motion.li>)}</ul>
-                  <div className={styles.example}>
-                    <p className={styles.exampleLabel}>In practice <span>{item.context}</span></p>
-                    <p className={styles.exampleCopy}>{item.example}</p>
-                    <a href={`#experience-${item.role}`} className={styles.exampleLink}>Explore the role <span aria-hidden="true">↗</span></a>
-                  </div>
-                </motion.div>
-              </div>
-            ))}
+              {layers.map((item, index) => (
+                <div key={item.id} role="tabpanel" id={`tech-panel-${item.id}`} aria-labelledby={`tech-tab-${item.id}`} hidden={selected !== index} tabIndex={0} className={styles.panel}>
+                  <motion.div key={`${item.id}-${selected === index}`} initial={reducedMotion || selected !== index ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.3 }}>
+                    <div className={styles.panelHeading}><h3>{item.title}</h3></div><p className={styles.panelCopy}>{item.description}</p>
+                    <ul className={styles.tools}>{item.tools.map((tool, toolIndex) => <motion.li key={tool} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.25, delay: reducedMotion ? 0 : toolIndex * 0.035 }}>{tool}</motion.li>)}</ul>
+                    <div className={styles.example}>
+                      <p className={styles.exampleLabel}>In practice <span>{item.context}</span></p>
+                      <p className={styles.exampleCopy}>{item.example}</p>
+                      <a href={`#experience-${item.role}`} className={styles.exampleLink}>Explore the role <span aria-hidden="true">↗</span></a>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>

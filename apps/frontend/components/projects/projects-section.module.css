@@ -67,6 +67,9 @@
 
 .imageFrame { position: relative; display: block; height: 100%; overflow: hidden; }
 
+/* Keep the full Mentora poster visible, including its title and tagline. */
+.mentora .visual { aspect-ratio: 1351 / 1164; }
+
 .image {
   object-fit: cover;
   object-position: center top;
@@ -226,10 +229,12 @@
   .featured { padding-top: var(--space-16); padding-bottom: var(--space-24); }
   .featured .visual { grid-column: span 7; }
   .featured .record { grid-column: 8 / span 5; }
-  .nextLevel .record { grid-column: 1 / span 5; grid-row: 1; }
-  .nextLevel .visual { grid-column: 6 / span 7; }
-  .programmingHero .visual { grid-column: span 7; }
-  .programmingHero .record { grid-column: 8 / span 5; }
+  .mentora .record,
+  .programmingHero .record { grid-column: 1 / span 5; grid-row: 1; }
+  .mentora .visual,
+  .programmingHero .visual { grid-column: 6 / span 7; }
+  .nextLevel .visual { grid-column: span 7; }
+  .nextLevel .record { grid-column: 8 / span 5; }
 }
 
 @media (prefers-reduced-motion: reduce) {

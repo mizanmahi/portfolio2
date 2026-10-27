@@ -19,33 +19,54 @@ const projects = [
     imageAlt: "Edulavo website showing an AI-powered skill coach and adaptive learning paths",
     href: "https://www.edulavo.com/",
     host: "edulavo.com",
+    linkLabel: "Visit live site",
+    previewLabel: "Open site",
     technologies: ["Next.js", "TypeScript", "OpenAI", "Python", "gRPC", "tRPC", "CrewAI"],
     className: styles.featured,
   },
   {
-    id: "next-level",
+    id: "mentora",
     index: "02",
+    name: "Mentora",
+    label: "AI-native learning ecosystem",
+    description: "Video lectures become conversations, with cited AI answers, checkpoint quizzes, and a digital twin that tracks each learner’s skills.",
+    image: "/images/project2.png",
+    imageAlt: "Mentora banner with an AI learning assistant and the tagline AI-Powered Interactive Education Ecosystem",
+    href: "https://github.com/mir-hussain/ph-ai-eco",
+    host: "github.com/mir-hussain/ph-ai-eco",
+    linkLabel: "View repository",
+    previewLabel: "Open repository",
+    technologies: ["Next.js", "TypeScript", "Express", "Prisma", "PostgreSQL", "pgvector", "Redis", "BullMQ", "OpenRouter", "Deepgram"],
+    className: styles.mentora,
+  },
+  {
+    id: "next-level",
+    index: "03",
     name: "Next Level",
     label: "AI-first engineering program",
     description: "A career-focused learning experience for developers becoming production-ready engineers.",
-    image: "/images/project2.jpeg",
+    image: "/images/project3.jpeg",
     imageAlt: "Next Level website promoting an AI-first software engineering program",
     href: "https://next.programming-hero.com/",
     host: "next.programming-hero.com",
-    technologies: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    linkLabel: "Visit live site",
+    previewLabel: "Open site",
+    technologies: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Mongoose", "Redis", "Docker"],
     className: styles.nextLevel,
   },
   {
     id: "programming-hero",
-    index: "03",
+    index: "04",
     name: "Programming Hero",
     label: "Career-focused ed-tech platform",
     description: "Practical learning programs helping developers build real-world software skills.",
-    image: "/images/project3.jpeg",
+    image: "/images/project4.jpeg",
     imageAlt: "Programming Hero website for an AI-driven full-stack web engineering program",
     href: "https://web.programming-hero.com/home",
     host: "web.programming-hero.com",
-    technologies: ["React", "Next.js", "Node.js", "Redis"],
+    linkLabel: "Visit live site",
+    previewLabel: "Open site",
+    technologies: ["React", "Next.js", "Node.js", "Redis", "AWS", "Firebase", "Pino", "Stripe"],
     className: styles.programmingHero,
   },
 ] as const;
@@ -114,7 +135,7 @@ export function ProjectsSection() {
           {projects.map((project) => (
             <motion.li className={`${styles.project} ${project.className}`} key={project.id} variants={revealVariants.entry}>
               <motion.a
-                aria-label={`Visit ${project.name}`}
+                aria-label={`${project.previewLabel}: ${project.name}`}
                 className={styles.visual}
                 href={project.href}
                 onPointerMove={updateBorderSpotlight}
@@ -132,7 +153,7 @@ export function ProjectsSection() {
                   />
                   <span aria-hidden="true" className={styles.imageVeil} />
                 </span>
-                <span aria-hidden="true" className={styles.visualMark}>Open site <HugeiconsIcon icon={ArrowUpRight01Icon} size="1em" /></span>
+                <span aria-hidden="true" className={styles.visualMark}>{project.previewLabel} <HugeiconsIcon icon={ArrowUpRight01Icon} size="1em" /></span>
                 <span aria-hidden="true" className={styles.visualFooter}>
                   <span>{project.host}</span>
                   <HugeiconsIcon icon={ArrowUpRight01Icon} size="1em" />
@@ -150,7 +171,7 @@ export function ProjectsSection() {
                   {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
                 </ul>
                 <a className={styles.liveLink} href={project.href} rel="noreferrer" target="_blank">
-                  Visit live site <HugeiconsIcon aria-hidden="true" icon={ArrowUpRight01Icon} size="1em" />
+                  {project.linkLabel} <HugeiconsIcon aria-hidden="true" icon={ArrowUpRight01Icon} size="1em" />
                 </a>
               </motion.div>
             </motion.li>
