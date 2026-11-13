@@ -21,3 +21,35 @@ look at the typography.md file for the font, size, and weight rules. This file i
 
 <!-- for the design -->
 look at the design.md file for the design decisions, color palette, and tech stack. This file is a single source of truth for design decisions on this project. Check it before adding anything new, colors, spacing, components, so later sections stay consistent with week 1.
+
+
+
+## Backend Rules
+- The backend project is located in the `apps/backend` directory. It is a Fastify TypeScript API.
+- All backend code should be written in TypeScript.
+- Do not use type any in the backend code. Use proper types and interfaces instead unless absolutely necessary.
+- strictly follow the separation of concerns principle. repository layer, service layer, and controller layer should be clearly defined and separated.
+- Use dependency injection for better testability and maintainability.
+- Use async/await for asynchronous operations and handle errors properly.
+- Prefer readable code over clever code.
+- Use early returns where helpful.
+- Keep functions small and focused.
+- Reuse existing utilities/services/helpers.
+- Avoid duplicate logic.
+- Comment non-obvious code, but avoid redundant comments.
+- Validate inputs.
+- Keep response shape consistent.
+- Handle errors safely with appropriate HTTP status codes.
+- Never expose internal errors, stack traces, or sensitive information to clients.
+- Keep controllers thin.
+- Use structured logging instead of console.log.
+- Add pagination to endpoints that return potentially large datasets.
+- Make operations idempotent where appropriate, especially for payment and retryable operations.
+
+## Database Rules
+
+- Avoid unnecessary queries.
+- Be careful with destructive operations.
+- Think about race conditions.
+- Avoid unnecessary database queries and prevent N+1 query problems.
+- Use transactions when multiple database operations must succeed or fail together.
